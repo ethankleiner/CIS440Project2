@@ -19,9 +19,9 @@ namespace ProjectTemplate
 		////////////////////////////////////////////////////////////////////////
 		///replace the values of these variables with your database credentials
 		////////////////////////////////////////////////////////////////////////
-		private string dbID = "cis440template";
-		private string dbPass = "!!Cis440";
-		private string dbName = "cis440template";
+		private string dbID = "sprc2023team11";
+		private string dbPass = "sprc2023team11";
+		private string dbName = "sprc2023team11";
 		////////////////////////////////////////////////////////////////////////
 		
 		////////////////////////////////////////////////////////////////////////
@@ -31,8 +31,7 @@ namespace ProjectTemplate
 			return "SERVER=107.180.1.16; PORT=3306; DATABASE=" + dbName+"; UID=" + dbID + "; PASSWORD=" + dbPass;
 		}
 		////////////////////////////////////////////////////////////////////////
-
-
+		
 
 		/////////////////////////////////////////////////////////////////////////
 		//don't forget to include this decoration above each method that you want
@@ -61,6 +60,105 @@ namespace ProjectTemplate
 			{
 				return "Something went wrong, please check your credentials and db name and try again.  Error: "+e.Message;
 			}
+		}
+		
+		[WebMethod(EnableSession = true)] //NOTICE: gotta enable session on each individual method
+		public bool LogOn(string uid, string pass)
+		{
+			//we return this flag to tell them if they logged in or not
+			bool success = false;
+			
+			string sqlSelect = "SELECT id FROM user_database WHERE userid=@idValue and pass=@passValue";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(uid));
+			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
+
+			
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			DataTable sqlDt = new DataTable();
+			sqlDa.Fill(sqlDt);
+			
+			if (sqlDt.Rows.Count > 0)
+			{
+				//if we found an account, store the id and admin status in the session
+				//so we can check those values later on other method calls to see if they 
+				//are 1) logged in at all, and 2) and admin or not
+				Session["id"] = sqlDt.Rows[0]["id"];
+				// Session["admin"] = sqlDt.Rows[0]["admin"];
+				success = true;
+				// call a function that can connect to database again and store user login time or any details 
+				// into the loginstatus table
+				int userid = int.Parse(Session["id"].ToString());
+				UpdateLoginStatus(userid, "logged in");
+			}
+			//return the result!
+			return success;
+		}
+
+		[WebMethod(EnableSession = true)]
+		public bool LogOff()
+		{
+			//if they log off, then we remove the session.  That way, if they access
+			//again later they have to log back on in order for their ID to be back
+			//in the session!
+			Session.Abandon();
+			int userid = int.Parse(Session["id"].ToString());
+			UpdateLoginStatus(userid,"logged off");
+			return true;
+		}
+		
+		public void UpdateLoginStatus(int id, string log)
+		{
+			AllowChange();
+
+			string sqlSelect = "insert into login_status (id, time, log) values(@idValue, now(), @logValue);";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", id);
+			sqlCommand.Parameters.AddWithValue("@logValue", log);
+
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			Console.WriteLine("Executing query...");
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+				Console.WriteLine("Query executed");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			sqlConnection.Close(); 
+		}
+
+		public void AllowChange()
+		{
+			string sqlSet = "set foreign_key_checks = 0;";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSet, sqlConnection);
+			
+			sqlConnection.Open();
+			
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+				Console.WriteLine("Foreign key query executed");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			sqlConnection.Close(); 
 		}
 	}
 }
