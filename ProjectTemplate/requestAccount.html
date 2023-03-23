@@ -90,18 +90,29 @@
 <body>
 	<header>
 		<nav>
-            <a id="leftAlign">New Account</a>
+            <!-- <a id="leftAlign">New Account</a> -->
 			<a class="navLink" id="leftAlign" href="index.html">Back to Log In</a>
             <a class="navLink" id="rightAlign" href="help.html">Help</a>
 		</nav>
 	</header>
 
 	<main class="gradientBG">
-		<h1>It's time to build your account login!</h1>
+		<h1>Create Your Account</h1>
 		<h2>Fill out the form below to start you journey</h2>
 
         <form onsubmit="CreateAccount($('#newLogonId').val(), $('#newLogonPassword').val(), $('#newLogonFName').val(), 
         $('#newLogonLName').val(), $('#newLogonEmail').val()); return false;">
+			
+			<section>
+				<label>First Name</label><br />
+				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
+			</section>
+
+            <section>
+				<label>Last Name</label><br />
+				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
+			</section>
+
 			<section>
 				<label>Username</label><br />
 				<input type="text" class="textInput" id="newLogonId" name="username" required /><br /><br />
@@ -113,18 +124,25 @@
 			</section>
 
             <section>
-				<label>First Name</label><br />
-				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
-			</section>
-
-            <section>
-				<label>Last Name</label><br />
-				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
-			</section>
-
-            <section>
 				<label>Email</label><br />
 				<input type="text" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
+			</section>
+			
+			<section>
+				<label>Company</label><br />
+				<input type="text"  required /><br /><br />
+			</section>
+
+			<section>
+				<label>Years Experience</label><br />
+				<input type="number" step="1" min="0" max="70" required /><br /><br />
+			</section>
+
+			<section>
+				<input type="radio"  id="mentorRadio"  />
+				<label for="mentorRadio">Mentor</label>
+				<input type="radio"  id="menteeRadio"  />
+				<label for="menteeRadio">Mentor</label>
 			</section>
 
 			<br>
