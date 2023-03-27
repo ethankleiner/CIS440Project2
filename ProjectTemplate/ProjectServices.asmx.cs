@@ -63,17 +63,17 @@ namespace ProjectTemplate
 		}
 		
 		[WebMethod(EnableSession = true)] //NOTICE: gotta enable session on each individual method
-		public bool LogOn(string uid, string pass)
+		public bool LogOn(string email, string pass)
 		{
 			//we return this flag to tell them if they logged in or not
 			bool success = false;
 			
-			string sqlSelect = "SELECT id FROM user_database WHERE userid=@idValue and pass=@passValue";
+			string sqlSelect = "SELECT userID FROM users WHERE email=@emailValue and pass=@passValue";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 			
-			sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(uid));
+			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
 			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
 
 			
@@ -159,6 +159,40 @@ namespace ProjectTemplate
 			}
 
 			sqlConnection.Close(); 
+		}
+
+		[WebMethod(EnableSession = true)]
+		public void RequestAccount(string uid, string pass, string firstName, string lastName, string email)
+		{
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
+			//does is tell mySql server to return the primary key of the last inserted row.
+			string sqlSelect = "insert into user_database (userid, pass, firstname, lastname, email, charID, choices) " +
+			                   "values(@idValue, @passValue, @fnameValue, @lnameValue, @emailValue, 1, null); SELECT LAST_INSERT_ID();";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(uid));
+			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
+			sqlCommand.Parameters.AddWithValue("@fnameValue", HttpUtility.UrlDecode(firstName));
+			sqlCommand.Parameters.AddWithValue("@lnameValue", HttpUtility.UrlDecode(lastName));
+			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
+			
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			try
+			{
+				int accountID = Convert.ToInt32(sqlCommand.ExecuteScalar());
+				//here, you could use this accountID for additional queries regarding
+				//the requested account.  Really this is just an example to show you
+				//a query where you get the primary key of the inserted row back from
+				//the database!
+			}
+			catch (Exception e) {
+			}
+			sqlConnection.Close();
 		}
 	}
 }
