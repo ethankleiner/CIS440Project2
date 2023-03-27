@@ -68,7 +68,7 @@ namespace ProjectTemplate
 			//we return this flag to tell them if they logged in or not
 			bool success = false;
 			
-			string sqlSelect = "SELECT userID FROM users WHERE email=@emailValue and pass=@passValue";
+			string sqlSelect = "SELECT userID FROM users WHERE email=@emailValue and pword=@passValue";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
