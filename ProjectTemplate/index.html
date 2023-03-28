@@ -32,9 +32,9 @@
 			});
 		}
 
-		function LogOn(userId, pass) {
+		function LogOn(email, pass) {
 			var webMethod = "ProjectServices.asmx/LogOn";
-			var parameters = "{\"uid\":\"" + encodeURI(userId) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+			var parameters = "{\"uid\":\"" + encodeURI(email) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
 
 			//jQuery ajax method
 			$.ajax({
@@ -107,7 +107,7 @@
 		</div>
 		</div>
 
-		<form onsubmit="LogOn($('#logonId').val(), $('#logonPassword').val()); return false;">
+		<form onsubmit="LogOn($('#logonEmail').val(), $('#logonPassword').val()); return false;">
 			<div class="w3-container w3-content" style="max-width:600px;margin-top:5px">    
 			<div class = "w3-card w3-round w3-white">
 			<div class="w3-container">
@@ -117,7 +117,7 @@
 			</section>
 			<section>
 				<label>Email</label><br />
-				<input class="textInput" type="text" id="logonId" name="account" required/><br /><br />
+				<input class="textInput" type="text" id="logonEmail" name="account" required/><br /><br />
 			</section>
 			<section>
 				<label>Password</label><br />

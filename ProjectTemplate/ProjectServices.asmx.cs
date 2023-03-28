@@ -168,7 +168,7 @@ namespace ProjectTemplate
 			DataTable sqlDt = new DataTable("accounts");
 
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			string sqlSelect = "select userID, email, pword, fName, lName, userRole, experience, company from users;";
+			string sqlSelect = "select email, pword, fName, lName, userRole, experience, company from users;";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -183,7 +183,6 @@ namespace ProjectTemplate
 			{
 				accounts.Add(new Account
 				{
-					userId = sqlDt.Rows[i]["userID"].ToString(),
 					email = sqlDt.Rows[i]["email"].ToString(),
 					password = sqlDt.Rows[i]["pword"].ToString(),
 					firstName = sqlDt.Rows[i]["fName"].ToString(),
@@ -199,19 +198,18 @@ namespace ProjectTemplate
 		
 
 		[WebMethod(EnableSession = true)]
-		public void RequestAccount(string uid, string pass, string firstName, string lastName, string email, string company, string role, string year)
+		public void RequestAccount(string pass, string firstName, string lastName, string email, string company, string role, string year)
 		{
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
 			//does is tell mySql server to return the primary key of the last inserted row.
-			string sqlSelect = "insert into users (userid, email, pword, fName, lName, userRole, phone, experience, company, industry, prompt, skills) " +
-			                   "values(@idValue, @emailValue, @passValue, @fnameValue, @lnameValue, @roleValue, null, @experienceValue, @companyValue, " +
+			string sqlSelect = "insert into users (email, pword, fName, lName, userRole, phone, experience, company, industry, prompt, skills) " +
+			                   "values(@emailValue, @passValue, @fnameValue, @lnameValue, @roleValue, null, @experienceValue, @companyValue, " +
 			                   "null, null, null); SELECT LAST_INSERT_ID();";
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
-			sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(uid));
 			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
 			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
 			sqlCommand.Parameters.AddWithValue("@fnameValue", HttpUtility.UrlDecode(firstName));
