@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8" />
 	<title>Create and Account</title>
 	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
 	<script>
 		var accountsArray;
 		var noRepeatedAccount;
@@ -30,8 +30,8 @@
 			var ele = document.getElementsByName('role');
 			var role = "";
 
-			for(i = 0; i < ele.length; i++) {
-				if(ele[i].checked)
+			for (i = 0; i < ele.length; i++) {
+				if (ele[i].checked)
 					role = ele[i].value;
 			}
 
@@ -49,9 +49,9 @@
 						accountsArray = msg.d;
 						noRepeatedAccount = false;
 
-						for (var i = 0; i < accountsArray.length; i++){
+						for (var i = 0; i < accountsArray.length; i++) {
 							// console.log(accountsArray[i]);
-							if (accountsArray[i].userId == id){
+							if (accountsArray[i].userId == id) {
 								noRepeatedAccount = false;
 								break;
 							} else {
@@ -63,12 +63,12 @@
 					}
 					console.log(noRepeatedAccount);
 
-					if (noRepeatedAccount){
+					if (noRepeatedAccount) {
 						webMethod = "ProjectServices.asmx/RequestAccount";
 						parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" +
-								encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) +
-								"\",\"company\":\"" + encodeURI(company) + "\",\"lastName\":\"" + encodeURI(lname) +
-								"\",\"role\":\"" + encodeURI(role) + "\", \"year\":\"" + encodeURI(years) + "\"}";
+							encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) +
+							"\",\"company\":\"" + encodeURI(company) + "\",\"lastName\":\"" + encodeURI(lname) +
+							"\",\"role\":\"" + encodeURI(role) + "\", \"year\":\"" + encodeURI(years) + "\"}";
 
 						$.ajax({
 							type: "POST",
@@ -85,7 +85,7 @@
 								alert("boo...");
 							}
 						})
-					} else{
+					} else {
 						alert('Account ID exists! Choose a new one.');
 						clearNewAccount();
 					};
@@ -97,77 +97,113 @@
 		};
 
 	</script>
+	<script>
+		function changeVis(type) {
+			if (type == 'Mentor') {
+				console.log(type);
+				console.log(document.getElementById('skillPropmt').innerHTML)
+				document.getElementById('skillPropmt').innerHTML = 'What areas of expertise can you mentor in?';
+				document.getElementById('skillListSection').style.visibility = 'visible';
+				document.getElementById('formButton').style.visibility = 'visible';
+			} else {
+				document.getElementById('skillPrompt').innerHTML = 'What areas would you like to be mentored in?';
+				document.getElementById('skillListSection').style.visibility = 'visible';
+				document.getElementById('formButton').style.visibility = 'visible';
+			}
 
-<!--	<link href="styles.css" rel="stylesheet">-->
+			// change visibility of checkboxes and go button
+		}
+	</script>
+	<style>
+		#formButton,
+		#skillListSection {
+			visibility: hidden;
+		}
+	</style>
 
-</head >
+	<!--	<link href="styles.css" rel="stylesheet">-->
+
+</head>
 
 <body>
-<header>
-	<nav>
-		<!-- <a id="leftAlign">New Account</a> -->
-		<a class="navLink" id="leftAlign" href="index.html">Back to Log In</a>
-		<a class="navLink" id="rightAlign" href="help.html">Help</a>
-	</nav>
-</header>
+	<header>
+		<nav>
+			<!-- <a id="leftAlign">New Account</a> -->
+			<a class="navLink" id="leftAlign" href="index.html">Back to Log In</a>
+			<a class="navLink" id="rightAlign" href="help.html">Help</a>
+		</nav>
+	</header>
 
-<main class="gradientBG">
-	<h1>Create Your Account</h1>
-	<h2>Fill out the form below to start you journey</h2>
+	<main class="gradientBG">
+		<h1>Create Your Account</h1>
+		<h2>Fill out the form below to start you journey</h2>
 
-	<form onsubmit="CreateAccount($('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonId').val(), 
+		<form
+			onsubmit="CreateAccount($('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonId').val(), 
         $('#newLogonPassword').val(), $('#newLogonEmail').val(), $('#newLogonCompany').val(), $('#newLogonYears').val()); return false;">
 
-		<section>
-			<label>First Name</label><br />
-			<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
-		</section>
+			<section>
+				<label>First Name</label><br />
+				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
+			</section>
 
-		<section>
-			<label>Last Name</label><br />
-			<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
-		</section>
+			<section>
+				<label>Last Name</label><br />
+				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
+			</section>
 
-		<section>
-			<label>Username</label><br />
-			<input type="text" class="textInput" id="newLogonId" name="username" required /><br /><br />
-		</section>
+			<section>
+				<label>Username</label><br />
+				<input type="text" class="textInput" id="newLogonId" name="username" required /><br /><br />
+			</section>
 
-		<section>
-			<label>Password</label><br />
-			<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
-		</section>
+			<section>
+				<label>Password</label><br />
+				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
+			</section>
 
-		<section>
-			<label>Email</label><br />
-			<input type="text" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
-		</section>
+			<section>
+				<label>Email</label><br />
+				<input type="email" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
+			</section>
 
-		<section>
-			<label>Company</label><br />
-			<input type="text" type="text" class="textInput" id="newLogonCompany" name="company" required /><br /><br />
-		</section>
+			<section>
+				<label>Company</label><br />
+				<input type="text" type="text" class="textInput" id="newLogonCompany" name="company"
+					required /><br /><br />
+			</section>
 
-		<section>
-			<label>Years Experience</label><br />
-			<input type="number" step="1" min="0" max="70" id="newLogonYears" required /><br /><br />
-		</section>
+			<section>
+				<label>Years Experience</label><br />
+				<input type="number" step="1" min="0" max="70" id="newLogonYears" required /><br /><br />
+			</section>
 
-		<section>
-			<input type="radio" value="mentor" name="role" id="mentorRadio"  />
-			<label for="mentorRadio">Mentor</label>
-			<input type="radio" value="mentee" name="role" id="menteeRadio"  />
-			<label for="menteeRadio">Mentee</label>
-		</section>
+			<section>
+				<input type="radio" value="mentor" name="role" id="mentorRadio" onclick="changeVis('Mentor')" />
+				<label for="mentorRadio">Mentor</label>
+				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis('Mentee')" />
+				<label for="menteeRadio">Mentee</label>
+			</section>
 
-		<br>
-		<div>
-			<button type="reset" class="button" id="formButton" value="Clear">Clear</button>
-			<button class="button" id="formButton" type="submit">Go!</button>
-		</div>
+			<section id="skillListSection">
+				<span id="skillPrompt">prompt</span>
+				<input value="1" id="pythonCheck" type="checkbox">
+				<label id="pythonLabel" for="pythonCheck">Python</label><br>
+				<input value="2" id="javaCheck" type="checkbox">
+				<label id="javaLabel" for="javaCheck">Java</label><br>
+				<input value="3" id="sqlCheck" type="checkbox">
+				<label id="sqlLabel" for="sqlCheck">SQL</label><br>
+			</section>
 
-	</form>
+			<br>
+			<div>
+				<!-- <button type="reset" class="button" id="formButton" value="Clear">Clear</button> -->
+				<button class="button" id="formButton" type="submit">Go!</button>
+			</div>
 
-</main>
+		</form>
+
+	</main>
 </body>
-</html >
+
+</html>
