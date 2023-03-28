@@ -106,10 +106,12 @@
 				// console.log(document.getElementById('skillPropmt').innerHTML)
 				document.getElementById('skillPrompt').innerHTML = '<br>What areas of expertise can you mentor in? <br>';
 				document.getElementById('skillListSection').style.visibility = 'visible';
+				document.getElementById('additionNotesSection').style.visibility = 'visible';
 				document.getElementById('formButton').style.visibility = 'visible';
 			} else {
 				document.getElementById('skillPrompt').innerHTML = '<br>What areas would you like to be mentored in? <br>';
 				document.getElementById('skillListSection').style.visibility = 'visible';
+				document.getElementById('additionNotesSection').style.visibility = 'visible';
 				document.getElementById('formButton').style.visibility = 'visible';
 			}
 
@@ -118,7 +120,7 @@
 	</script>
 	<style>
 		#formButton,
-		#skillListSection {
+		#skillListSection, #additionNotesSection {
 			visibility: hidden;
 		}
 	</style>
@@ -167,11 +169,6 @@
 			</section>
 
 			<section>
-				<label>Username</label><br />
-				<input type="text" class="textInput" id="newLogonId" name="username" required /><br /><br />
-			</section>
-
-			<section>
 				<label>Password</label><br />
 				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
 			</section>
@@ -212,8 +209,6 @@
 				<label for="mentorRadio">Mentor</label>
 				<input type="radio" value="2" name="role" id="menteeRadio" onclick="changeVis($('#menteeRadio').val())" />
 				<label for="menteeRadio">Mentee</label>
-
-				
 			</section>
 
 			<section id="skillListSection">
@@ -224,6 +219,12 @@
 				<label id="javaLabel" for="javaCheck">Java</label><br>
 				<input value="3" id="sqlCheck" type="checkbox">
 				<label id="sqlLabel" for="sqlCheck">SQL</label><br>
+			</section><br>
+
+			
+			<section id="additionNotesSection">
+				<label>Additional Notes</label><br />
+				<input type="text" class="textInput" id="newLogonNotes" name="notes" required /><br /><br />
 			</section>
 
 			<br>
