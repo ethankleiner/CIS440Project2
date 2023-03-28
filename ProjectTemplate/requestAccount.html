@@ -100,17 +100,15 @@
 			})
 		};
 
-	</script>
-	<script>
 		function changeVis(type) {
-			if (type == 'Mentor') {
+			if (type == 'mentor') {
 				console.log(type);
-				console.log(document.getElementById('skillPropmt').innerHTML)
-				document.getElementById('skillPropmt').innerHTML = 'What areas of expertise can you mentor in?';
+				// console.log(document.getElementById('skillPropmt').innerHTML)
+				document.getElementById('skillPrompt').innerHTML = '<br>What areas of expertise can you mentor in? <br>';
 				document.getElementById('skillListSection').style.visibility = 'visible';
 				document.getElementById('formButton').style.visibility = 'visible';
 			} else {
-				document.getElementById('skillPrompt').innerHTML = 'What areas would you like to be mentored in?';
+				document.getElementById('skillPrompt').innerHTML = '<br>What areas would you like to be mentored in? <br>';
 				document.getElementById('skillListSection').style.visibility = 'visible';
 				document.getElementById('formButton').style.visibility = 'visible';
 			}
@@ -195,10 +193,17 @@
 			</section>
 
 			<section>
-				<input type="radio" value="mentor" name="role" id="mentorRadio" onclick="changeVis('Mentor')" />
+<!--				<input type="radio" value="mentor" name="role" id="mentorRadio" onclick="changeVis('Mentor')" />-->
+<!--				<label for="mentorRadio">Mentor</label>-->
+<!--				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis('Mentee')" />-->
+<!--				<label for="menteeRadio">Mentee</label>-->
+
+				<input type="radio" value="mentor" name="role" id="mentorRadio" onclick="changeVis($('#mentorRadio').val())" />
 				<label for="mentorRadio">Mentor</label>
-				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis('Mentee')" />
+				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis($('#menteeRadio').val())" />
 				<label for="menteeRadio">Mentee</label>
+
+				
 			</section>
 
 			<section id="skillListSection">
