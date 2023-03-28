@@ -28,6 +28,33 @@
 				}
 			});
 		}
+
+		function LogOn(userId, pass) {
+			var webMethod = "ProjectServices.asmx/LogOn";
+			var parameters = "{\"uid\":\"" + encodeURI(userId) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+
+			//jQuery ajax method
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				data: parameters,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d) {
+						//server replied true, so direct the user to the dashboard
+						clearLogon();
+						window.open('dashboard.html', '_self');
+					}
+					else {
+						alert("logon failed");
+					}
+				},
+				error: function (e) {
+					alert("boo...");
+				}
+			});
+		}
 	</script>
 	<!--END OF YOUR OWN JAVASCRIPT-->
 
@@ -39,5 +66,34 @@
 </head >
 <body>
 	<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
+	<header>
+		<nav>
+			<a id="leftAlign">Log In</a>
+			<a class="navLink" id="rightAlign" href="help.html">Help</a>
+		</nav>
+	</header>
+
+	<main class="gradientBG">
+		<h1>Space must be explored..</h1>
+		<h2>Login below to reach for the stars!</h2>
+
+		<form onsubmit="LogOn($('#logonId').val(), $('#logonPassword').val()); return false;">
+			<div><a href='requestAccount.html' class="tinyLink">...or request an account</a></div>
+			<br>
+			<section>
+				<label>Username</label><br />
+				<input class="textInput" type="text" id="logonId" name="account" required/><br /><br />
+			</section>
+			<section>
+				<label>Password</label><br />
+				<input class="textInput" type="password" id="logonPassword" name="password" required/><br /><br />
+			</section>
+			<br>
+			<div>
+				<input class="button" id="formButton"  type="reset" value="Clear">
+				<button class="button" id="formButton" type="submit">Go!</button>
+			</div>
+		</form>
+	</main>
 </body>
 </html >

@@ -6,153 +6,168 @@
 	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-<script>
-	var accountsArray;
-	var noRepeatedAccount;
+	<script>
+		var accountsArray;
+		var noRepeatedAccount;
 
-	//resets the new account inputs
-	function clearNewAccount() {
-		$('#newLogonId').val("");
-		$('#newLogonPassword').val("");
-		$('#newLogonFName').val("");
-		$('#newLogonLName').val("");
-		$('#newLogonEmail').val("");
-	}
+		//resets the new account inputs
+		function clearNewAccount() {
+			$('#newLogonFName').val("");
+			$('#newLogonLName').val("");
+			$('#newLogonId').val("");
+			$('#newLogonPassword').val("");
+			$('#newLogonEmail').val("");
+			$('#newLogonCompany').val();
+			$('#newLogonYears').val();
+			$('#mentorRadio').val();
+			$('#menteeRadio').val();
 
-	//passes account info to the server, to create an account request
-	function CreateAccount(id, pass, fname, lname, email) {
+		}
 
-		var webMethod = "ProjectServices.asmx/StoreAccounts";
-		$.ajax({
-			type: "POST",
-			url: webMethod,
-			contentType: "application/json; charset=utf-8",
-			dataType: "json",
-			success: function (msg) {
-				if (msg.d.length > 0) {
-					//let's put our accounts that we get from the
-					//server into our accountsArray variable
-					//so we can use them in other functions as well
-					accountsArray = msg.d;
-					noRepeatedAccount = false;
+		//passes account info to the server, to create an account request
+		function CreateAccount(fname, lname, id, pass, email, company, years) {
 
-					for (var i = 0; i < accountsArray.length; i++){
-						// console.log(accountsArray[i]);
-						if (accountsArray[i].userId == id){
-							noRepeatedAccount = false;
-							break;
-						} else {
-							noRepeatedAccount = true;
-						}
-					}
-				} else {
-					alert("loading accounts failed");
-				}
-				console.log(noRepeatedAccount);
+			var ele = document.getElementsByName('role');
+			var role = "";
 
-				if (noRepeatedAccount){
-					webMethod = "ProjectServices.asmx/RequestAccount";
-					parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" +
-							encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) + "\"}";
-
-					$.ajax({
-						type: "POST",
-						url: webMethod,
-						data: parameters,
-						contentType: "application/json; charset=utf-8",
-						dataType: "json",
-						success: function (msg) {
-							window.open('index.html', '_self')
-							clearNewAccount();
-							alert("Account created!");
-						},
-						error: function (e) {
-							alert("boo...");
-						}
-					})
-				} else{
-					alert('Account ID exists! Choose a new one.');
-					clearNewAccount();
-				};
-			},
-			error: function (e) {
-				alert("boo...");
+			for(i = 0; i < ele.length; i++) {
+				if(ele[i].checked)
+					role = ele[i].value;
 			}
-		})
-	};
 
-</script>
+			var webMethod = "ProjectServices.asmx/StoreAccounts";
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d.length > 0) {
+						//let's put our accounts that we get from the
+						//server into our accountsArray variable
+						//so we can use them in other functions as well
+						accountsArray = msg.d;
+						noRepeatedAccount = false;
 
-	<link href="styles.css" rel="stylesheet">
+						for (var i = 0; i < accountsArray.length; i++){
+							// console.log(accountsArray[i]);
+							if (accountsArray[i].userId == id){
+								noRepeatedAccount = false;
+								break;
+							} else {
+								noRepeatedAccount = true;
+							}
+						}
+					} else {
+						alert("loading accounts failed");
+					}
+					console.log(noRepeatedAccount);
+
+					if (noRepeatedAccount){
+						webMethod = "ProjectServices.asmx/RequestAccount";
+						parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" +
+								encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) +
+								"\",\"company\":\"" + encodeURI(company) + "\",\"lastName\":\"" + encodeURI(lname) +
+								"\",\"role\":\"" + encodeURI(role) + "\", \"year\":\"" + encodeURI(years) + "\"}";
+
+						$.ajax({
+							type: "POST",
+							url: webMethod,
+							data: parameters,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (msg) {
+								window.open('index.html', '_self')
+								clearNewAccount();
+								alert("Account created!");
+							},
+							error: function (e) {
+								alert("boo...");
+							}
+						})
+					} else{
+						alert('Account ID exists! Choose a new one.');
+						clearNewAccount();
+					};
+				},
+				error: function (e) {
+					alert("boo...");
+				}
+			})
+		};
+
+	</script>
+
+<!--	<link href="styles.css" rel="stylesheet">-->
 
 </head >
 
 <body>
-	<header>
-		<nav>
-            <!-- <a id="leftAlign">New Account</a> -->
-			<a class="navLink" id="leftAlign" href="index.html">Back to Log In</a>
-            <a class="navLink" id="rightAlign" href="help.html">Help</a>
-		</nav>
-	</header>
+<header>
+	<nav>
+		<!-- <a id="leftAlign">New Account</a> -->
+		<a class="navLink" id="leftAlign" href="index.html">Back to Log In</a>
+		<a class="navLink" id="rightAlign" href="help.html">Help</a>
+	</nav>
+</header>
 
-	<main class="gradientBG">
-		<h1>Create Your Account</h1>
-		<h2>Fill out the form below to start you journey</h2>
+<main class="gradientBG">
+	<h1>Create Your Account</h1>
+	<h2>Fill out the form below to start you journey</h2>
 
-        <form onsubmit="CreateAccount($('#newLogonId').val(), $('#newLogonPassword').val(), $('#newLogonFName').val(), 
-        $('#newLogonLName').val(), $('#newLogonEmail').val()); return false;">
-			
-			<section>
-				<label>First Name</label><br />
-				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
-			</section>
+	<form onsubmit="CreateAccount($('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonId').val(), 
+        $('#newLogonPassword').val(), $('#newLogonEmail').val(), $('#newLogonCompany').val(), $('#newLogonYears').val()); return false;">
 
-            <section>
-				<label>Last Name</label><br />
-				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
-			</section>
+		<section>
+			<label>First Name</label><br />
+			<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
+		</section>
 
-			<section>
-				<label>Username</label><br />
-				<input type="text" class="textInput" id="newLogonId" name="username" required /><br /><br />
-			</section>
+		<section>
+			<label>Last Name</label><br />
+			<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
+		</section>
 
-			<section>
-				<label>Password</label><br />
-				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
-			</section>
+		<section>
+			<label>Username</label><br />
+			<input type="text" class="textInput" id="newLogonId" name="username" required /><br /><br />
+		</section>
 
-            <section>
-				<label>Email</label><br />
-				<input type="text" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
-			</section>
-			
-			<section>
-				<label>Company</label><br />
-				<input type="text"  required /><br /><br />
-			</section>
+		<section>
+			<label>Password</label><br />
+			<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
+		</section>
 
-			<section>
-				<label>Years Experience</label><br />
-				<input type="number" step="1" min="0" max="70" required /><br /><br />
-			</section>
+		<section>
+			<label>Email</label><br />
+			<input type="text" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
+		</section>
 
-			<section>
-				<input type="radio"  id="mentorRadio"  />
-				<label for="mentorRadio">Mentor</label>
-				<input type="radio"  id="menteeRadio"  />
-				<label for="menteeRadio">Mentor</label>
-			</section>
+		<section>
+			<label>Company</label><br />
+			<input type="text" type="text" class="textInput" id="newLogonCompany" name="company" required /><br /><br />
+		</section>
 
-			<br>
-				  <div>
-					  <button type="reset" class="button" id="formButton" value="Clear">Clear</button>
-					  <button class="button" id="formButton" type="submit">Go!</button>
-				  </div>
+		<section>
+			<label>Years Experience</label><br />
+			<input type="number" step="1" min="0" max="70" id="newLogonYears" required /><br /><br />
+		</section>
 
-		</form>
+		<section>
+			<input type="radio" value="mentor" name="role" id="mentorRadio"  />
+			<label for="mentorRadio">Mentor</label>
+			<input type="radio" value="mentee" name="role" id="menteeRadio"  />
+			<label for="menteeRadio">Mentee</label>
+		</section>
 
-	</main>
+		<br>
+		<div>
+			<button type="reset" class="button" id="formButton" value="Clear">Clear</button>
+			<button class="button" id="formButton" type="submit">Go!</button>
+		</div>
+
+	</form>
+
+</main>
 </body>
 </html >
