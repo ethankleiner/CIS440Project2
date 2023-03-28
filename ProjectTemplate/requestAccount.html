@@ -101,7 +101,7 @@
 		};
 
 		function changeVis(type) {
-			if (type == 'mentor') {
+			if (type == '1') {
 				console.log(type);
 				// console.log(document.getElementById('skillPropmt').innerHTML)
 				document.getElementById('skillPrompt').innerHTML = '<br>What areas of expertise can you mentor in? <br>';
@@ -182,9 +182,19 @@
 			</section>
 
 			<section>
+				<label>Phone Number (format: 123-456-7890)</label><br />
+				<input type="tel" class="textInput" id="newLogonPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" required /><br /><br />
+			</section>
+
+			<section>
 				<label>Company</label><br />
 				<input type="text" type="text" class="textInput" id="newLogonCompany" name="company"
 					required /><br /><br />
+			</section>
+
+			<section>
+				<label>Industry</label><br />
+				<input type="emtextail" class="textInput" id="newLogonIndsutry" name="industry" required /><br /><br />
 			</section>
 
 			<section>
@@ -198,9 +208,9 @@
 <!--				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis('Mentee')" />-->
 <!--				<label for="menteeRadio">Mentee</label>-->
 
-				<input type="radio" value="mentor" name="role" id="mentorRadio" onclick="changeVis($('#mentorRadio').val())" />
+				<input type="radio" value="1" name="role" id="mentorRadio" onclick="changeVis($('#mentorRadio').val())" />
 				<label for="mentorRadio">Mentor</label>
-				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis($('#menteeRadio').val())" />
+				<input type="radio" value="2" name="role" id="menteeRadio" onclick="changeVis($('#menteeRadio').val())" />
 				<label for="menteeRadio">Mentee</label>
 
 				
