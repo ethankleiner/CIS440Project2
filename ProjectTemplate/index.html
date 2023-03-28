@@ -34,7 +34,7 @@
 
 		function LogOn(email, pass) {
 			var webMethod = "ProjectServices.asmx/LogOn";
-			var parameters = "{\"uid\":\"" + encodeURI(email) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+			var parameters = "{\"email\":\"" + encodeURI(email) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
 
 			//jQuery ajax method
 			$.ajax({
