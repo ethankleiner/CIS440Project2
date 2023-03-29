@@ -72,27 +72,31 @@ namespace ProjectTemplate
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			Console.WriteLine("command created");
 			
 			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
 			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
-
+			Console.WriteLine(email);
+			Console.WriteLine(pass);
 			
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
 			DataTable sqlDt = new DataTable();
 			sqlDa.Fill(sqlDt);
 			
 			if (sqlDt.Rows.Count > 0)
-			{
+			{ 
 				//if we found an account, store the id and admin status in the session
 				//so we can check those values later on other method calls to see if they 
 				//are 1) logged in at all, and 2) and admin or not
-				Session["id"] = sqlDt.Rows[0]["id"];
+				Session["userID"] = sqlDt.Rows[0]["userID"];
+				Console.WriteLine("userID located");
 				// Session["admin"] = sqlDt.Rows[0]["admin"];
-				success = true;
+				//success = true;
 				// call a function that can connect to database again and store user login time or any details 
 				// into the loginstatus table
-				int userid = int.Parse(Session["id"].ToString());
-				UpdateLoginStatus(userid, "logged in");
+				// int userid = int.Parse(Session["userID"].ToString());
+				// UpdateLoginStatus(userid, "logged in");
 			}
 			//return the result!
 			return success;
@@ -105,7 +109,7 @@ namespace ProjectTemplate
 			//again later they have to log back on in order for their ID to be back
 			//in the session!
 			Session.Abandon();
-			int userid = int.Parse(Session["id"].ToString());
+			int userid = int.Parse(Session["userID"].ToString());
 			UpdateLoginStatus(userid,"logged off");
 			return true;
 		}

@@ -11,6 +11,11 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
 	<script type="text/javascript">
+
+		function clearLogon() {
+			$('#logonEmail').val("");
+			$('#logonPassword').val("");
+		}
 		function TestButtonHandler() {
 			var webMethod = "ProjectServices.asmx/TestConnection";
 			var parameters = "{}";
@@ -34,7 +39,7 @@
 
 		function LogOn(email, pass) {
 			var webMethod = "ProjectServices.asmx/LogOn";
-			var parameters = "{\"email\":\"" + encodeURI(email) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+			var parameters = "{\"email\":\"" + encodeURI(email) + "\",\"pword\":\"" + encodeURI(pass) + "\"}";
 
 			//jQuery ajax method
 			$.ajax({
