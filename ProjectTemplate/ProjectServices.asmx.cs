@@ -92,7 +92,7 @@ namespace ProjectTemplate
 				Session["userID"] = sqlDt.Rows[0]["userID"];
 				Console.WriteLine("userID located");
 				// Session["admin"] = sqlDt.Rows[0]["admin"];
-				//success = true;
+				success = true;
 				// call a function that can connect to database again and store user login time or any details 
 				// into the loginstatus table
 				// int userid = int.Parse(Session["userID"].ToString());
