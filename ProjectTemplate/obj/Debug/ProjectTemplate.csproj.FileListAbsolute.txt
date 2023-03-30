@@ -58,6 +58,7 @@
 /Users/huangyu-hsuan/Desktop/CIS440Project2/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.CopyComplete
 /Users/huangyu-hsuan/Desktop/CIS440Project2/ProjectTemplate/obj/Debug/ProjectTemplate.dll
 /Users/huangyu-hsuan/Desktop/CIS440Project2/ProjectTemplate/obj/Debug/ProjectTemplate.pdb
+<<<<<<< Updated upstream
 /Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/bin/ProjectTemplate.dll
 /Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/bin/ProjectTemplate.pdb
 /Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/bin/BouncyCastle.Crypto.dll
@@ -78,3 +79,26 @@
 /Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.CopyComplete
 /Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/obj/Debug/ProjectTemplate.dll
 /Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/obj/Debug/ProjectTemplate.pdb
+=======
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\ProjectTemplate.dll.config
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\ProjectTemplate.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\ProjectTemplate.pdb
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\BouncyCastle.Crypto.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\Google.Protobuf.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\MySql.Data.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\Newtonsoft.Json.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\System.Net.Http.Formatting.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\System.Web.Http.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\System.Web.Http.WebHost.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\Google.Protobuf.xml
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\MySql.Data.xml
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\Newtonsoft.Json.xml
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\System.Net.Http.Formatting.xml
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\System.Web.Http.xml
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\bin\System.Web.Http.WebHost.xml
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\obj\Debug\ProjectTemplate.csprojAssemblyReference.cache
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\obj\Debug\ProjectTemplate.csproj.CoreCompileInputs.cache
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\obj\Debug\ProjectTemplate.csproj.CopyComplete
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\obj\Debug\ProjectTemplate.dll
+C:\Users\reb\Documents\GitHub\CIS440Project2\ProjectTemplate\obj\Debug\ProjectTemplate.pdb
+>>>>>>> Stashed changes

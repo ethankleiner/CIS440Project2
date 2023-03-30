@@ -104,6 +104,7 @@
 				console.log(type);
 				// console.log(document.getElementById('skillPropmt').innerHTML)
 				document.getElementById('skillPrompt').innerHTML = '<br>What areas of expertise can you mentor in? <br>';
+				document.getElementById('fname').style.visibility = 'collapse';
 				document.getElementById('skillListSection').style.visibility = 'visible';
 				document.getElementById('additionNotesSection').style.visibility = 'visible';
 				document.getElementById('formButton').style.visibility = 'visible';
@@ -119,7 +120,8 @@
 	</script>
 	<style>
 		#formButton,
-		#skillListSection, #additionNotesSection {
+		#skillListSection,
+		#additionNotesSection {
 			visibility: hidden;
 		}
 	</style>
@@ -128,19 +130,20 @@
 
 </head>
 
-<body class ="w3-theme-l5">
+<body class="w3-theme-l5">
 	<div class="w3-top">
 		<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-		 <!-- <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="index.html" onclick="openNav()"><i class="fa fa-bars"></i></a>
+			<!-- <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="index.html" onclick="openNav()"><i class="fa fa-bars"></i></a>
 		 <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a> -->
-		 <a class="w3-bar-item w3-button w3-padding-small w3-theme-d4" id="leftAlign" href="index.html">Back to Log In</a>
-		 <a class="w3-bar-item w3-button w3-padding-small w3-theme-d4" id="rightAlign" href="help.html">Help</a>
-		 
-		 <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+			<a class="w3-bar-item w3-button w3-padding-small w3-theme-d4" id="leftAlign" href="index.html">Back to Log
+				In</a>
+			<a class="w3-bar-item w3-button w3-padding-small w3-theme-d4" id="rightAlign" href="help.html">Help</a>
+
+			<!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
 		   <img src="/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
 		 </a> -->
 		</div>
-	   </div>
+	</div>
 	<header>
 		<nav>
 			<!-- <a id="leftAlign">New Account</a> -->
@@ -157,12 +160,12 @@
 			onsubmit="CreateAccount($('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonPassword').val(), 
 			$('#newLogonEmail').val(), $('#newLogonCompany').val(), $('#newLogonYears').val()); return false;">
 
-			<section>
+			<section id="fname">
 				<label>First Name</label><br />
 				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
 			</section>
 
-			<section>
+			<section id="lname">
 				<label>Last Name</label><br />
 				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
 			</section>
@@ -180,7 +183,8 @@
 
 			<section>
 				<label>Phone Number (format: 123-456-7890)</label><br />
-				<input type="tel" class="textInput" id="newLogonPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" required /><br /><br />
+				<input type="tel" class="textInput" id="newLogonPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone"
+					required /><br /><br />
 			</section>
 
 			<section>
@@ -200,9 +204,20 @@
 			</section>
 
 			<section>
+<<<<<<< Updated upstream
 				<input type="radio" value="1" name="role" id="mentorRadio" onclick="changeVis($('#mentorRadio').val())" />
+=======
+				<!--				<input type="radio" value="mentor" name="role" id="mentorRadio" onclick="changeVis('Mentor')" />-->
+				<!--				<label for="mentorRadio">Mentor</label>-->
+				<!--				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis('Mentee')" />-->
+				<!--				<label for="menteeRadio">Mentee</label>-->
+
+				<input type="radio" value="1" name="role" id="mentorRadio"
+					onclick="changeVis($('#mentorRadio').val())" />
+>>>>>>> Stashed changes
 				<label for="mentorRadio">Mentor</label>
-				<input type="radio" value="2" name="role" id="menteeRadio" onclick="changeVis($('#menteeRadio').val())" />
+				<input type="radio" value="2" name="role" id="menteeRadio"
+					onclick="changeVis($('#menteeRadio').val())" />
 				<label for="menteeRadio">Mentee</label>
 			</section>
 
@@ -216,7 +231,7 @@
 				<label id="sqlLabel" for="sqlCheck">SQL</label><br>
 			</section><br>
 
-			
+
 			<section id="additionNotesSection">
 				<label>Additional Notes</label><br />
 				<input type="text" class="textInput" id="newLogonNotes" name="notes" required /><br /><br />
