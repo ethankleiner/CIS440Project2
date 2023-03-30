@@ -72,27 +72,31 @@ namespace ProjectTemplate
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			Console.WriteLine("command created");
 			
 			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
 			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
-
+			Console.WriteLine(email);
+			Console.WriteLine(pass);
 			
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
 			DataTable sqlDt = new DataTable();
 			sqlDa.Fill(sqlDt);
 			
 			if (sqlDt.Rows.Count > 0)
-			{
+			{ 
 				//if we found an account, store the id and admin status in the session
 				//so we can check those values later on other method calls to see if they 
 				//are 1) logged in at all, and 2) and admin or not
-				Session["id"] = sqlDt.Rows[0]["id"];
+				Session["userID"] = sqlDt.Rows[0]["userID"];
+				Console.WriteLine("userID located");
 				// Session["admin"] = sqlDt.Rows[0]["admin"];
 				success = true;
 				// call a function that can connect to database again and store user login time or any details 
 				// into the loginstatus table
-				int userid = int.Parse(Session["id"].ToString());
-				UpdateLoginStatus(userid, "logged in");
+				// int userid = int.Parse(Session["userID"].ToString());
+				// UpdateLoginStatus(userid, "logged in");
 			}
 			//return the result!
 			return success;
@@ -105,7 +109,7 @@ namespace ProjectTemplate
 			//again later they have to log back on in order for their ID to be back
 			//in the session!
 			Session.Abandon();
-			int userid = int.Parse(Session["id"].ToString());
+			int userid = int.Parse(Session["userID"].ToString());
 			UpdateLoginStatus(userid,"logged off");
 			return true;
 		}
@@ -168,7 +172,7 @@ namespace ProjectTemplate
 			DataTable sqlDt = new DataTable("accounts");
 
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			string sqlSelect = "select userID, email, pword, fName, lName, userRole, experience, company from users;";
+			string sqlSelect = "select email, pword, fName, lName, userRole, experience, company from users;";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -183,7 +187,6 @@ namespace ProjectTemplate
 			{
 				accounts.Add(new Account
 				{
-					userId = sqlDt.Rows[i]["userID"].ToString(),
 					email = sqlDt.Rows[i]["email"].ToString(),
 					password = sqlDt.Rows[i]["pword"].ToString(),
 					firstName = sqlDt.Rows[i]["fName"].ToString(),
@@ -199,19 +202,18 @@ namespace ProjectTemplate
 		
 
 		[WebMethod(EnableSession = true)]
-		public void RequestAccount(string uid, string pass, string firstName, string lastName, string email, string company, string role, string year)
+		public void RequestAccount(string pass, string firstName, string lastName, string email, string company, string role, string year)
 		{
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
 			//does is tell mySql server to return the primary key of the last inserted row.
-			string sqlSelect = "insert into users (userid, email, pword, fName, lName, userRole, phone, experience, company, industry, prompt, skills) " +
-			                   "values(@idValue, @emailValue, @passValue, @fnameValue, @lnameValue, @roleValue, null, @experienceValue, @companyValue, " +
+			string sqlSelect = "insert into users (email, pword, fName, lName, userRole, phone, experience, company, industry, prompt, skills) " +
+			                   "values(@emailValue, @passValue, @fnameValue, @lnameValue, @roleValue, null, @experienceValue, @companyValue, " +
 			                   "null, null, null); SELECT LAST_INSERT_ID();";
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
-			sqlCommand.Parameters.AddWithValue("@idValue", HttpUtility.UrlDecode(uid));
 			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
 			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
 			sqlCommand.Parameters.AddWithValue("@fnameValue", HttpUtility.UrlDecode(firstName));

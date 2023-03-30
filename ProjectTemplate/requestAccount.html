@@ -18,7 +18,6 @@
 		function clearNewAccount() {
 			$('#newLogonFName').val("");
 			$('#newLogonLName').val("");
-			$('#newLogonId').val("");
 			$('#newLogonPassword').val("");
 			$('#newLogonEmail').val("");
 			$('#newLogonCompany').val();
@@ -29,7 +28,7 @@
 		}
 
 		//passes account info to the server, to create an account request
-		function CreateAccount(fname, lname, id, pass, email, company, years) {
+		function CreateAccount(fname, lname, pass, email, company, years) {
 
 			var ele = document.getElementsByName('role');
 			var role = "";
@@ -55,7 +54,7 @@
 
 						for (var i = 0; i < accountsArray.length; i++) {
 							// console.log(accountsArray[i]);
-							if (accountsArray[i].userId == id) {
+							if (accountsArray[i].email == email) {
 								noRepeatedAccount = false;
 								break;
 							} else {
@@ -69,10 +68,10 @@
 
 					if (noRepeatedAccount) {
 						webMethod = "ProjectServices.asmx/RequestAccount";
-						parameters = "{\"uid\":\"" + encodeURI(id) + "\",\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" +
-							encodeURI(fname) + "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) +
-							"\",\"company\":\"" + encodeURI(company) + "\",\"lastName\":\"" + encodeURI(lname) +
-							"\",\"role\":\"" + encodeURI(role) + "\", \"year\":\"" + encodeURI(years) + "\"}";
+						parameters = "{\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" + encodeURI(fname) +
+								      "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) +
+								      "\",\"company\":\"" + encodeURI(company) + "\",\"role\":\"" + encodeURI(role) + 
+								      "\", \"year\":\"" + encodeURI(years) + "\"}";
 
 						$.ajax({
 							type: "POST",
@@ -155,8 +154,8 @@
 		<h2>Fill out the form below to start you journey</h2>
 
 		<form
-			onsubmit="CreateAccount($('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonId').val(), 
-        $('#newLogonPassword').val(), $('#newLogonEmail').val(), $('#newLogonCompany').val(), $('#newLogonYears').val()); return false;">
+			onsubmit="CreateAccount($('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonPassword').val(), 
+			$('#newLogonEmail').val(), $('#newLogonCompany').val(), $('#newLogonYears').val()); return false;">
 
 			<section>
 				<label>First Name</label><br />
@@ -168,6 +167,7 @@
 				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
 			</section>
 
+			
 			<section>
 				<label>Password</label><br />
 				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
@@ -200,11 +200,6 @@
 			</section>
 
 			<section>
-<!--				<input type="radio" value="mentor" name="role" id="mentorRadio" onclick="changeVis('Mentor')" />-->
-<!--				<label for="mentorRadio">Mentor</label>-->
-<!--				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis('Mentee')" />-->
-<!--				<label for="menteeRadio">Mentee</label>-->
-
 				<input type="radio" value="1" name="role" id="mentorRadio" onclick="changeVis($('#mentorRadio').val())" />
 				<label for="mentorRadio">Mentor</label>
 				<input type="radio" value="2" name="role" id="menteeRadio" onclick="changeVis($('#menteeRadio').val())" />

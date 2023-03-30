@@ -11,6 +11,11 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
 	<script type="text/javascript">
+
+		function clearLogon() {
+			$('#logonEmail').val("");
+			$('#logonPassword').val("");
+		}
 		function TestButtonHandler() {
 			var webMethod = "ProjectServices.asmx/TestConnection";
 			var parameters = "{}";
@@ -32,9 +37,9 @@
 			});
 		}
 
-		function LogOn(userId, pass) {
+		function LogOn(email, pass) {
 			var webMethod = "ProjectServices.asmx/LogOn";
-			var parameters = "{\"uid\":\"" + encodeURI(userId) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+			var parameters = "{\"email\":\"" + encodeURI(email) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
 
 			//jQuery ajax method
 			$.ajax({
@@ -107,7 +112,7 @@
 		</div>
 		</div>
 
-		<form onsubmit="LogOn($('#logonId').val(), $('#logonPassword').val()); return false;">
+		<form onsubmit="LogOn($('#logonEmail').val(), $('#logonPassword').val()); return false;">
 			<div class="w3-container w3-content" style="max-width:600px;margin-top:5px">    
 			<div class = "w3-card w3-round w3-white">
 			<div class="w3-container">
@@ -117,7 +122,7 @@
 			</section>
 			<section>
 				<label>Email</label><br />
-				<input class="textInput" type="text" id="logonId" name="account" required/><br /><br />
+				<input class="textInput" type="text" id="logonEmail" name="account" required/><br /><br />
 			</section>
 			<section>
 				<label>Password</label><br />
