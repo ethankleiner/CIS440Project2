@@ -1,0 +1,16 @@
+.navBar {
+    position: fixed;
+    width: 100%;
+}
+
+.alignLeft {
+    float: left;
+    text-decoration: none;
+    padding: 15px;
+}
+
+.alignRight {
+    float: right;
+    text-decoration: none;
+    padding: 15px;
+}
