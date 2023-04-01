@@ -3,8 +3,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Create and Account</title>
-	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+	<title>Create an Account</title>
 	<link rel="stylesheet" href="style1.css">
 	<link rel="stylesheet" href="style2.css">
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
@@ -16,19 +15,14 @@
 
 		//resets the new account inputs
 		function clearNewAccount() {
-			$('#newLogonFName').val("");
-			$('#newLogonLName').val("");
 			$('#newLogonPassword').val("");
 			$('#newLogonEmail').val("");
-			$('#newLogonCompany').val();
-			$('#newLogonYears').val();
 			$('#mentorRadio').val();
 			$('#menteeRadio').val();
-
 		}
 
 		//passes account info to the server, to create an account request
-		function CreateAccount(fname, lname, pass, email, company, years) {
+		function CreateAccount(pass, email) {
 
 			var ele = document.getElementsByName('role');
 			var role = "";
@@ -46,14 +40,10 @@
 				dataType: "json",
 				success: function (msg) {
 					if (msg.d.length > 0) {
-						//let's put our accounts that we get from the
-						//server into our accountsArray variable
-						//so we can use them in other functions as well
 						accountsArray = msg.d;
 						noRepeatedAccount = false;
 
 						for (var i = 0; i < accountsArray.length; i++) {
-							// console.log(accountsArray[i]);
 							if (accountsArray[i].email == email) {
 								noRepeatedAccount = false;
 								break;
@@ -68,10 +58,8 @@
 
 					if (noRepeatedAccount) {
 						webMethod = "ProjectServices.asmx/RequestAccount";
-						parameters = "{\"pass\":\"" + encodeURI(pass) + "\",\"firstName\":\"" + encodeURI(fname) +
-								      "\",\"lastName\":\"" + encodeURI(lname) + "\",\"email\":\"" + encodeURI(email) +
-								      "\",\"company\":\"" + encodeURI(company) + "\",\"role\":\"" + encodeURI(role) + 
-								      "\", \"year\":\"" + encodeURI(years) + "\"}";
+						parameters = "{\"pass\":\"" + encodeURI(pass) + "\",\"email\":\"" + encodeURI(email) +
+								      "\",\"role\":\"" + encodeURI(role) + "\"}";
 
 						$.ajax({
 							type: "POST",
@@ -85,6 +73,7 @@
 								alert("Account created!");
 							},
 							error: function (e) {
+								console.log('requestionAccount failed')
 								alert("boo...");
 							}
 						})
@@ -94,38 +83,36 @@
 					};
 				},
 				error: function (e) {
+					console.log('stored Account failed')
 					alert("boo...");
 				}
 			})
 		};
 
-		function changeVis(type) {
-			if (type == '1') {
-				console.log(type);
-				// console.log(document.getElementById('skillPropmt').innerHTML)
-				document.getElementById('skillPrompt').innerHTML = '<br>What areas of expertise can you mentor in? <br>';
-				document.getElementById('skillListSection').style.visibility = 'visible';
-				document.getElementById('additionNotesSection').style.visibility = 'visible';
-				document.getElementById('formButton').style.visibility = 'visible';
-			} else {
-				document.getElementById('skillPrompt').innerHTML = '<br>What areas would you like to be mentored in? <br>';
-				document.getElementById('skillListSection').style.visibility = 'visible';
-				document.getElementById('additionNotesSection').style.visibility = 'visible';
-				document.getElementById('formButton').style.visibility = 'visible';
-			}
-
-			// change visibility of checkboxes and go button
-		}
+		// change visibility of checkboxes and go button
+		// function changeVis(type) {
+		// 	if (type == '1') {
+		// 		console.log(type);
+		// 		// console.log(document.getElementById('skillPropmt').innerHTML)
+		// 		document.getElementById('skillPrompt').innerHTML = '<br>What areas of expertise can you mentor in? <br>';
+		// 		document.getElementById('skillListSection').style.visibility = 'visible';
+		// 		document.getElementById('additionNotesSection').style.visibility = 'visible';
+		// 		document.getElementById('formButton').style.visibility = 'visible';
+		// 	} else {
+		// 		document.getElementById('skillPrompt').innerHTML = '<br>What areas would you like to be mentored in? <br>';
+		// 		document.getElementById('skillListSection').style.visibility = 'visible';
+		// 		document.getElementById('additionNotesSection').style.visibility = 'visible';
+		// 		document.getElementById('formButton').style.visibility = 'visible';
+		// 	}
+		// }
 	</script>
 	<style>
-		#formButton,
-		#skillListSection, #additionNotesSection {
-			visibility: hidden;
-		}
+		/*#formButton,*/
+		/*#skillListSection, #additionNotesSection {*/
+		/*	visibility: hidden;*/
+		/*}*/
 	</style>
-
-	<!--	<link href="styles.css" rel="stylesheet">-->
-
+	
 </head>
 
 <body class ="w3-theme-l5">
@@ -154,24 +141,17 @@
 		<h2>Fill out the form below to start you journey</h2>
 
 		<form
-			onsubmit="CreateAccount($('#newLogonFName').val(), $('#newLogonLName').val(), $('#newLogonPassword').val(), 
-			$('#newLogonEmail').val(), $('#newLogonCompany').val(), $('#newLogonYears').val()); return false;">
+			onsubmit="CreateAccount($('#newLogonPassword').val(), $('#newLogonEmail').val()); return false;">
 
-			<section>
-				<label>First Name</label><br />
-				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />
-			</section>
+<!--			<section>-->
+<!--				<label>First Name</label><br />-->
+<!--				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />-->
+<!--			</section>-->
 
-			<section>
-				<label>Last Name</label><br />
-				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
-			</section>
-
-			
-			<section>
-				<label>Password</label><br />
-				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
-			</section>
+<!--			<section>-->
+<!--				<label>Last Name</label><br />-->
+<!--				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />-->
+<!--			</section>-->
 
 			<section>
 				<label>Email</label><br />
@@ -179,50 +159,54 @@
 			</section>
 
 			<section>
-				<label>Phone Number (format: 123-456-7890)</label><br />
-				<input type="tel" class="textInput" id="newLogonPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" required /><br /><br />
+				<label>Password</label><br />
+				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
 			</section>
+			
+<!--			<section>-->
+<!--				<label>Phone Number (format: 123-456-7890)</label><br />-->
+<!--				<input type="tel" class="textInput" id="newLogonPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" required /><br /><br />-->
+<!--			</section>-->
+
+<!--			<section>-->
+<!--				<label>Company</label><br />-->
+<!--				<input type="text" type="text" class="textInput" id="newLogonCompany" name="company"-->
+<!--					required /><br /><br />-->
+<!--			</section>-->
+
+<!--			<section>-->
+<!--				<label>Industry</label><br />-->
+<!--				<input type="emtextail" class="textInput" id="newLogonIndsutry" name="industry" required /><br /><br />-->
+<!--			</section>-->
+
+<!--			<section>-->
+<!--				<label>Years Experience</label><br />-->
+<!--				<input type="number" step="1" min="0" max="70" id="newLogonYears" required /><br /><br />-->
+<!--			</section>-->
 
 			<section>
-				<label>Company</label><br />
-				<input type="text" type="text" class="textInput" id="newLogonCompany" name="company"
-					required /><br /><br />
-			</section>
-
-			<section>
-				<label>Industry</label><br />
-				<input type="emtextail" class="textInput" id="newLogonIndsutry" name="industry" required /><br /><br />
-			</section>
-
-			<section>
-				<label>Years Experience</label><br />
-				<input type="number" step="1" min="0" max="70" id="newLogonYears" required /><br /><br />
-			</section>
-
-			<section>
-				<input type="radio" value="1" name="role" id="mentorRadio" onclick="changeVis($('#mentorRadio').val())" />
+				<input type="radio" value="mentor" name="role" id="mentorRadio" />
 				<label for="mentorRadio">Mentor</label>
-				<input type="radio" value="2" name="role" id="menteeRadio" onclick="changeVis($('#menteeRadio').val())" />
+				<input type="radio" value="mentee" name="role" id="menteeRadio" />
 				<label for="menteeRadio">Mentee</label>
-			</section>
-
-			<section id="skillListSection">
-				<span id="skillPrompt">prompt</span>
-				<input value="1" id="pythonCheck" type="checkbox">
-				<label id="pythonLabel" for="pythonCheck">Python</label><br>
-				<input value="2" id="javaCheck" type="checkbox">
-				<label id="javaLabel" for="javaCheck">Java</label><br>
-				<input value="3" id="sqlCheck" type="checkbox">
-				<label id="sqlLabel" for="sqlCheck">SQL</label><br>
 			</section><br>
 
-			
-			<section id="additionNotesSection">
-				<label>Additional Notes</label><br />
-				<input type="text" class="textInput" id="newLogonNotes" name="notes" required /><br /><br />
-			</section>
+<!--			<section id="skillListSection">-->
+<!--				<span id="skillPrompt">prompt</span>-->
+<!--				<input value="1" id="pythonCheck" type="checkbox">-->
+<!--				<label id="pythonLabel" for="pythonCheck">Python</label><br>-->
+<!--				<input value="2" id="javaCheck" type="checkbox">-->
+<!--				<label id="javaLabel" for="javaCheck">Java</label><br>-->
+<!--				<input value="3" id="sqlCheck" type="checkbox">-->
+<!--				<label id="sqlLabel" for="sqlCheck">SQL</label><br>-->
+<!--			</section><br>-->
 
-			<br>
+			
+<!--			<section id="additionNotesSection">-->
+<!--				<label>Additional Notes</label><br />-->
+<!--				<input type="text" class="textInput" id="newLogonNotes" name="notes" required /><br /><br />-->
+<!--			</section>-->
+			
 			<div>
 				<!-- <button type="reset" class="button" id="formButton" value="Clear">Clear</button> -->
 				<button class="button" id="formButton" type="submit">Go!</button>
