@@ -65,21 +65,16 @@ namespace ProjectTemplate
 		[WebMethod(EnableSession = true)] //NOTICE: gotta enable session on each individual method
 		public bool LogOn(string email, string pass)
 		{
-			//we return this flag to tell them if they logged in or not
 			bool success = false;
 			
 			string sqlSelect = "SELECT userID FROM users WHERE email=@emailValue and pword=@passValue";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-
-			Console.WriteLine("command created");
 			
 			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
 			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
-			Console.WriteLine(email);
-			Console.WriteLine(pass);
-			
+
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
 			DataTable sqlDt = new DataTable();
 			sqlDa.Fill(sqlDt);
@@ -90,7 +85,6 @@ namespace ProjectTemplate
 				//so we can check those values later on other method calls to see if they 
 				//are 1) logged in at all, and 2) and admin or not
 				Session["userID"] = sqlDt.Rows[0]["userID"];
-				Console.WriteLine("userID located");
 				// Session["admin"] = sqlDt.Rows[0]["admin"];
 				success = true;
 				// call a function that can connect to database again and store user login time or any details 
@@ -172,7 +166,7 @@ namespace ProjectTemplate
 			DataTable sqlDt = new DataTable("accounts");
 
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			string sqlSelect = "select email, pword, fName, lName, userRole, experience, company from users;";
+			string sqlSelect = "select email, pword, roles from users;";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -189,11 +183,7 @@ namespace ProjectTemplate
 				{
 					email = sqlDt.Rows[i]["email"].ToString(),
 					password = sqlDt.Rows[i]["pword"].ToString(),
-					firstName = sqlDt.Rows[i]["fName"].ToString(),
-					lastName = sqlDt.Rows[i]["lName"].ToString(),
-					role = sqlDt.Rows[i]["userRole"].ToString(),
-					experience = sqlDt.Rows[i]["experience"].ToString(),	
-					company = sqlDt.Rows[i]["company"].ToString(),
+					role = sqlDt.Rows[i]["roles"].ToString(),
 				});
 			}
 			//convert the list of accounts to an array and return!
@@ -202,29 +192,24 @@ namespace ProjectTemplate
 		
 
 		[WebMethod(EnableSession = true)]
-		public void RequestAccount(string pass, string firstName, string lastName, string email, string company, string role, string year)
+		public void RequestAccount(string pass, string email, string role)
 		{
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
 			//does is tell mySql server to return the primary key of the last inserted row.
-			string sqlSelect = "insert into users (email, pword, fName, lName, userRole, phone, experience, company, industry, prompt, skills) " +
-			                   "values(@emailValue, @passValue, @fnameValue, @lnameValue, @roleValue, null, @experienceValue, @companyValue, " +
-			                   "null, null, null); SELECT LAST_INSERT_ID();";
+			string sqlSelect = "insert into users (email, pword, roles) values (@emailValue, @passValue, @roleValue); SELECT LAST_INSERT_ID();";
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
 			sqlCommand.Parameters.AddWithValue("@emailValue", HttpUtility.UrlDecode(email));
 			sqlCommand.Parameters.AddWithValue("@passValue", HttpUtility.UrlDecode(pass));
-			sqlCommand.Parameters.AddWithValue("@fnameValue", HttpUtility.UrlDecode(firstName));
-			sqlCommand.Parameters.AddWithValue("@lnameValue", HttpUtility.UrlDecode(lastName));
-			sqlCommand.Parameters.AddWithValue("@companyValue", HttpUtility.UrlDecode(company));
 			sqlCommand.Parameters.AddWithValue("@roleValue", HttpUtility.UrlDecode(role));
-			sqlCommand.Parameters.AddWithValue("@experienceValue", HttpUtility.UrlDecode(year));
 
 			sqlConnection.Open();
 			//we're using a try/catch so that if the query errors out we can handle it gracefully
 			//by closing the connection and moving on
+			Console.WriteLine("Executing query...");
 			try
 			{
 				int accountID = Convert.ToInt32(sqlCommand.ExecuteScalar());
@@ -232,10 +217,60 @@ namespace ProjectTemplate
 				//the requested account.  Really this is just an example to show you
 				//a query where you get the primary key of the inserted row back from
 				//the database!
+				
+				// we want to make sure subtype (Mentor/Mentee) has the same ID as supertype's userID
+				CreateRole(accountID, role);
 			}
 			catch (Exception e) {
+				Console.WriteLine(e);
 			}
 			sqlConnection.Close();
+		}
+
+		public void CreateRole(int userid, string roleType)
+		{
+			Console.WriteLine("Executing mentor/mentee create...");
+			if (roleType == "mentor")
+			{
+				string sqlSelect = "insert into Mentors (mentorID) values (@mentorValue); SELECT LAST_INSERT_ID();";
+			
+				MySqlConnection sqlConnection = new MySqlConnection(getConString());
+				MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+				sqlCommand.Parameters.AddWithValue("@mentorValue", userid);
+
+				sqlConnection.Open();
+				//we're using a try/catch so that if the query errors out we can handle it gracefully
+				//by closing the connection and moving on
+				try
+				{
+					sqlCommand.ExecuteNonQuery();
+				}
+				catch (Exception e) {
+					Console.WriteLine(e);
+				}
+				sqlConnection.Close();
+			} else 
+			{
+				string sqlSelect = "insert into Mentees (menteeID) values (@menteeValue); SELECT LAST_INSERT_ID();";
+			
+				MySqlConnection sqlConnection = new MySqlConnection(getConString());
+				MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+				sqlCommand.Parameters.AddWithValue("@menteeValue", userid);
+
+				sqlConnection.Open();
+				//we're using a try/catch so that if the query errors out we can handle it gracefully
+				//by closing the connection and moving on
+				try
+				{
+					sqlCommand.ExecuteNonQuery();
+				}
+				catch (Exception e) {
+					Console.WriteLine(e);
+				}
+				sqlConnection.Close();
+			}
 		}
 	}
 }
