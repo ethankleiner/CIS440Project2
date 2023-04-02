@@ -106,27 +106,29 @@
 				document.getElementById('skillPrompt').innerHTML = '<br>What areas of expertise can you mentor in? <br>';
 				document.getElementById('fname').style.visibility = 'collapse';
 				document.getElementById('skillListSection').style.visibility = 'visible';
-				document.getElementById('additionNotesSection').style.visibility = 'visible';
-				document.getElementById('formButton').style.visibility = 'visible';
-			} else {
+				document.getElementById('bioSection').style.visibility = 'visible';
+				document.getElementById('clearButton').style.visibility = 'visible';
+				document.getElementById('submitButton').style.visibility = 'visible';
+				} else {
 				document.getElementById('skillPrompt').innerHTML = '<br>What areas would you like to be mentored in? <br>';
 				document.getElementById('skillListSection').style.visibility = 'visible';
-				document.getElementById('additionNotesSection').style.visibility = 'visible';
-				document.getElementById('formButton').style.visibility = 'visible';
+				document.getElementById('bioSection').style.visibility = 'visible';
+				document.getElementById('clearButton').style.visibility = 'visible';
+				document.getElementById('submitButton').style.visibility = 'visible';
+
 			}
 
 			// change visibility of checkboxes and go button
 		}
 	</script>
 	<style>
-		#formButton,
+		#clearButton, 
+		#submitButton,
 		#skillListSection,
-		#additionNotesSection {
+		#bioSection {
 			visibility: hidden;
 		}
 	</style>
-
-	<!--	<link href="styles.css" rel="stylesheet">-->
 
 </head>
 
@@ -152,7 +154,7 @@
 		</nav>
 	</header>
 
-	<main class="gradientBG">
+	<main class="gradientBG w3-padding-large">
 		<h1>Create Your Account</h1>
 		<h2>Fill out the form below to start you journey</h2>
 
@@ -169,7 +171,6 @@
 				<label>Last Name</label><br />
 				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
 			</section>
-
 			
 			<section>
 				<label>Password</label><br />
@@ -188,12 +189,6 @@
 			</section>
 
 			<section>
-				<label>Company</label><br />
-				<input type="text" type="text" class="textInput" id="newLogonCompany" name="company"
-					required /><br /><br />
-			</section>
-
-			<section>
 				<label>Industry</label><br />
 				<input type="emtextail" class="textInput" id="newLogonIndsutry" name="industry" required /><br /><br />
 			</section>
@@ -203,18 +198,13 @@
 				<input type="number" step="1" min="0" max="70" id="newLogonYears" required /><br /><br />
 			</section>
 
-			<section>
-<<<<<<< Updated upstream
-				<input type="radio" value="1" name="role" id="mentorRadio" onclick="changeVis($('#mentorRadio').val())" />
-=======
-				<!--				<input type="radio" value="mentor" name="role" id="mentorRadio" onclick="changeVis('Mentor')" />-->
-				<!--				<label for="mentorRadio">Mentor</label>-->
-				<!--				<input type="radio" value="mentee" name="role" id="menteeRadio" onclick="changeVis('Mentee')" />-->
-				<!--				<label for="menteeRadio">Mentee</label>-->
+			<section id="lname">
+				<label>Last Name</label><br />
+				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />
+			</section>
 
-				<input type="radio" value="1" name="role" id="mentorRadio"
-					onclick="changeVis($('#mentorRadio').val())" />
->>>>>>> Stashed changes
+			<section>
+				<input type="radio" value="1" name="role" id="mentorRadio" onclick="changeVis($('#mentorRadio').val())" />
 				<label for="mentorRadio">Mentor</label>
 				<input type="radio" value="2" name="role" id="menteeRadio"
 					onclick="changeVis($('#menteeRadio').val())" />
@@ -231,16 +221,15 @@
 				<label id="sqlLabel" for="sqlCheck">SQL</label><br>
 			</section><br>
 
-
-			<section id="additionNotesSection">
-				<label>Additional Notes</label><br />
-				<input type="text" class="textInput" id="newLogonNotes" name="notes" required /><br /><br />
+			<section id="bioSection">
+				<label>Write your bio!</label><br />
+				<input type="text" class="textInput" id="newLogonBio" name="bio" required /><br /><br />
 			</section>
 
 			<br>
 			<div>
-				<!-- <button type="reset" class="button" id="formButton" value="Clear">Clear</button> -->
-				<button class="button" id="formButton" type="submit">Go!</button>
+				<button type="reset" class="button" id="clearButton" value="Clear">Clear</button>
+				<button class="button" id="submitButton" type="submit">Go!</button>
 			</div>
 
 		</form>
@@ -249,3 +238,9 @@
 </body>
 
 </html>
+
+
+
+<!-- position
+birthday
+profile picture -->
