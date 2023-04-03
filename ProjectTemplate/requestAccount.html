@@ -89,29 +89,7 @@
 			})
 		};
 
-		// change visibility of checkboxes and go button
-		// function changeVis(type) {
-		// 	if (type == '1') {
-		// 		console.log(type);
-		// 		// console.log(document.getElementById('skillPropmt').innerHTML)
-		// 		document.getElementById('skillPrompt').innerHTML = '<br>What areas of expertise can you mentor in? <br>';
-		// 		document.getElementById('skillListSection').style.visibility = 'visible';
-		// 		document.getElementById('additionNotesSection').style.visibility = 'visible';
-		// 		document.getElementById('formButton').style.visibility = 'visible';
-		// 	} else {
-		// 		document.getElementById('skillPrompt').innerHTML = '<br>What areas would you like to be mentored in? <br>';
-		// 		document.getElementById('skillListSection').style.visibility = 'visible';
-		// 		document.getElementById('additionNotesSection').style.visibility = 'visible';
-		// 		document.getElementById('formButton').style.visibility = 'visible';
-		// 	}
-		// }
 	</script>
-	<style>
-		/*#formButton,*/
-		/*#skillListSection, #additionNotesSection {*/
-		/*	visibility: hidden;*/
-		/*}*/
-	</style>
 	
 </head>
 
@@ -144,15 +122,7 @@
 		<form
 			onsubmit="CreateAccount($('#newLogonPassword').val(), $('#newLogonEmail').val()); return false;">
 
-<!--			<section>-->
-<!--				<label>First Name</label><br />-->
-<!--				<input type="text" class="textInput" id="newLogonFName" name="fName" required /><br /><br />-->
-<!--			</section>-->
 
-<!--			<section>-->
-<!--				<label>Last Name</label><br />-->
-<!--				<input type="text" class="textInput" id="newLogonLName" name="lName" required /><br /><br />-->
-<!--			</section>-->
 
 			<section>
 				<label>Email</label><br />
@@ -163,27 +133,6 @@
 				<label>Password</label><br />
 				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
 			</section>
-			
-<!--			<section>-->
-<!--				<label>Phone Number (format: 123-456-7890)</label><br />-->
-<!--				<input type="tel" class="textInput" id="newLogonPhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone" required /><br /><br />-->
-<!--			</section>-->
-
-<!--			<section>-->
-<!--				<label>Company</label><br />-->
-<!--				<input type="text" type="text" class="textInput" id="newLogonCompany" name="company"-->
-<!--					required /><br /><br />-->
-<!--			</section>-->
-
-<!--			<section>-->
-<!--				<label>Industry</label><br />-->
-<!--				<input type="emtextail" class="textInput" id="newLogonIndsutry" name="industry" required /><br /><br />-->
-<!--			</section>-->
-
-<!--			<section>-->
-<!--				<label>Years Experience</label><br />-->
-<!--				<input type="number" step="1" min="0" max="70" id="newLogonYears" required /><br /><br />-->
-<!--			</section>-->
 
 			<section>
 				<input type="radio" value="mentor" name="role" id="mentorRadio" />
@@ -191,22 +140,6 @@
 				<input type="radio" value="mentee" name="role" id="menteeRadio" />
 				<label for="menteeRadio">Mentee</label>
 			</section><br>
-
-<!--			<section id="skillListSection">-->
-<!--				<span id="skillPrompt">prompt</span>-->
-<!--				<input value="1" id="pythonCheck" type="checkbox">-->
-<!--				<label id="pythonLabel" for="pythonCheck">Python</label><br>-->
-<!--				<input value="2" id="javaCheck" type="checkbox">-->
-<!--				<label id="javaLabel" for="javaCheck">Java</label><br>-->
-<!--				<input value="3" id="sqlCheck" type="checkbox">-->
-<!--				<label id="sqlLabel" for="sqlCheck">SQL</label><br>-->
-<!--			</section><br>-->
-
-			
-<!--			<section id="additionNotesSection">-->
-<!--				<label>Additional Notes</label><br />-->
-<!--				<input type="text" class="textInput" id="newLogonNotes" name="notes" required /><br /><br />-->
-<!--			</section>-->
 			
 			<div>
 				<button type="reset" class="button" id="clearButton" value="Clear">Clear</button>
@@ -219,9 +152,3 @@
 </body>
 
 </html>
-
-
-
-<!-- position
-birthday
-profile picture -->
