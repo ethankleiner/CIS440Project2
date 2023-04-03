@@ -59,7 +59,7 @@
 					if (noRepeatedAccount) {
 						webMethod = "ProjectServices.asmx/RequestAccount";
 						parameters = "{\"pass\":\"" + encodeURI(pass) + "\",\"email\":\"" + encodeURI(email) +
-								      "\",\"role\":\"" + encodeURI(role) + "\"}";
+							"\",\"role\":\"" + encodeURI(role) + "\"}";
 
 						$.ajax({
 							type: "POST",
@@ -90,7 +90,7 @@
 		};
 
 	</script>
-	
+
 </head>
 
 <body class="w3-theme-l5">
@@ -119,10 +119,7 @@
 		<h1>Create Your Account</h1>
 		<h2>Fill out the form below to start you journey</h2>
 
-		<form
-			onsubmit="CreateAccount($('#newLogonPassword').val(), $('#newLogonEmail').val()); return false;">
-
-
+		<form onsubmit="CreateAccount($('#newLogonPassword').val(), $('#newLogonEmail').val()); return false;">
 
 			<section>
 				<label>Email</label><br />
@@ -140,7 +137,7 @@
 				<input type="radio" value="mentee" name="role" id="menteeRadio" />
 				<label for="menteeRadio">Mentee</label>
 			</section><br>
-			
+
 			<div>
 				<button type="reset" class="button" id="clearButton" value="Clear">Clear</button>
 				<button class="button" id="submitButton" type="submit">Go!</button>
@@ -149,6 +146,7 @@
 		</form>
 
 	</main>
+
 </body>
 
 </html>

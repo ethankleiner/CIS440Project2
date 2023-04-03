@@ -8,6 +8,102 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Your Profile</title>
     <!-- script - need to redirect to profile pic upload page -->
+    <script>
+		var accountsArray;
+		var noRepeatedAccount;
+
+		//resets the new account inputs
+		function clearProfile() {
+			$('#profileFname').val("");
+			$('#profileLname').val("");
+			$('#profileBday').val();
+			$('#profilePhone').val();
+            $('#profileCompany').val("");
+			$('#profilePosition').val("");
+            $('#pythonCheck').checked = false;
+            $('#javaCheck').checked = false;
+            $('#sqlCheck').checked = false;
+			$('#profileBio').val("");
+            $('#profileYears').val();
+		}
+
+		//passes account info to the server, to create an account request
+		function CreateProfile(fname, lname, bday, phone, comp, pos, years, python=null, java=null, sql=null, bio) {
+
+			var ele = document.getElementsByName('role');
+			var role = "";
+
+			for (i = 0; i < ele.length; i++) {
+				if (ele[i].checked)
+					role = ele[i].value;
+			}
+
+            // new webMethod?
+			var webMethod = "ProjectServices.asmx/StoreAccounts";
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d.length > 0) {
+						accountsArray = msg.d;
+						noRepeatedAccount = false;
+
+						for (var i = 0; i < accountsArray.length; i++) {
+							if (accountsArray[i].email == email) {
+								noRepeatedAccount = false;
+								break;
+							} else {
+								noRepeatedAccount = true;
+							}
+						}
+					} else {
+						alert("loading accounts failed");
+					}
+					console.log(noRepeatedAccount);
+
+					if (noRepeatedAccount) {
+                        // new webMethod?
+						webMethod = "ProjectServices.asmx/RequestAccount";
+						parameters = "{\"fname\":\"" + encodeURI(fname) + "\",\"lname\":\"" + encodeURI(lname) +
+                        // + "\",\"bday\":\"" + encodeURI(bday) - not in table yet 
+                        + "\",\"phone\":\"" + encodeURI(phone)+ "\",\"company\":\"" + encodeURI(company) 
+                        + "\",\"experienceYears\":\"" + encodeURI(years) + "\",\"positionRole\":\"" + encodeURI(positionRole) + "\"}";
+
+                        // need to add after updating table:
+                        // + "\",\"bio\":\"" + encodeURI(bio) 
+                        // + "\",\"python\":\"" + encodeURI(python) + "\",\"java\":\"" + encodeURI(java) + "\",\"sql\":\"" + encodeURI(sql) +
+
+						$.ajax({
+							type: "POST",
+							url: webMethod,
+							data: parameters,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (msg) {
+								window.open('profilePictureUpload.html', '_self')
+								clearProfile();
+								alert("Profile updated!");
+							},
+							error: function (e) {
+								console.log('profileUpdate failed')
+								alert("boo...");
+							}
+						})
+					} else {
+						alert('Account ID exists! Choose a new one.');
+						clearProfile();
+					};
+				},
+				error: function (e) {
+					console.log('stored Account failed')
+					alert("boo...");
+				}
+			})
+		};
+
+	</script>
 </head>
 
 <body>
@@ -41,12 +137,12 @@
 
         <section>
             <label>Position</label><br />
-            <input type="text" class="textInput" id="position" required /><br /><br />
+            <input type="text" class="textInput" id="profilePosition" required /><br /><br />
         </section>
 
         <section>
             <label>Years Experience</label><br />
-            <input type="number" step="1" min="0" max="70" id="years" required /><br /><br />
+            <input type="number" step="1" min="0" max="70" id="profileYears" required /><br /><br />
         </section>
 
 
@@ -68,7 +164,7 @@
 
         <section id="buttons">
             <button type="reset" class="button" id="profileClear" value="Clear">Clear</button>
-            <button type="submit">Next</button>
+            <button type="submit" onclick="createProfile">Next</button>
         </section>
 
     </form>
