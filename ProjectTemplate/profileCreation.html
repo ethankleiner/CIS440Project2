@@ -7,67 +7,72 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Your Profile</title>
+    <!-- script - need to redirect to profile pic upload page -->
 </head>
 
 <body>
     <h1>Profile Settings</h1>
+    <form>
+        <section>
+            <label>First Name</label><br />
+            <input type="text" class="textInput" id="profileFname" name="fName" required /><br /><br />
+        </section>
 
-    <section>
-        <label>First Name</label><br />
-        <input type="text" class="textInput" id="profileFname" name="fName" required /><br /><br />
-    </section>
+        <section>
+            <label>Last Name</label><br />
+            <input type="text" class="textInput" id="profileLname" name="lName" required /><br /><br />
+        </section>
 
-    <section>
-        <label>Last Name</label><br />
-        <input type="text" class="textInput" id="profileLname" name="lName" required /><br /><br />
-    </section>
+        <section>
+            <label>Birthday</label><br>
+            <input type="date" id="profileBday" name="bday" required><br><br>
+        </section>
 
-    <section>
-        <label>Birthday</label><br>
-        <input type="date" id="profileBday" name="bday" required><br><br>
-    </section>
+        <section>
+            <label>Phone Number (format: 123-456-7890)</label><br />
+            <input type="tel" class="textInput" id="profilePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone"
+                required /><br /><br />
+        </section>
 
-    <section>
-        <label>Phone Number (format: 123-456-7890)</label><br />
-        <input type="tel" class="textInput" id="profilePhone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" name="phone"
-            required /><br /><br />
-    </section>
+        <section>
+            <label>Company</label><br />
+            <input type="text" type="text" class="textInput" id="profileCompany" name="company" required /><br /><br />
+        </section>
 
-    <section>
-        <label>Company</label><br />
-        <input type="text" type="text" class="textInput" id="profileCompany" name="company" required /><br /><br />
-    </section>
+        <section>
+            <label>Position</label><br />
+            <input type="text" class="textInput" id="position" required /><br /><br />
+        </section>
 
-    <section>
-        <label>Position</label><br />
-        <input type="text" class="textInput" id="position" required /><br /><br />
-    </section>
-
-    <section>
-        <label>Years Experience</label><br />
-        <input type="number" step="1" min="0" max="70" id="years" required /><br /><br />
-    </section>
-
-
-    <section id="skillListSection">
-        <span id="skillPrompt">Relevant Interests</span><br>
-        <input value="1" id="pythonCheck" type="checkbox">
-        <label id="pythonLabel" for="pythonCheck">Python</label><br>
-        <input value="2" id="javaCheck" type="checkbox">
-        <label id="javaLabel" for="javaCheck">Java</label><br>
-        <input value="3" id="sqlCheck" type="checkbox">
-        <label id="sqlLabel" for="sqlCheck">SQL</label><br>
-    </section><br>
+        <section>
+            <label>Years Experience</label><br />
+            <input type="number" step="1" min="0" max="70" id="years" required /><br /><br />
+        </section>
 
 
-    <section id="bio">
-        <label>Profile Bio</label><br />
-        <input type="text" class="textInput" id="profileBio" name="bio" required /><br /><br />
-    </section>
+        <section id="skillListSection">
+            <span id="skillPrompt">Relevant Interests</span><br>
+            <input value="1" id="pythonCheck" type="checkbox">
+            <label id="pythonLabel" for="pythonCheck">Python</label><br>
+            <input value="2" id="javaCheck" type="checkbox">
+            <label id="javaLabel" for="javaCheck">Java</label><br>
+            <input value="3" id="sqlCheck" type="checkbox">
+            <label id="sqlLabel" for="sqlCheck">SQL</label><br>
+        </section><br>
 
-    <section id="buttons">
-        <input type="button" value="Next">
-    </section>
+
+        <section id="bio">
+            <label>Profile Bio</label><br />
+            <input type="text" class="textInput" id="profileBio" name="bio" required /><br /><br />
+        </section>
+
+        <section id="buttons">
+            <button type="reset" class="button" id="profileClear" value="Clear">Clear</button>
+            <button type="submit">Next</button>
+        </section>
+
+    </form>
+
 </body>
 
 </html>
