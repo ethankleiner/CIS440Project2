@@ -93,6 +93,7 @@
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="ProjectServices.asmx" />
+    <Content Include="uploadingImage.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>

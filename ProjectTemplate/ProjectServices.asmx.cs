@@ -220,6 +220,8 @@ namespace ProjectTemplate
 				
 				// we want to make sure subtype (Mentor/Mentee) has the same ID as supertype's userID
 				CreateRole(accountID, role);
+				Session["userID"] = accountID;
+				Session["role"] = role;
 			}
 			catch (Exception e) {
 				Console.WriteLine(e);
@@ -271,6 +273,60 @@ namespace ProjectTemplate
 				}
 				sqlConnection.Close();
 			}
+		}
+		
+		[WebMethod(EnableSession = true)]
+		public void CreateProfile(string fname, string lname, string bday, string phone, string comp, string pos, string years, string python, string java, string sql, string bio)
+		{
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
+			//does is tell mySql server to return the primary key of the last inserted row.
+
+			string sqlSelect = " ";
+			string picName = Session["userID"] + ".png";
+
+			if (Session["role"] == "mentor")
+			{
+				sqlSelect = "insert into Mentors (fname, lname, company , phone, experienceYears, positionRole, birthday, profileBio, profilePic, pythonOption, javaOption, sqlOption) " +
+				            "values (@fnameValue, @lnameValue, @companyValue, @phoneValue, @yearsValue, @positionValue, @bdayValue, @bioValue, @picValue, @pythonValue, @javaValue, @sqlValue )" +
+				            "where mentorID=@idValue; SELECT LAST_INSERT_ID();";
+			}
+			else
+			{
+				sqlSelect = "insert into Mentees (fname, lname, company , phone, experienceYears, positionRole, birthday, profileBio, profilePic, pythonOption, javaOption, sqlOption) " +
+				            "values (@fnameValue, @lnameValue, @companyValue, @phoneValue, @yearsValue, @positionValue, @bdayValue, @bioValue, @picValue, @pythonValue, @javaValue, @sqlValue )" +
+				            "where menteeID=@idValue; SELECT LAST_INSERT_ID();";
+			}
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			sqlCommand.Parameters.AddWithValue("@fnameValue", HttpUtility.UrlDecode(fname));
+			sqlCommand.Parameters.AddWithValue("@lnameValue", HttpUtility.UrlDecode(lname));
+			sqlCommand.Parameters.AddWithValue("@bdayValue", HttpUtility.UrlDecode(bday));
+			sqlCommand.Parameters.AddWithValue("@phoneValue", HttpUtility.UrlDecode(phone));
+			sqlCommand.Parameters.AddWithValue("@companyValue", HttpUtility.UrlDecode(comp));
+			sqlCommand.Parameters.AddWithValue("@positionValue", HttpUtility.UrlDecode(pos));
+			sqlCommand.Parameters.AddWithValue("@yearsValue", HttpUtility.UrlDecode(years));
+			sqlCommand.Parameters.AddWithValue("@javaValue", Convert.ToBoolean(HttpUtility.UrlDecode(java)));
+			sqlCommand.Parameters.AddWithValue("@pythonValue", Convert.ToBoolean(HttpUtility.UrlDecode(python)));
+			sqlCommand.Parameters.AddWithValue("@sqlValue", Convert.ToBoolean(HttpUtility.UrlDecode(sql)));
+			sqlCommand.Parameters.AddWithValue("@bioValue", HttpUtility.UrlDecode(bio));
+			sqlCommand.Parameters.AddWithValue("@picValue", picName);
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			Console.WriteLine("Executing query...");
+			try
+			{
+				Console.WriteLine("success");
+			}
+			catch (Exception e) {
+				Console.WriteLine(e);
+			}
+			sqlConnection.Close();
 		}
 	}
 }
