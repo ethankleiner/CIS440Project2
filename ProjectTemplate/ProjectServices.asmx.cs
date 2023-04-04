@@ -285,17 +285,18 @@ namespace ProjectTemplate
 			string sqlSelect = " ";
 			string picName = Session["userID"] + ".png";
 
+			// using Update statement instead of insert
 			if (Session["role"] == "mentor")
 			{
-				sqlSelect = "insert into Mentors (fname, lname, company , phone, experienceYears, positionRole, birthday, profileBio, profilePic, pythonOption, javaOption, sqlOption) " +
-				            "values (@fnameValue, @lnameValue, @companyValue, @phoneValue, @yearsValue, @positionValue, @bdayValue, @bioValue, @picValue, @pythonValue, @javaValue, @sqlValue )" +
-				            "where mentorID=@idValue; SELECT LAST_INSERT_ID();";
+				sqlSelect = "Update Mentors Set fname=@fnameValue, lname=@lnameValue, company=@companyValue, phone=@phoneValue," +
+				            "experienceYears=@yearsValue, positionRole=@positionValue, birthday=@bdayValue, profileBio=@bioValue," +
+				            "profilePic=@picValue, pythonOption=@pythonValue, javaOption=@javaValue, sqlOption=@sqlValue where mentorID=@idValue";
 			}
 			else
 			{
-				sqlSelect = "insert into Mentees (fname, lname, company , phone, experienceYears, positionRole, birthday, profileBio, profilePic, pythonOption, javaOption, sqlOption) " +
-				            "values (@fnameValue, @lnameValue, @companyValue, @phoneValue, @yearsValue, @positionValue, @bdayValue, @bioValue, @picValue, @pythonValue, @javaValue, @sqlValue )" +
-				            "where menteeID=@idValue; SELECT LAST_INSERT_ID();";
+				sqlSelect = "Update Mentees Set fname=@fnameValue, lname=@lnameValue, company=@companyValue, phone=@phoneValue," +
+				            "experienceYears=@yearsValue, positionRole=@positionValue, birthday=@bdayValue, profileBio=@bioValue," +
+				            "profilePic=@picValue, pythonOption=@pythonValue, javaOption=@javaValue, sqlOption=@sqlValue where menteeID=@idValue";
 			}
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
@@ -327,6 +328,50 @@ namespace ProjectTemplate
 				Console.WriteLine(e);
 			}
 			sqlConnection.Close();
+		}
+		
+		
+		[WebMethod(EnableSession = true)]
+		public Mentor[] StoreProfiles()
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			string sqlSelect = "select mentorID, fname, lname, company, phone, experienceYears, positionRole, birthday," +
+			                   "profileBio, profilePic, pythonOption, javaOption, sqlOption from Mentors where mentorID=@idValue;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+			
+			List<Mentor> mentors = new List<Mentor>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				mentors.Add(new Mentor
+				{
+					mentorID = Convert.ToInt32(sqlDt.Rows[i]["id"]),
+					fname = sqlDt.Rows[i]["fname"].ToString(),
+					lname = sqlDt.Rows[i]["lname"].ToString(),
+					company = sqlDt.Rows[i]["company"].ToString(),
+					phone = sqlDt.Rows[i]["phone"].ToString(),
+					years = sqlDt.Rows[i]["experienceYears"].ToString(),
+					birthday = sqlDt.Rows[i]["birthday"].ToString(),
+					position = sqlDt.Rows[i]["positionRole"].ToString(),
+					bio = sqlDt.Rows[i]["profileBio"].ToString(),
+					picture = sqlDt.Rows[i]["profilePic"].ToString(),
+					python = Convert.ToBoolean(sqlDt.Rows[i]["pythonOption"]),
+					java = Convert.ToBoolean(sqlDt.Rows[i]["javaOption"]),
+					sql = Convert.ToBoolean(sqlDt.Rows[i]["sqlOption"])
+				});
+			}
+			//convert the list of accounts to an array and return!
+			return mentors.ToArray();
 		}
 	}
 }
