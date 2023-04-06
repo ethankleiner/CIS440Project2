@@ -52,7 +52,8 @@
 					if (msg.d) {
 						//server replied true, so direct the user to the dashboard
 						clearLogon();
-						window.open('dashboard.html', '_self');
+						// testing purpose, can change after dashboard is done
+						window.open('profile.html', '_self');
 					}
 					else {
 						alert("logon failed");
@@ -103,12 +104,12 @@
 	<main class="gradientBG">
 
 		<div class="w3-container w3-content" style="max-width:780px;height:180px;margin-top:80px;">    
-		<div class = "w3-card w3-round w3-white" style="height: 160px;">
-		<div class="w3-container">
-		<h1>Welcome to Mentorist!</h1>
-		<h2>Login in to get started</h2>
-		</div>
-		</div>
+			<div class = "w3-card w3-round w3-white" style="height: 160px;">
+				<div class="w3-container">
+				<h1>Welcome to Mentorist!</h1>
+					<h2>Login in to get started</h2>
+				</div>
+			</div>
 		</div>
 
 		<form onsubmit="LogOn($('#logonEmail').val(), $('#logonPassword').val()); return false;">

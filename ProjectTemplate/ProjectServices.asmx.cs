@@ -275,17 +275,21 @@ namespace ProjectTemplate
 			}
 		}
 		
+		
 		[WebMethod(EnableSession = true)]
-		public void CreateProfile(string fname, string lname, string bday, string phone, string comp, string pos, string years, string python, string java, string sql, string bio)
+		public void CreateProfiles(string fname, string lname, string bday, string phone, string comp, string pos, string years, string python, string java, string sql, string bio)
 		{
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
 			//does is tell mySql server to return the primary key of the last inserted row.
 
+			Console.WriteLine("Executing profile create...");
+			
 			string sqlSelect = " ";
 			string picName = Session["userID"] + ".png";
+			
+			Console.WriteLine(Session["role"] + picName);
 
-			// using Update statement instead of insert
 			if (Session["role"] == "mentor")
 			{
 				sqlSelect = "Update Mentors Set fname=@fnameValue, lname=@lnameValue, company=@companyValue, phone=@phoneValue," +
@@ -330,15 +334,54 @@ namespace ProjectTemplate
 			sqlConnection.Close();
 		}
 		
-		
 		[WebMethod(EnableSession = true)]
-		public Mentor[] StoreProfiles()
+		public string LoadCurrentRole()
 		{
 			DataTable sqlDt = new DataTable("accounts");
 
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			string sqlSelect = "select mentorID, fname, lname, company, phone, experienceYears, positionRole, birthday," +
-			                   "profileBio, profilePic, pythonOption, javaOption, sqlOption from Mentors where mentorID=@idValue;";
+			// select latest login id
+			string sqlSelect = "select roles from users where userID=@idValue;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			string role = "";
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				role = sqlDt.Rows[i]["roles"].ToString();
+				Console.WriteLine(role);
+			}
+			//return role
+			return role;
+		}
+		
+		
+		[WebMethod(EnableSession = true)]
+		public Profile[] StoreProfiles(string role)
+		{
+			Console.WriteLine("Executing profile...");
+			Console.WriteLine(role);
+			
+			DataTable sqlDt = new DataTable("accounts");
+			
+			string sqlSelect = " ";
+			
+			if (role == "mentor")
+			{
+				sqlSelect = "select * from Mentors where mentorID=@idValue;";
+			}
+			else
+			{
+				sqlSelect = "select * from Mentees where menteeID=@idValue;";
+			}
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -350,12 +393,12 @@ namespace ProjectTemplate
 			//filling the data table
 			sqlDa.Fill(sqlDt);
 			
-			List<Mentor> mentors = new List<Mentor>();
+			// change class to name to more general name
+			List<Profile> profiles = new List<Profile>();
 			for (int i = 0; i < sqlDt.Rows.Count; i++)
 			{
-				mentors.Add(new Mentor
+				profiles.Add(new Profile
 				{
-					mentorID = Convert.ToInt32(sqlDt.Rows[i]["id"]),
 					fname = sqlDt.Rows[i]["fname"].ToString(),
 					lname = sqlDt.Rows[i]["lname"].ToString(),
 					company = sqlDt.Rows[i]["company"].ToString(),
@@ -371,7 +414,7 @@ namespace ProjectTemplate
 				});
 			}
 			//convert the list of accounts to an array and return!
-			return mentors.ToArray();
+			return profiles.ToArray();
 		}
 	}
 }

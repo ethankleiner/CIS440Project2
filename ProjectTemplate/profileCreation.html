@@ -47,12 +47,13 @@
                 }
 			}
 
-            var webMethod = "ProjectServices.asmx/CreateProfile";
+            var webMethod = "ProjectServices.asmx/CreateProfiles";
             var parameters = "{\"fname\":\"" + encodeURI(fname) + "\",\"lname\":\"" + encodeURI(lname) 
                 + "\",\"bday\":\"" + encodeURI(bday) + "\",\"phone\":\"" + encodeURI(phone)+ "\",\"comp\":\"" + encodeURI(comp)
                 + "\",\"years\":\"" + encodeURI(years) + "\",\"pos\":\"" + encodeURI(pos) + "\", \"bio\":\"" + encodeURI(bio) 
                 + "\, \"python\":\"" + encodeURI(python) + "\",\"java\":\"" + encodeURI(java) + "\",\"sql\":\"" + encodeURI(sql) + "\"}";
-
+            
+            
             //jQuery ajax method
             $.ajax({
                 type: "POST",
@@ -70,7 +71,7 @@
                     alert("boo...");
                 }
             })
-        };
+        }
 
 	</script>
 </head>

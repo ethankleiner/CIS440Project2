@@ -114,34 +114,40 @@
 	</header>
 
 	<main class="gradientBG w3-padding-large">
-		<h1>Create Your Account</h1>
-		<h2>Fill out the form below to start you journey</h2>
+		<div class="w3-container w3-content" style="max-width:780px;height:180px;margin-top:80px;">
+			<div class = "w3-card w3-round w3-white" style="height: 160px;">
+				<div class="w3-container">
+					<h1>Create Your Account</h1>
+					<h2>Fill out the form below to start you journey</h2>
+				</div>
 
-		<form onsubmit="CreateAccount($('#newLogonPassword').val(), $('#newLogonEmail').val()); return false;">
+					<form onsubmit="CreateAccount($('#newLogonPassword').val(), $('#newLogonEmail').val()); return false;">
 
-			<section>
-				<label>Email</label><br />
-				<input type="email" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
-			</section>
+					<section>
+						<label>Email</label><br />
+						<input type="email" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
+					</section>
 
-			<section>
-				<label>Password</label><br />
-				<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
-			</section>
+					<section>
+						<label>Password</label><br />
+						<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
+					</section>
 
-			<section>
-				<input type="radio" value="mentor" name="role" id="mentorRadio" />
-				<label for="mentorRadio">Mentor</label>
-				<input type="radio" value="mentee" name="role" id="menteeRadio" />
-				<label for="menteeRadio">Mentee</label>
-			</section><br>
+					<section>
+						<input type="radio" value="mentor" name="role" id="mentorRadio" />
+						<label for="mentorRadio">Mentor</label>
+						<input type="radio" value="mentee" name="role" id="menteeRadio" />
+						<label for="menteeRadio">Mentee</label>
+					</section><br>
 
-			<div>
-				<button type="reset" class="button" id="clearButton" value="Clear">Clear</button>
-				<button class="button" id="submitButton" type="submit">Go!</button>
+					<div>
+						<button type="reset" class="button" id="clearButton" value="Clear">Clear</button>
+						<button class="button" id="submitButton" type="submit">Go!</button>
+					</div>
+
+					</form>
 			</div>
-
-		</form>
+		</div>
 
 	</main>
 
