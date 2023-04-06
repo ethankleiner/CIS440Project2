@@ -80,12 +80,8 @@ namespace ProjectTemplate
 			sqlDa.Fill(sqlDt);
 			
 			if (sqlDt.Rows.Count > 0)
-			{ 
-				//if we found an account, store the id and admin status in the session
-				//so we can check those values later on other method calls to see if they 
-				//are 1) logged in at all, and 2) and admin or not
+			{
 				Session["userID"] = sqlDt.Rows[0]["userID"];
-				// Session["admin"] = sqlDt.Rows[0]["admin"];
 				success = true;
 				// call a function that can connect to database again and store user login time or any details 
 				// into the loginstatus table
@@ -277,16 +273,16 @@ namespace ProjectTemplate
 		
 		
 		[WebMethod(EnableSession = true)]
-		public void CreateProfiles(string fname, string lname, string bday, string phone, string comp, string pos, string years, string python, string java, string sql, string bio)
+		public void CreateProfiles(string fname, string lname, string bday, string phone, string comp, string years, string pos, string bio, string python, string java, string sql)
 		{
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
 			//the only thing fancy about this query is SELECT LAST_INSERT_ID() at the end.  All that
 			//does is tell mySql server to return the primary key of the last inserted row.
 
-			Console.WriteLine("Executing profile create...");
+			Console.WriteLine("Executing profile creation...");
 			
 			string sqlSelect = " ";
-			string picName = Session["userID"] + ".png";
+			string picName = Session["userID"].ToString() + ".png";
 			
 			Console.WriteLine(Session["role"] + picName);
 
@@ -326,6 +322,7 @@ namespace ProjectTemplate
 			Console.WriteLine("Executing query...");
 			try
 			{
+				sqlCommand.ExecuteNonQuery();
 				Console.WriteLine("success");
 			}
 			catch (Exception e) {
@@ -333,6 +330,7 @@ namespace ProjectTemplate
 			}
 			sqlConnection.Close();
 		}
+		
 		
 		[WebMethod(EnableSession = true)]
 		public string LoadCurrentRole()

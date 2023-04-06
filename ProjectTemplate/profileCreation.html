@@ -31,9 +31,12 @@
 		}
 
 		//passes account info to the server, to create an account request
-		function CreateProfile(fname, lname, bday, phone, comp, pos, years, python=false, java=false, sql=false, bio) {
+		function CreateProfile(fname, lname, bday, phone, comp, pos, years, bio) {
 
 			var skillList = document.getElementsByName('skill');
+            var python = false;
+            var java = false;
+            var sql = false;
 
 			for (i = 0; i < skillList.length; i++) {
 				if (skillList[i].checked){
@@ -46,14 +49,18 @@
                     }
                 }
 			}
+            
+            console.log(fname, lname, bday, phone, comp, pos, years, python, java, sql, bio);
 
             var webMethod = "ProjectServices.asmx/CreateProfiles";
-            var parameters = "{\"fname\":\"" + encodeURI(fname) + "\",\"lname\":\"" + encodeURI(lname) 
-                + "\",\"bday\":\"" + encodeURI(bday) + "\",\"phone\":\"" + encodeURI(phone)+ "\",\"comp\":\"" + encodeURI(comp)
-                + "\",\"years\":\"" + encodeURI(years) + "\",\"pos\":\"" + encodeURI(pos) + "\", \"bio\":\"" + encodeURI(bio) 
-                + "\, \"python\":\"" + encodeURI(python) + "\",\"java\":\"" + encodeURI(java) + "\",\"sql\":\"" + encodeURI(sql) + "\"}";
+            var parameters = "{\"fname\":\"" + encodeURI(fname) + "\",\"lname\":\"" + encodeURI(lname) + 
+                "\",\"bday\":\"" + encodeURI(bday) + "\",\"phone\":\"" + encodeURI(phone)+ 
+                "\",\"comp\":\"" + encodeURI(comp) + "\",\"years\":\"" + encodeURI(years) + 
+                "\",\"pos\":\"" + encodeURI(pos) + "\", \"bio\":\"" + encodeURI(bio) + 
+                "\",\"python\":\"" + encodeURI(python) + "\",\"java\":\"" + encodeURI(java) + 
+                "\",\"sql\":\"" + encodeURI(sql) + "\"}";
             
-            
+
             //jQuery ajax method
             $.ajax({
                 type: "POST",
