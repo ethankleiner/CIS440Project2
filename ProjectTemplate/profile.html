@@ -20,13 +20,94 @@
       font-family: "Open Sans", sans-serif
     }
   </style>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    
+    var userRole;
+    
+    function getCurrentRole(){
+      var webMethod = "ProjectServices.asmx/LoadCurrentRole";
+      var parameters = "{}";
+
+      //jQuery ajax method
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d) {
+            userRole = msg.d;
+            console.log(userRole);
+            console.log("call function");
+            getProfileData();
+          }
+          else {
+            alert("load current role failed");
+          }
+        },
+        error: function (e) {
+          alert("load current role boo...");
+        }
+      });
+    }
+    function getProfileData(){
+      
+      var profilesArray;
+      var interests;
+
+      console.log("loading profile data...");
+
+      webMethod = "ProjectServices.asmx/StoreProfiles";
+      parameters = "{\"role\":\"" + encodeURI(userRole) + "\"}";
+
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d.length > 0) {
+            profilesArray = msg.d;
+
+            for (var i = 0; i < profilesArray.length; i++){
+              console.log(profilesArray[i]);
+
+              if (profilesArray[i].python == true){
+                interests = "Python";
+              } else if (profilesArray[i].java == true){
+                interests += "Java";
+              } else if (profilesArray[i].sql == true){
+                interests += "SQL";
+              }
+              
+              document.getElementById('userName').innerHTML = profilesArray[i].fname + " " + profilesArray[i].lname;
+              document.getElementById('userYears').innerHTML = profilesArray[i].years;
+              document.getElementById('userCompany').innerHTML = profilesArray[i].company;
+              document.getElementById('userPosition').innerHTML = profilesArray[i].position;
+              document.getElementById('userBio').innerHTML = profilesArray[i].bio;
+              document.getElementById('area').innerHTML = interests;
+              
+          }} else {
+            alert('loading failed');
+          }
+        },
+        error: function (e) {
+          alert("boo...");
+        }
+      });
+
+    }
+  </script>
 </head>
 
 <!-- script at the bottom -->
 
 <!-- NOTES: Add links to everything, link everything! -->
 
-<body class="w3-theme-l5">
+<body onload="getCurrentRole()" class="w3-theme-l5">
 
   <!-- Navbar -->
   <div class="w3-top">
@@ -139,9 +220,9 @@
                 <img src="ProfilePic.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
               </td>
               <td>
-                <h4><span>John Doe</span><span>|</span><span>Position</span><span>|</span><span
-                    id="company">Company</span></h4>
-                <h6><span>Years of Experience</span><span>|</span><span>Areas of Expertise</span></h6>
+                <h4><span id="userName">John Doe</span><span>|</span><span id="userPosition">Position</span><span>|</span><span
+                    id="userCompany">Company</span></h4>
+                <h6><span id="userYears">Years of Experience</span><span>|</span><span id="area">Areas of Expertise</span></h6>
               </td>
             </tr>
             <tr>
@@ -151,9 +232,7 @@
             </tr>
           </table>
           <hr class="w3-clear">
-                <span>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aut nihil esse aperiam ex veritatis explicabo
-                non vel doloremque quas mollitia, veniam voluptate excepturi nisi expedita possimus sunt tenetur alias
-                natus!</span>
+                <span id="userBio"></span>
           <div class="w3-row-padding" style="margin:0 -16px">
           </div>
         </div>

@@ -1,8 +1,7 @@
 namespace ProjectTemplate
 {
-    public class Mentor
+    public class Profile
     {
-        public int mentorID;
         public string fname;
         public string lname;
         public string company;
