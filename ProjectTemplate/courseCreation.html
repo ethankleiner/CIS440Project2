@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
+    <title>Course Creation</title>
+    <script>
+        function clearQuest(){
+            $('#questTitle').val("");
+            $('#task1').val("");
+            $('#task2').val("");
+            $('#task3').val("");
+            $('#task4').val("");
+            $('#task5').val("");
+        }
+
+        function createQuest(title, t1, t2=null, t3=null, t4=null, t5=null){
+            // need to create asmx?
+            // how do we store mentor ID?
+            var webMethod = "ProjectServices.asmx/createQuests";
+            var parameters = "{\"courseName\":\"" + encodeURI(title) + "\",\"check1\":\"" + encodeURI(t1) +
+            "\",\"check2\":\"" + encodeURI(t2) + "\",\"check3\":\"" + encodeURI(t3) +
+            "\",\"check4\":\"" + encodeURI(t4) + "\",\"check5\":\"" + encodeURI(t5) + "\"}";
+        }
+
+        //jQuery ajax method
+        $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    // window.open('profilePictureUpload.aspx', '_self')
+                    clearQuest();
+                    alert("Quest Created!");
+                },
+                error: function (e) {
+                    console.log('Failed to create quest...')
+                    alert("boo...");
+                }
+            })
+    </script>
+</head>
+<body>
+    <h1>Craft a Quest</h1>
+    <form>
+        <section>
+            <label>Christen thy quest</label>
+            <input type="text" id="questTitle" required>
+        </section>
+
+        <section>Trials for thy mentees</section>
+        <section>
+            <label>Trial 1</label>
+            <input type="text" id="task1" required>
+        </section>
+        <section>
+            <label>Trial 2</label>
+            <input type="text" id="task2" >
+        </section>
+        <section>
+            <label>Trial 3</label>
+            <input type="text" id="task3" >
+        </section>
+        <section>
+            <label>Trial 4</label>
+            <input type="text" id="task4" >
+        </section>
+        <section>
+            <label>Trial 5</label>
+            <input type="text" id="task5" >
+        </section>
+
+        <section id="buttons">
+            <button type="reset" class="button" onclick="clearQuest()">Clear</button>
+            <button class="button" id="submitButton" type="submit">Create</button>
+        </section>
+    </form>
+</body>
+</html>
