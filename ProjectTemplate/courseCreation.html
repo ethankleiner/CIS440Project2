@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=<device-width>, initial-scale=1.0">
     <title>Course Creation</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
         function clearQuest(){
             $('#questTitle').val("");
@@ -15,17 +16,22 @@
             $('#task5').val("");
         }
 
-        function createQuest(title, t1, t2=null, t3=null, t4=null, t5=null){
-            // need to create asmx?
-            // how do we store mentor ID?
-            var webMethod = "ProjectServices.asmx/createQuests";
-            var parameters = "{\"courseName\":\"" + encodeURI(title) + "\",\"check1\":\"" + encodeURI(t1) +
+        function createQuest(title, t1, t2, t3, t4, t5){
+
+            if (t2 == ''){t2 = null;};
+            if (t3 == ''){t3 = null;};
+            if (t4 == ''){t4 = null;};
+            if (t5 == ''){t5 = null;};
+
+            console.log(title, t1, t2, t3, t4, t5);
+            
+            var webMethod = "ProjectServices.asmx/CreateQuests";
+            var parameters = "{\"title\":\"" + encodeURI(title) + "\",\"check1\":\"" + encodeURI(t1) +
             "\",\"check2\":\"" + encodeURI(t2) + "\",\"check3\":\"" + encodeURI(t3) +
             "\",\"check4\":\"" + encodeURI(t4) + "\",\"check5\":\"" + encodeURI(t5) + "\"}";
-        }
 
-        //jQuery ajax method
-        $.ajax({
+            //jQuery ajax method
+            $.ajax({
                 type: "POST",
                 url: webMethod,
                 data: parameters,
@@ -41,11 +47,16 @@
                     alert("boo...");
                 }
             })
+        
+        }
+
+        
     </script>
 </head>
 <body>
     <h1>Craft a Quest</h1>
-    <form>
+    <form onsubmit="createQuest($('#questTitle').val(), $('#task1').val(), $('#task2').val(), $('#task3').val(), 
+                                $('#task4').val(), $('#task5').val()); return false;">
         <section>
             <label>Christen thy quest</label>
             <input type="text" id="questTitle" required>

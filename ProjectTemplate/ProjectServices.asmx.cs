@@ -414,5 +414,39 @@ namespace ProjectTemplate
 			//convert the list of accounts to an array and return!
 			return profiles.ToArray();
 		}
+		
+		[WebMethod(EnableSession = true)]
+		public void CreateQuests(string title, string check1, string check2, string check3, string check4, string check5)
+		{
+			Console.WriteLine(title + Session["userID"]+ check1 + check2 + check3 + check4 + check5);
+			
+			string sqlSelect = "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
+			                   "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value)" +
+			                   "; SELECT LAST_INSERT_ID();";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			sqlCommand.Parameters.AddWithValue("@titleValue", HttpUtility.UrlDecode(title));
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+			sqlCommand.Parameters.AddWithValue("@check1Value", HttpUtility.UrlDecode(check1));
+			sqlCommand.Parameters.AddWithValue("@check2Value", HttpUtility.UrlDecode(check2));
+			sqlCommand.Parameters.AddWithValue("@check3Value", HttpUtility.UrlDecode(check3));
+			sqlCommand.Parameters.AddWithValue("@check4Value", HttpUtility.UrlDecode(check4));
+			sqlCommand.Parameters.AddWithValue("@check5Value", HttpUtility.UrlDecode(check5));
+
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			Console.WriteLine("Executing query...");
+			try
+			{
+				Console.WriteLine("executing...");
+			}
+			catch (Exception e) {
+				Console.WriteLine(e);
+			}
+			sqlConnection.Close();
+		}
 	}
 }
