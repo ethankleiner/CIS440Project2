@@ -55,7 +55,7 @@
     function getProfileData(){
       
       var profilesArray;
-      var interests;
+      var interests = "";
 
       console.log("loading profile data...");
 
@@ -84,13 +84,17 @@
               }
               
               document.getElementById('userName').innerHTML = profilesArray[i].fname + " " + profilesArray[i].lname;
-              document.getElementById('userYears').innerHTML = profilesArray[i].years;
+              document.getElementById('userYears').innerHTML = "Years of Experience: " + profilesArray[i].years;
               document.getElementById('userCompany').innerHTML = profilesArray[i].company;
               document.getElementById('userPosition').innerHTML = profilesArray[i].position;
               document.getElementById('userBio').innerHTML = profilesArray[i].bio;
-              document.getElementById('area').innerHTML = interests;
-              
-          }} else {
+              document.getElementById('area').innerHTML = "Areas of Expertise: " + interests;
+              document.getElementById('bday').innerHTML = profilesArray[i].birthday;
+              document.getElementById('phone').innerHTML = profilesArray[i].phone;
+
+              getAccount();
+                      
+            } }else {
             alert('loading failed');
           }
         },
@@ -98,6 +102,37 @@
           alert("boo...");
         }
       });
+      
+      function getAccount(){
+
+        var accountsArray;
+        
+        webMethod = "ProjectServices.asmx/StoreAccounts";
+        parameters = ""
+
+        $.ajax({
+          type: "POST",
+          url: webMethod,
+          data: parameters,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (msg) {
+            if (msg.d.length > 0) {
+              accountsArray = msg.d;
+
+              for (var i = 0; i < accountsArray.length; i++){
+                console.log(accountsArray[i]);
+                document.getElementById('mail').innerHTML = accountsArray[i].email;
+
+              } }else {
+              alert('loading failed');
+            }
+          },
+          error: function (e) {
+            alert("boo...");
+          }
+        })
+      };
 
     }
   </script>
@@ -177,11 +212,11 @@
             <button onclick="myFunction('Demo3')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i
                 class="fa fa-users fa-fw w3-margin-right"></i> Personal Info</button>
             <div id="Demo3" class="w3-hide w3-container">
-              <p>
+              <p id="bday">
                 / / / Birthday </p>
-              <p>
+              <p id="phone">
                 () Phone </p>
-              <p>
+              <p id="mail">
                 @.com Email </p>
               <!-- <div class="w3-half">
                 <img src="/w3images/forest.jpg" style="width:100%" class="w3-margin-bottom">

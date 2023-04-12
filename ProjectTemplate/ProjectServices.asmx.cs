@@ -162,11 +162,14 @@ namespace ProjectTemplate
 			DataTable sqlDt = new DataTable("accounts");
 
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			string sqlSelect = "select email, pword, roles from users;";
+			string sqlSelect = "select email, pword, roles from users where userID=@idValue;";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+
+			
 			//gonna use this to fill a data table
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
 			//filling the data table
@@ -280,17 +283,19 @@ namespace ProjectTemplate
 			//does is tell mySql server to return the primary key of the last inserted row.
 
 			Console.WriteLine("Executing profile creation...");
+
 			
 			string sqlSelect = " ";
 			string picName = Session["userID"].ToString() + ".png";
-			
-			Console.WriteLine(Session["role"] + picName);
+			Console.WriteLine(Session["role"] + picName + fname + lname + bday + phone + comp + years + pos + bio + python + java + sql);
 
-			if (Session["role"] == "mentor")
+			if ((string)Session["role"] == "mentor")
 			{
 				sqlSelect = "Update Mentors Set fname=@fnameValue, lname=@lnameValue, company=@companyValue, phone=@phoneValue," +
 				            "experienceYears=@yearsValue, positionRole=@positionValue, birthday=@bdayValue, profileBio=@bioValue," +
 				            "profilePic=@picValue, pythonOption=@pythonValue, javaOption=@javaValue, sqlOption=@sqlValue where mentorID=@idValue";
+				// sqlSelect = "Update Mentors Set lname=@lnameValue where mentorID=@idValue;";
+				
 			}
 			else
 			{
@@ -298,6 +303,8 @@ namespace ProjectTemplate
 				            "experienceYears=@yearsValue, positionRole=@positionValue, birthday=@bdayValue, profileBio=@bioValue," +
 				            "profilePic=@picValue, pythonOption=@pythonValue, javaOption=@javaValue, sqlOption=@sqlValue where menteeID=@idValue";
 			}
+			
+			Console.WriteLine(sqlSelect);
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);

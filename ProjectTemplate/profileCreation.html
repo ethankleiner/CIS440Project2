@@ -71,7 +71,8 @@
                 success: function (msg) {
                     // window.open('profilePictureUpload.aspx', '_self')
                     clearProfile();
-                    alert("Profile Added!");
+                    alert("Profile Added! Please log in again.");
+                    window.open('index.html', '_self');
                 },
                 error: function (e) {
                     console.log('Added profile failed...')
