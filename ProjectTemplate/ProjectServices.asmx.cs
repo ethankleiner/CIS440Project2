@@ -420,10 +420,20 @@ namespace ProjectTemplate
 		{
 			Console.WriteLine(title + Session["userID"]+ check1 + check2 + check3 + check4 + check5);
 			
-			string sqlSelect = "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
-			                   "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value)" +
-			                   "; SELECT LAST_INSERT_ID();";
+			// string sqlSelect = "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
+			//                    "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value)" +
+			//                    "; SELECT LAST_INSERT_ID();";
+
 			
+			string sqlSelect = "SET FOREIGN_KEY_CHECKS = 0;";
+			
+			sqlSelect += "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
+			            "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value);";
+
+			sqlSelect += "SET FOREIGN_KEY_CHECKS = 1;";
+
+			Console.WriteLine(sqlSelect);
+				
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
@@ -442,6 +452,7 @@ namespace ProjectTemplate
 			try
 			{
 				Console.WriteLine("executing...");
+				sqlCommand.ExecuteNonQuery();
 			}
 			catch (Exception e) {
 				Console.WriteLine(e);
