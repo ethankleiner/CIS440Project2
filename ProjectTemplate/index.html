@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8" />
     <title>The Mentorist</title>
@@ -13,7 +14,6 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
-
 	<!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
 	<script type="text/javascript">
 
@@ -52,7 +52,7 @@
 								if (msg.d.length > 0) {
 									accountsArray = msg.d;
 
-									for (var i = 0; i < accountsArray.length; i++){
+									for (var i = 0; i < accountsArray.length; i++) {
 										console.log(accountsArray[i]);
 										roleType = accountsArray[i].role;
 										console.log(roleType);
@@ -79,29 +79,17 @@
 			});
 		}
 
-		function openPage(){
-			if (roleType == "mentor"){
+		function openPage() {
+			if (roleType == "mentor") {
 				window.open('mentorDashboard.html', '_self');
 			} else {
 				window.open('menteeDashboard.html', '_self');
 			};
 		}
-		
+
 	</script>
 	<!--END OF YOUR OWN JAVASCRIPT-->
 
-	<!--AND YOUR OWN CSS CAN GO HERE AS WELL-->
-	<style>
-		h1, h2, form {
-			text-align: center;
-		}
-
-		h1 {
-			margin-top: 20px;
-		}
-
-	</style>
-	<!--END OF YOUR OWN CSS-->
 </head >
 
 <body id="indexBody">
