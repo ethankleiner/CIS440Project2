@@ -535,22 +535,7 @@ namespace ProjectTemplate
 						sql = Convert.ToBoolean(sqlDt.Rows[i]["sqlOption"])
 					});
 				}
-				profiles.Add(new Profile
-				{
-					id = sqlDt.Rows[i]["mentorID"].ToString(),
-					fname = sqlDt.Rows[i]["fname"].ToString(),
-					lname = sqlDt.Rows[i]["lname"].ToString(),
-					company = sqlDt.Rows[i]["company"].ToString(),
-					phone = sqlDt.Rows[i]["phone"].ToString(),
-					years = sqlDt.Rows[i]["experienceYears"].ToString(),
-					birthday = sqlDt.Rows[i]["birthday"].ToString(),
-					position = sqlDt.Rows[i]["positionRole"].ToString(),
-					bio = sqlDt.Rows[i]["profileBio"].ToString(),
-					picture = sqlDt.Rows[i]["profilePic"].ToString(),
-					python = Convert.ToBoolean(sqlDt.Rows[i]["pythonOption"]),
-					java = Convert.ToBoolean(sqlDt.Rows[i]["javaOption"]),
-					sql = Convert.ToBoolean(sqlDt.Rows[i]["sqlOption"])
-				});
+				
 			}
 			//convert the list of accounts to an array and return!
 			return profiles.ToArray();
@@ -558,16 +543,18 @@ namespace ProjectTemplate
 		
 		[WebMethod(EnableSession = true)]
 			  
-		public List<Quest> getQuests() {
+		public List<Quest> getQuests(string id) {
 			Console.WriteLine("Executing quests...");
 				
 			DataTable sqlDt = new DataTable ("quests");
 			  
-			string sqlSelect = "select * from Courses;";
+			string sqlSelect = "select Courses.* from Courses INNER JOIN Mentors on Mentors.mentorID=Courses.courseCreatorID where mentorID=@mentorID;";
 		
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-			  
+			
+			sqlCommand.Parameters.AddWithValue("@mentorID", HttpUtility.UrlDecode(id));
+			
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
 			//filling the data table
 			sqlDa.Fill(sqlDt);

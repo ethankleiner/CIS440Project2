@@ -4,9 +4,11 @@
     <projectFile>ProjectTemplate/ProjectTemplate.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6350286b-44f7-410f-ac4b-843f0af01185" name="Changes" comment="adjusted getQuestMember function to check for role before storing id">
+    <list default="true" id="6350286b-44f7-410f-ac4b-843f0af01185" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/ProjectServices.asmx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/ProjectServices.asmx.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/quest.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/quest.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,10 +27,6 @@
         <option name="url" value="https://github.com/ethankleiner/CIS440Project2.git" />
       </UrlAndAccount>
     </option>
-  </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/Profile.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock:///Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/ProjectServices.asmx.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -93,7 +91,8 @@
       <workItem from="1680804588340" duration="4266000" />
       <workItem from="1681355688602" duration="975000" />
       <workItem from="1681356830406" duration="1169000" />
-      <workItem from="1681359599227" duration="6553000" />
+      <workItem from="1681359599227" duration="6940000" />
+      <workItem from="1681421399874" duration="2215000" />
     </task>
     <task id="LOCAL-00001" summary="added quest page and functionality">
       <created>1681355926657</created>
@@ -116,7 +115,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681364833382</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="added Enroll function">
+      <created>1681366929464</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681366929464</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -130,6 +136,7 @@
     <MESSAGE value="added quest page and functionality" />
     <MESSAGE value="added id field to profile object and added onload to quest page" />
     <MESSAGE value="adjusted getQuestMember function to check for role before storing id" />
-    <option name="LAST_COMMIT_MESSAGE" value="adjusted getQuestMember function to check for role before storing id" />
+    <MESSAGE value="added Enroll function" />
+    <option name="LAST_COMMIT_MESSAGE" value="added Enroll function" />
   </component>
 </project>
