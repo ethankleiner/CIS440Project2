@@ -12,6 +12,7 @@
 
 <script>
     var userRole;
+    var mentorID;
     
     function getCurrentRole(){
       var webMethod = "ProjectServices.asmx/LoadCurrentRole";
@@ -61,7 +62,7 @@
           if (msg.d.length > 0) {
             membersArray = msg.d;
 
-            for (var i = 0; i < 1; i++){
+            for (var i = 0; i < membersArray; i++){
               console.log(membersArray[i]);
 
               if (membersArray[i].python == true){
@@ -71,18 +72,15 @@
               } else if (membersArray[i].sql == true){
                 interests += "SQL";
               }
-              
-              document.getElementById("memberInfo").innerHTML = `${membersArray[i].fname} ${membersArray[i].lname}, ${membersArray[i].company}, ${membersArray[i].position}, ${membersArray[i].years}`;
+              mentorID = membersArray[i].id;
 
-              // document.getElementById('userName').innerHTML = profilesArray[i].fname + " " + profilesArray[i].lname;
-              // document.getElementById('userYears').innerHTML = profilesArray[i].years;
-              // document.getElementById('userCompany').innerHTML = profilesArray[i].company;
-              // document.getElementById('userPosition').innerHTML = profilesArray[i].position;
-              // document.getElementById('userBio').innerHTML = profilesArray[i].bio;
-              // document.getElementById('area').innerHTML = interests;
+              insertElements(membersArray[i].fname, membersArray[i].lname, membersArray[i].company, membersArray[i].position, membersArray[i].years);
+              
+              //getCourseData();
+              
             
           };
-             getCourseData();
+             
         } else {
             alert('loading failed');
           }
@@ -100,20 +98,22 @@
       console.log("loading quest data...");
 
       webMethod = "ProjectServices.asmx/getQuests";
+      parameters = "{\"id\":\"" + encodeURI(mentorID) + "\"}";
 
       $.ajax({
         type: "POST",
         url: webMethod,
+        data: parameters,
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (msg) {
           if (msg.d.length > 0) {
             questsArray = msg.d;
 
-            for (var i = 0; i < 1; i++){
+            for (var i = 0; i < questsArray; i++){
               console.log(questsArray[i]);
 
-              document.getElementById("class").innerHTML = questsArray[i].courseName;
+              
             }
           } else {
             alert('loading failed');
@@ -123,6 +123,20 @@
           alert("boo...");
         }
       });
+    }
+
+    function insertElements(fname, lname, company, position, years) {
+
+      const mentorList = document.getElementById("mentorList");
+      const div = document.createElement("div");
+      const spn = document.createElement("spn");
+      const values = document.createTextNode(`${fname} ${lname}, ${company}, ${position}, ${years} Years`);
+      
+      spn.appendChild(values);
+      div.appendChild(spn);
+      mentorList.appendChild(div);
+      console.log(mentorList);
+
     }
 
 </script>
@@ -164,7 +178,7 @@
   <h1>Quests</h1>
     
     <div id="mentorList">
-      <div>
+      <!-- <div>
           <span id="memberInfo"></span>
             <ul id="class"><button>Enroll</button></ul>
 
@@ -175,7 +189,7 @@
             <ul>Course 1 <button>Enroll</button></ul>
             <ul>Course 2 <button>Enroll</button></ul>
             <ul>Course 3 <button>Enroll</button></ul>
-        </div>
+        </div> -->
     
     </div>
 
