@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<script>
+    var userRole;
+    
+    function getCurrentRole(){
+      var webMethod = "ProjectServices.asmx/LoadCurrentRole";
+      var parameters = "{}";
+
+      //jQuery ajax method
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d) {
+            userRole = msg.d;
+            console.log(userRole);
+            console.log("call function");
+            getQuests();
+          }
+          else {
+            alert("load current role failed");
+          }
+        },
+        error: function (e) {
+          alert("load current role boo...");
+        }
+      });
+    }
+
+    function getQuestMemberData(){
+      
+      var membersArray;
+      var interests;
+
+      console.log("loading quest member data...");
+
+      webMethod = "ProjectServices.asmx/getQuestMembers";
+      parameters = "{\"role\":\"" + encodeURI(userRole) + "\"}";
+
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d.length > 0) {
+            membersArray = msg.d;
+
+            for (var i = 0; i < 1; i++){
+              console.log(membersArray[i]);
+
+              if (membersArray[i].python == true){
+                interests = "Python";
+              } else if (membersArray[i].java == true){
+                interests += "Java";
+              } else if (membersArray[i].sql == true){
+                interests += "SQL";
+              }
+              
+              document.getElementById("memberInfo").innerHTML = `${membersArray[i].fname} ${membersArray[i].lname}, ${membersArray[i].company}, ${membersArray[i].position}, ${membersArray[i].years}`;
+
+              // document.getElementById('userName').innerHTML = profilesArray[i].fname + " " + profilesArray[i].lname;
+              // document.getElementById('userYears').innerHTML = profilesArray[i].years;
+              // document.getElementById('userCompany').innerHTML = profilesArray[i].company;
+              // document.getElementById('userPosition').innerHTML = profilesArray[i].position;
+              // document.getElementById('userBio').innerHTML = profilesArray[i].bio;
+              // document.getElementById('area').innerHTML = interests;
+              
+          }} else {
+            alert('loading failed');
+          }
+        },
+        error: function (e) {
+          alert("boo...");
+        }
+      });
+
+    }
+
+    function getCourseData() {
+      var questsArray;
+
+      console.log("loading quest data...");
+
+      webMethod = "ProjectServices.asmx/getQuests";
+
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d.length > 0) {
+            membersArray = msg.d;
+
+            for (var i = 0; i < 1; i++){
+              console.log(questsArray[i]);
+
+              document.getElementById("class").innerHTML = questsArray[i].courseName;
+            }
+          } else {
+            alert('loading failed');
+          }
+        },
+        error: function (e) {
+          alert("boo...");
+        }
+      });
+    }
+
+</script>
+
+<body>
+
+  <h1>Quests</h1>
+    
+    <div id="mentorList">
+      <div>
+          <span id="memberInfo"></span>
+            <ul id="class"><button>Enroll</button></ul>
+
+        </div>
+        
+        <div>
+          <span>Jane Don, Microsoft, Data Analytics Manager, 15 Years</span>
+            <ul>Course 1 <button>Enroll</button></ul>
+            <ul>Course 2 <button>Enroll</button></ul>
+            <ul>Course 3 <button>Enroll</button></ul>
+        </div>
+    
+    </div>
+
+</body>
+</html>
