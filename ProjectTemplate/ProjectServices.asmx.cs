@@ -498,6 +498,43 @@ namespace ProjectTemplate
 			List<Profile> profiles = new List<Profile>();
 			for (int i = 0; i < sqlDt.Rows.Count; i++)
 			{
+				if (role == "mentee"){
+					profiles.Add(new Profile
+					{
+						id = sqlDt.Rows[i]["mentorID"].ToString(),
+						fname = sqlDt.Rows[i]["fname"].ToString(),
+						lname = sqlDt.Rows[i]["lname"].ToString(),
+						company = sqlDt.Rows[i]["company"].ToString(),
+						phone = sqlDt.Rows[i]["phone"].ToString(),
+						years = sqlDt.Rows[i]["experienceYears"].ToString(),
+						birthday = sqlDt.Rows[i]["birthday"].ToString(),
+						position = sqlDt.Rows[i]["positionRole"].ToString(),
+						bio = sqlDt.Rows[i]["profileBio"].ToString(),
+						picture = sqlDt.Rows[i]["profilePic"].ToString(),
+						python = Convert.ToBoolean(sqlDt.Rows[i]["pythonOption"]),
+						java = Convert.ToBoolean(sqlDt.Rows[i]["javaOption"]),
+						sql = Convert.ToBoolean(sqlDt.Rows[i]["sqlOption"])
+					});
+				}
+				else
+				{
+					profiles.Add(new Profile
+					{
+						id = sqlDt.Rows[i]["menteeID"].ToString(),
+						fname = sqlDt.Rows[i]["fname"].ToString(),
+						lname = sqlDt.Rows[i]["lname"].ToString(),
+						company = sqlDt.Rows[i]["company"].ToString(),
+						phone = sqlDt.Rows[i]["phone"].ToString(),
+						years = sqlDt.Rows[i]["experienceYears"].ToString(),
+						birthday = sqlDt.Rows[i]["birthday"].ToString(),
+						position = sqlDt.Rows[i]["positionRole"].ToString(),
+						bio = sqlDt.Rows[i]["profileBio"].ToString(),
+						picture = sqlDt.Rows[i]["profilePic"].ToString(),
+						python = Convert.ToBoolean(sqlDt.Rows[i]["pythonOption"]),
+						java = Convert.ToBoolean(sqlDt.Rows[i]["javaOption"]),
+						sql = Convert.ToBoolean(sqlDt.Rows[i]["sqlOption"])
+					});
+				}
 				profiles.Add(new Profile
 				{
 					id = sqlDt.Rows[i]["mentorID"].ToString(),
