@@ -1,3 +1,26 @@
 #indexBody{
     background-image: url("LoginBackground.jpg");
+
+}
+
+.content-box{
+    background-color:rgb(0, 93, 0);
+    color:white;
+}
+
+.nav{
+    width:100%;
+    top:0;
+    position: fixed;
+    background-color:rgb(0, 93, 0);
+    color: white;
+}
+
+.titleFont{
+    font-family: 'MedievalSharp', cursive;
+}
+
+.button-hover:hover{
+    background-color: rgb(0, 129, 0);
+    color:rgb(184, 136, 14);
 }

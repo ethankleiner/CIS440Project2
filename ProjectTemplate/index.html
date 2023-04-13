@@ -9,6 +9,9 @@
 	<link rel="stylesheet" href="style1.css">
 	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
 	<!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
 	<script type="text/javascript">
 
@@ -80,41 +83,42 @@
 	</style>
 	<!--END OF YOUR OWN CSS-->
 </head >
-<body class ="w3-theme-l5" id="indexBody">
+<body id="indexBody">
 	<!-- Navbar -->
-	<div class="w3-top">
+	<div class="nav titleFont">
 		<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
 			<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
 			<a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
 			
-			<a href="index.html" class="w3-bar-item w3-button w3-left w3-padding-large  w3-theme-d4 w3-hover-white">Help</a>
+			<a href="index.html" class="w3-bar-item w3-button w3-left w3-padding-large  w3-theme-d4 button-hover">Help</a>
 
-			<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+			<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large button-hover" title="My Account">
 			<img src="/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
 			</a>
 		</div>
    </div>
-
+   
+   <br><br><br>
 	<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>
 
 	<main class="gradientBG">
 
-		<div class="w3-container w3-content" style="max-width:780px;height:180px;margin-top:80px;">    
-			<div class = "w3-card w3-round w3-white" style="height: 160px;">
+		<div class="w3-container w3-content " style="max-width:780px;height:180px;margin-top:80px;">    
+			<div class = "w3-card w3-round content-box" style="height: 160px;">
 				<div class="w3-container">
-				<h1>Welcome to Mentorist!</h1>
-					<h2>Login to get started</h2>
+				<h1 class="titleFont">Welcome to Mentorist!</h1>
+					<h2 class="titleFont">Login to begin your quest</h2>
 				</div>
 			</div>
 		</div>
 
 		<form onsubmit="LogOn($('#logonEmail').val(), $('#logonPassword').val()); return false;">
 			<div class="w3-container w3-content" style="max-width:600px;margin-top:5px">    
-			<div class = "w3-card w3-round w3-white">
+			<div class = "w3-card w3-round content-box">
 			<div class="w3-container">
 			<br>
 			<section>
-				<button onclick= "window.location.href = 'requestAccount.html';" class="w3-button w3-theme-d1 w3-margin-bottom" style="justify-content: center;"> Request an Account</button> 
+				<button onclick= "window.location.href = 'requestAccount.html';" class="w3-button w3-theme-d1 w3-margin-bottom button-hover" style="justify-content: center;"> Request an Account</button> 
 			</section>
 			<section>
 				<label>Email</label><br />
@@ -126,8 +130,8 @@
 			</section>
 			</div>
 			<div>
-				<input class="w3-button w3-theme-l4" id="formButton"  type="reset" value="Clear">
-				<button class="w3-button w3-theme-l4" id="formButton" type="submit">Go!</button>
+				<input class="w3-button w3-theme-l4 button-hover" id="formButton"  type="reset" value="Clear">
+				<button class="w3-button w3-theme-l4 button-hover" id="formButton" type="submit">Go!</button>
 			</div>
 			<br>
 			</div>
