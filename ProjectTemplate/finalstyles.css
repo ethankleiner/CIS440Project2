@@ -22,7 +22,7 @@ html {
   }
 
 .colorOverlay {
-    background-color: rgba(215, 247, 211, 0.722);
+    background-color: rgba(10, 27, 8, 0.545);
     height: 100%; 
     background-position: center;
     background-repeat: no-repeat;
@@ -30,7 +30,7 @@ html {
 }
 
 .content-box{
-    background-color:rgb(64, 120, 64);
+    background-color:rgba(64, 120, 64, 0.669);
     color:white;
 }
 
@@ -38,7 +38,7 @@ html {
     width:100%;
     top:0;
     position: fixed;
-    background-color:rgb(240, 196, 20);
+    background-color:rgb(64, 120, 64);
     /* box-shadow: (50, 50, 50, black); */
     color: white;
 }
@@ -47,8 +47,7 @@ html {
     font-family: 'MedievalSharp', cursive;
 }
 
-
-
+ 
 /* .button-hover:hover{
     background-color: rgb(0, 129, 0);
     color:rgb(184, 136, 14);    
