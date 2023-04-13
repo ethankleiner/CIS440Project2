@@ -3,7 +3,8 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>The Mentorist</title>
+    <title>The Mentorist</title>
+
 	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<link rel="stylesheet" href="finalStyles.css">
@@ -102,70 +103,66 @@
 		}
 	</style>
 	<!--END OF YOUR OWN CSS-->
-</head>
+</head >
 
 <body id="indexBody">
-	<!-- Navbar -->
-	<div class="nav titleFont">
-		<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
-			<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
-				href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-			<a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i
-					class="fa fa-home w3-margin-right"></i>Logo</a>
+	<div class="colorOverlay" >
 
-			<a href="index.html"
-				class="w3-bar-item w3-button w3-left w3-padding-large  w3-theme-d4 button-hover">Help</a>
 
-			<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large button-hover"
-				title="My Account">
+		<!-- Navbar -->
+		<div class="nav titleFont">
+			<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+				<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+				
+				<a href="index.html" class="w3-bar-item w3-button w3-left w3-padding-large  w3-theme-d4 button-hover">Help</a>
+
+				<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large button-hover" title="My Account">
 				<img src="/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
-			</a>
-		</div>
+				</a>
+			</div>
 	</div>
-
+	
 	<br><br><br>
 	<!--	<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>-->
 
-	<main class="gradientBG">
+		<main>
 
-		<div class="w3-container w3-content " style="max-width:780px;height:180px;margin-top:80px;">
-			<div class="w3-card w3-round content-box" style="height: 160px;">
-				<div class="w3-container">
+			<div class="w3-container w3-content " style="max-width:780px; height:180px; margin-top:25px;">    
+				<div class = "w3-card w3-round content-box" style="height: 160px;">
+					<div class="w3-container">
 					<h1 class="titleFont">Welcome to Mentorist!</h1>
-					<h2 class="titleFont">Login to begin your quest</h2>
+						<h2 class="titleFont">Login to begin your quest</h2>
+					</div>
 				</div>
 			</div>
-		</div>
 
-		<form onsubmit="LogOn($('#logonEmail').val(), $('#logonPassword').val()); return false;">
-			<div class="w3-container w3-content" style="max-width:600px;margin-top:5px">
-				<div class="w3-card w3-round content-box">
-					<div class="w3-container">
+			<!-- AHHHH -->
+			<form onsubmit="LogOn($('#logonEmail').val(), $('#logonPassword').val()); return false;">
+				<div class="w3-container w3-content" style="max-width:600px;margin-top:5px">    
+					<div class = "w3-card w3-round content-box">
+						<div class="w3-container">
 						<br>
 						<section>
-							<button onclick="window.location.href = 'requestAccount.html';"
-								class="w3-button w3-theme-d1 w3-margin-bottom button-hover"
-								style="justify-content: center;"> Request an Account</button>
+							<button onclick= "window.location.href = 'requestAccount.html';" class="w3-button w3-theme-d1 w3-margin-bottom button-hover" style="justify-content: center;"> Request an Account</button> 
 						</section>
 						<section>
 							<label>Email</label><br />
-							<input class="textInput" type="text" id="logonEmail" name="account" required /><br /><br />
+							<input class="textInput" type="text" id="logonEmail" name="account" required/><br /><br />
 						</section>
 						<section>
 							<label>Password</label><br />
-							<input class="textInput" type="password" id="logonPassword" name="password"
-								required /><br /><br />
+							<input class="textInput" type="password" id="logonPassword" name="password" required/><br /><br />
 						</section>
+						</div>
+						<div>
+							<input class="w3-button w3-theme-l4 button-hover" id="formButton"  type="reset" value="Clear">
+							<button class="w3-button w3-theme-l4 button-hover" id="formButton" type="submit">Go!</button>
+						</div>
+						<br>
 					</div>
-					<div>
-						<input class="w3-button w3-theme-l4 button-hover" id="formButton" type="reset" value="Clear">
-						<button class="w3-button w3-theme-l4 button-hover" id="formButton" type="submit">Go!</button>
-					</div>
-					<br>
 				</div>
-			</div>
-		</form>
-	</main>
+			</form>
+		</main>
+	</div>
 </body>
-
 </html>
