@@ -5,6 +5,14 @@
     background-repeat: no-repeat;
 } */
 
+html, body {
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
 html { 
     background: url("theShire.jpg") no-repeat center center fixed; 
     -webkit-background-size: cover;
@@ -39,9 +47,16 @@ html {
     font-family: 'MedievalSharp', cursive;
 }
 
-.button-hover:hover{
+
+
+/* .button-hover:hover{
     background-color: rgb(0, 129, 0);
-    color:rgb(184, 136, 14);
+    color:rgb(184, 136, 14);    
+} */
+
+.buts {
+    background-color: aliceblue;
+
 }
 
 body {
