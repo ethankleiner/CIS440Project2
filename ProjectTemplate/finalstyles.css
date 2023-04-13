@@ -22,7 +22,7 @@ html {
   }
 
 .colorOverlay {
-    background-color: rgba(36, 50, 34, 0.554);
+    background-color: rgba(215, 247, 211, 0.722);
     height: 100%; 
     background-position: center;
     background-repeat: no-repeat;
@@ -30,36 +30,33 @@ html {
 }
 
 .content-box{
-    background-color:rgba(51, 137, 71, 0.712);
-    /* box-shadow: 0 0 100px 150px black; */
+    background-color:rgb(64, 120, 64);
     color:white;
-    border-radius: 25px;
 }
 
 .nav{
     width:100%;
     top:0;
     position: fixed;
-    background-color: rgb(51, 137, 71);
-    box-shadow: 0 0 15px black;
+    background-color:rgb(240, 196, 20);
+    /* box-shadow: (50, 50, 50, black); */
     color: white;
 }
 
 .titleFont{
     font-family: 'MedievalSharp', cursive;
 }
-/* 
-nav .button-hover{
-    background-color: inherit;
+
+
+
+/* .button-hover:hover{
+    background-color: rgb(0, 129, 0);
+    color:rgb(184, 136, 14);    
 } */
 
-.button-hover{
-    background-color: rgb(57, 109, 57);
-}
+.buts {
+    background-color: aliceblue;
 
-.button-hover:hover{
-    background-color: rgb(98, 148, 98);
-    /* color:rgb(184, 136, 14); */
 }
 
 body {
