@@ -1,14 +1,24 @@
-#indexBody{
+/* #indexBody{
     background-image: url("theShire.jpg");
-    /* height: auto; */
-    background-size: auto 100%;
+    height: auto;
+    background-size: auto;
     background-repeat: no-repeat;
-}
+} */
+
+html { 
+    background: url("theShire.jpg") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover; 
+  }
 
 .colorOverlay {
-    top: 0;
     background-color: rgba(215, 247, 211, 0.722);
-    height: 100%;
+    height: 100%; 
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .content-box{
@@ -36,4 +46,12 @@
 
 body {
     padding-bottom: 25px;
+}
+
+h1, h2, form {
+	text-align: center;
+}
+
+h1 {
+	margin-top: 20px;
 }
