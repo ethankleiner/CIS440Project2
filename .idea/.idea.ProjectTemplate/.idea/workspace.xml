@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6350286b-44f7-410f-ac4b-843f0af01185" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/Profile.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/Profile.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/ProjectServices.asmx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/ProjectServices.asmx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/profileCreation.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/profileCreation.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +17,7 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProjectId" id="2O40X7iNv21FydfWBGfKYPE6sWE" />
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -39,9 +36,9 @@
   },
   &quot;keyToStringList&quot;: {
     &quot;rider.external.source.directories&quot;: [
-      &quot;/Users/huangyu-hsuan/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
-      &quot;/Users/huangyu-hsuan/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
-      &quot;/Users/huangyu-hsuan/.local/share/Symbols/src&quot;
+      &quot;/Users/barbarajefferson/Library/Application Support/JetBrains/Rider2022.3/resharper-host/DecompilerCache&quot;,
+      &quot;/Users/barbarajefferson/Library/Application Support/JetBrains/Rider2022.3/resharper-host/SourcesCache&quot;,
+      &quot;/Users/barbarajefferson/.local/share/Symbols/src&quot;
     ]
   }
 }</component>
@@ -78,15 +75,29 @@
       <option name="presentableId" value="Default" />
       <updated>1680804583729</updated>
       <workItem from="1680804588340" duration="4266000" />
+      <workItem from="1681355688602" duration="975000" />
+      <workItem from="1681356830406" duration="1169000" />
+      <workItem from="1681359599227" duration="1325000" />
     </task>
+    <task id="LOCAL-00001" summary="added quest page and functionality">
+      <created>1681355926657</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1681355926658</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
   <component name="UnityUnitTestConfiguration" currentTestLauncher="NUnit" />
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value="added quest page and functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="added quest page and functionality" />
   </component>
 </project>
