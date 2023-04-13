@@ -62,7 +62,7 @@
           if (msg.d.length > 0) {
             membersArray = msg.d;
 
-            for (var i = 0; i < membersArray; i++){
+            for (var i = 0; i < membersArray.length; i++){
               console.log(membersArray[i]);
 
               if (membersArray[i].python == true){
@@ -75,8 +75,6 @@
               mentorID = membersArray[i].id;
 
               insertElements(membersArray[i].fname, membersArray[i].lname, membersArray[i].company, membersArray[i].position, membersArray[i].years);
-              
-              //getCourseData();
               
             
           };
@@ -110,10 +108,17 @@
           if (msg.d.length > 0) {
             questsArray = msg.d;
 
-            for (var i = 0; i < questsArray; i++){
+            for (var i = 0; i < questsArray.length; i++){
               console.log(questsArray[i]);
 
+              const mentorList = document.getElementById("mentorList");
+              const div = document.createElement("div");
+              const ul = document.createElement("ul");
+              const value = document.createTextNode(`${questsArray[i].courseName}`);
               
+              ul.appendChild(value);
+              div.appendChild(ul);
+              mentorList.appendChild(div);
             }
           } else {
             alert('loading failed');
@@ -137,6 +142,7 @@
       mentorList.appendChild(div);
       console.log(mentorList);
 
+      getCourseData();
     }
 
 </script>
