@@ -1,10 +1,18 @@
 #indexBody{
-    background-image: url("LoginBackground.jpg");
+    background-image: url("theShire.jpg");
+    /* height: auto; */
+    background-size: auto 100%;
+    background-repeat: no-repeat;
+}
 
+.colorOverlay {
+    top: 0;
+    background-color: rgba(215, 247, 211, 0.722);
+    height: 100%;
 }
 
 .content-box{
-    background-color:rgb(0, 93, 0);
+    background-color:rgb(67, 142, 67);
     color:white;
 }
 
@@ -12,7 +20,8 @@
     width:100%;
     top:0;
     position: fixed;
-    background-color:rgb(0, 93, 0);
+    background-color:rgba(56, 111, 40, 0.666);
+    /* box-shadow: (50, 50, 50, black); */
     color: white;
 }
 
@@ -23,4 +32,8 @@
 .button-hover:hover{
     background-color: rgb(0, 129, 0);
     color:rgb(184, 136, 14);
+}
+
+body {
+    padding-bottom: 25px;
 }
