@@ -17,6 +17,30 @@
       </style>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script>
+        function LogOff() {
+
+          var webMethod = "ProjectServices.asmx/LogOff";
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d) {
+                //we logged off, so go back to logon page,
+                //stop checking messages
+                //and clear the chat panel
+                window.open('index.html', '_self')
+                
+              } else {
+                alert('logout failed')
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
+        }
         
       </script>
    </head>
@@ -50,7 +74,7 @@
           title="My Account">
           <img src="ProfilePic.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
         </a>
-        <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white">Logout</a>
+        <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" onclick="LogOff">Logout</a>
 
       </div>
     </div>
