@@ -500,6 +500,7 @@ namespace ProjectTemplate
 			{
 				profiles.Add(new Profile
 				{
+					id = sqlDt.Rows[i]["mentorID"].ToString(),
 					fname = sqlDt.Rows[i]["fname"].ToString(),
 					lname = sqlDt.Rows[i]["lname"].ToString(),
 					company = sqlDt.Rows[i]["company"].ToString(),

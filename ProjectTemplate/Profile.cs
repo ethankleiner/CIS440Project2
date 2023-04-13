@@ -2,6 +2,7 @@ namespace ProjectTemplate
 {
     public class Profile
     {
+        public string id;
         public string fname;
         public string lname;
         public string company;

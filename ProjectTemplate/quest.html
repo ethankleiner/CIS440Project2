@@ -23,7 +23,7 @@
             userRole = msg.d;
             console.log(userRole);
             console.log("call function");
-            getQuests();
+            getQuestMemberData();
           }
           else {
             alert("load current role failed");
@@ -74,8 +74,10 @@
               // document.getElementById('userPosition').innerHTML = profilesArray[i].position;
               // document.getElementById('userBio').innerHTML = profilesArray[i].bio;
               // document.getElementById('area').innerHTML = interests;
-              
-          }} else {
+            
+          };
+             getCourseData();
+        } else {
             alert('loading failed');
           }
         },
@@ -119,7 +121,7 @@
 
 </script>
 
-<body>
+<body onload="getCurrentRole()">
 
   <h1>Quests</h1>
     
