@@ -591,5 +591,34 @@ namespace ProjectTemplate
 			//convert the list of accounts to an array and return!
 				return quests;
 		}
+
+		[WebMethod(EnableSession = true)]
+
+		public void Enroll(int courseID)
+		{
+			string sqlSelect = "insert into Progress(menteeID, courseID, check1, check2, check3, check4, check5, progress) values(@menteeValue, @courseID, false, false, false, false, false, 0);";
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			sqlCommand.Parameters.AddWithValue("@menteeValue", Session["userID"]);
+			sqlCommand.Parameters.AddWithValue("@courseID", courseID);
+			
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			Console.WriteLine("Executing query...");
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+				Console.WriteLine("Query executed");
+			}
+			catch (Exception e)
+			{
+				Console.WriteLine(e);
+			}
+
+			sqlConnection.Close(); 
+		}
 	}
 }

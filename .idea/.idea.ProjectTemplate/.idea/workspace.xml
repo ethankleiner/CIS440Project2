@@ -4,16 +4,9 @@
     <projectFile>ProjectTemplate/ProjectTemplate.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6350286b-44f7-410f-ac4b-843f0af01185" name="Changes" comment="added id field to profile object and added onload to quest page">
+    <list default="true" id="6350286b-44f7-410f-ac4b-843f0af01185" name="Changes" comment="adjusted getQuestMember function to check for role before storing id">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/ProjectServices.asmx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/ProjectServices.asmx.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.CoreCompileInputs.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/quest.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/quest.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +28,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/Profile.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///Users/barbarajefferson/Documents/CIS440Project2/ProjectTemplate/ProjectServices.asmx.cs" root0="SKIP_HIGHLIGHTING" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -99,7 +93,7 @@
       <workItem from="1680804588340" duration="4266000" />
       <workItem from="1681355688602" duration="975000" />
       <workItem from="1681356830406" duration="1169000" />
-      <workItem from="1681359599227" duration="4543000" />
+      <workItem from="1681359599227" duration="6553000" />
     </task>
     <task id="LOCAL-00001" summary="added quest page and functionality">
       <created>1681355926657</created>
@@ -115,7 +109,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681361167874</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="adjusted getQuestMember function to check for role before storing id">
+      <created>1681364833381</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1681364833382</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +129,7 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="added quest page and functionality" />
     <MESSAGE value="added id field to profile object and added onload to quest page" />
-    <option name="LAST_COMMIT_MESSAGE" value="added id field to profile object and added onload to quest page" />
+    <MESSAGE value="adjusted getQuestMember function to check for role before storing id" />
+    <option name="LAST_COMMIT_MESSAGE" value="adjusted getQuestMember function to check for role before storing id" />
   </component>
 </project>
