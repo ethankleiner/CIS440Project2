@@ -162,11 +162,14 @@ namespace ProjectTemplate
 			DataTable sqlDt = new DataTable("accounts");
 
 			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			string sqlSelect = "select email, pword, roles from users;";
+			string sqlSelect = "select email, pword, roles from users where userID=@idValue;";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+
+			
 			//gonna use this to fill a data table
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
 			//filling the data table
@@ -280,17 +283,19 @@ namespace ProjectTemplate
 			//does is tell mySql server to return the primary key of the last inserted row.
 
 			Console.WriteLine("Executing profile creation...");
+
 			
 			string sqlSelect = " ";
 			string picName = Session["userID"].ToString() + ".png";
-			
-			Console.WriteLine(Session["role"] + picName);
+			Console.WriteLine(Session["role"] + picName + fname + lname + bday + phone + comp + years + pos + bio + python + java + sql);
 
-			if (Session["role"] == "mentor")
+			if ((string)Session["role"] == "mentor")
 			{
 				sqlSelect = "Update Mentors Set fname=@fnameValue, lname=@lnameValue, company=@companyValue, phone=@phoneValue," +
 				            "experienceYears=@yearsValue, positionRole=@positionValue, birthday=@bdayValue, profileBio=@bioValue," +
 				            "profilePic=@picValue, pythonOption=@pythonValue, javaOption=@javaValue, sqlOption=@sqlValue where mentorID=@idValue";
+				// sqlSelect = "Update Mentors Set lname=@lnameValue where mentorID=@idValue;";
+				
 			}
 			else
 			{
@@ -298,6 +303,8 @@ namespace ProjectTemplate
 				            "experienceYears=@yearsValue, positionRole=@positionValue, birthday=@bdayValue, profileBio=@bioValue," +
 				            "profilePic=@picValue, pythonOption=@pythonValue, javaOption=@javaValue, sqlOption=@sqlValue where menteeID=@idValue";
 			}
+			
+			Console.WriteLine(sqlSelect);
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -420,10 +427,20 @@ namespace ProjectTemplate
 		{
 			Console.WriteLine(title + Session["userID"]+ check1 + check2 + check3 + check4 + check5);
 			
-			string sqlSelect = "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
-			                   "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value)" +
-			                   "; SELECT LAST_INSERT_ID();";
+			// string sqlSelect = "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
+			//                    "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value)" +
+			//                    "; SELECT LAST_INSERT_ID();";
+
 			
+			string sqlSelect = "SET FOREIGN_KEY_CHECKS = 0;";
+			
+			sqlSelect += "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
+			            "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value);";
+
+			sqlSelect += "SET FOREIGN_KEY_CHECKS = 1;";
+
+			Console.WriteLine(sqlSelect);
+				
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 
@@ -442,11 +459,99 @@ namespace ProjectTemplate
 			try
 			{
 				Console.WriteLine("executing...");
+				sqlCommand.ExecuteNonQuery();
 			}
 			catch (Exception e) {
 				Console.WriteLine(e);
 			}
 			sqlConnection.Close();
+		}
+		
+		[WebMethod(EnableSession = true)]
+		public Profile[] getQuestMembers(string role)
+		{
+			Console.WriteLine("Executing profile...");
+			Console.WriteLine(role);
+			
+			DataTable sqlDt = new DataTable("accounts");
+			
+			string sqlSelect = " ";
+			
+			if (role == "mentee")
+			{
+				sqlSelect = "select * from Mentors;";
+			}
+			else
+			{
+				Console.WriteLine("Logged in as Mentor, functionality coming soon");
+			}
+		
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+		
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+			
+			// change class to name to more general name
+			List<Profile> profiles = new List<Profile>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				profiles.Add(new Profile
+				{
+					fname = sqlDt.Rows[i]["fname"].ToString(),
+					lname = sqlDt.Rows[i]["lname"].ToString(),
+					company = sqlDt.Rows[i]["company"].ToString(),
+					phone = sqlDt.Rows[i]["phone"].ToString(),
+					years = sqlDt.Rows[i]["experienceYears"].ToString(),
+					birthday = sqlDt.Rows[i]["birthday"].ToString(),
+					position = sqlDt.Rows[i]["positionRole"].ToString(),
+					bio = sqlDt.Rows[i]["profileBio"].ToString(),
+					picture = sqlDt.Rows[i]["profilePic"].ToString(),
+					python = Convert.ToBoolean(sqlDt.Rows[i]["pythonOption"]),
+					java = Convert.ToBoolean(sqlDt.Rows[i]["javaOption"]),
+					sql = Convert.ToBoolean(sqlDt.Rows[i]["sqlOption"])
+				});
+			}
+			//convert the list of accounts to an array and return!
+			return profiles.ToArray();
+		}
+		
+		[WebMethod(EnableSession = true)]
+			  
+		public List<Quest> getQuests() {
+			Console.WriteLine("Executing quests...");
+				
+			DataTable sqlDt = new DataTable ("quests");
+			  
+			string sqlSelect = "select * from Courses;";
+		
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			  
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+			
+			List<Quest> quests = new List<Quest>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				quests.Add(new Quest
+				{
+					courseID = Convert.ToInt32(sqlDt.Rows[i]["courseID"]),
+					courseName = sqlDt.Rows[i]["courseName"].ToString(),
+					courseCreatorID = Convert.ToInt32(sqlDt.Rows[i]["courseCreatorID"]),
+					check1 = sqlDt.Rows[i]["check1"].ToString(),
+					check2 = sqlDt.Rows[i]["check2"].ToString(),
+					check3 = sqlDt.Rows[i]["check3"].ToString(),
+					check4 = sqlDt.Rows[i]["check4"].ToString(),
+					check5 = sqlDt.Rows[i]["check5"].ToString()
+				});
+			}
+		
+			//convert the list of accounts to an array and return!
+				return quests;
 		}
 	}
 }
