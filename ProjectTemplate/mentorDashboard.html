@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title>Dashboard</title>
+  <title>Mentor Dashboard</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -81,33 +81,38 @@
   <!-- Sidebar/menu -->
   <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
     <div class="w3-container w3-row">
-      <div class="w3-col s4">
-        <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
-      </div>
-      <div class="w3-col s8 w3-bar">
+      <div >
         <span>Welcome, <strong>Mike</strong></span><br>
-        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
-        <a href="profile.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-        <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+        <span>How fareth thine apprentices?</span><br>
       </div>
     </div>
     <hr>
     <div class="w3-container">
-      <select name="cars" id="cars">
-        <option value="volvo">Quest 1</option>
-        <option value="saab">Quest 2</option>
-        <option value="mercedes">Quest 3</option>
-        <option value="audi">Quest 4</option>
+      <select name="mentees" id="menteeLisy">
+        <!-- getMentees - click on option and get mentees enrolled -->
+        <option id="quest1" value="quest1Value" onclick="getMentees()">Quest 1</option>
+        <option id="quest2" value="quest2Value" style="visibility:hidden" onclick="getMentees()">Quest 2</option>
+        <option id="quest3" value="quest3Value" style="visibility:hidden" onclick="getMentees()">Quest 3</option>
+        <option id="quest4" value="quest4Value" style="visibility:hidden" onclick="getMentees()">Quest 4</option>
+        <option id="quest5" value="quest5Value" style="visibility:hidden" onclick="getMentees()">Quest 5</option>
+        <!-- can we create these in the script instead of having visibility set to hidden? -->
       </select>
 
-      <h5>My Apprentices</h5>
+      <h5>Apprentices</h5>
     </div>
     <div class="w3-bar-block">
       <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
         onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Apprentice 1</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Apprentice 2</a>
-      <a href="#" class="w3-bar-item w3-button w3-padding w3-blue"><i class="fa fa-users fa-fw"></i>  Apprentice 3</a>
+      <button id="mentee1" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 1</button>
+      <button id="mentee2" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 2</button>
+      <button id="mentee3" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 3</button>
+      <button id="mentee4" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 4</button>
+      <button id="mentee5" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 5</button>
+      <button id="mentee6" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 6</button>
+      <button id="mentee7" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 7</button>
+      <button id="mentee8" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 8</button>
+      <button id="mentee9" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 9</button>
+      <button id="mentee10" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 10</button>
     </div>
   </nav>
 
@@ -121,13 +126,12 @@
 
     <!-- Header -->
     <header class="w3-container" style="padding-top:20px">
-      <h5><b><i class="fa fa-dashboard"></i>My Dashboard</b></h5>
+      <h1><b>Quest Title</b></h1>
     </header>
 
     <hr>
     <div class="w3-container">
-      <h5>Quest Progress</h5>
-      <p>New Visitors</p>
+      <h5>Progress</h5>
       <div class="w3-grey">
         <div id="progressBar" class="w3-container w3-center w3-padding w3-green" style="width:0%">0%</div>
       </div>
@@ -166,7 +170,7 @@
           </tr>
         </table><br>
       </form>
-    </div>
+    <!-- </div>
     <hr>
     <div class="w3-container">
       <h5>My Mentors/Mentees</h5>
@@ -186,7 +190,7 @@
       </ul>
     </div>
     <hr>
-  </div>
+  </div> -->
 
   <script>
     // Get the Sidebar
