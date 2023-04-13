@@ -103,6 +103,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Profile.cs" />
+    <Compile Include="Progress.cs" />
     <Compile Include="ProjectServices.asmx.cs">
       <DependentUpon>ProjectServices.asmx</DependentUpon>
       <SubType>Component</SubType>
