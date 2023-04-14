@@ -17,7 +17,14 @@
       </style>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script>
+        
         var userRole;
+        var progressArray;
+        var profilesArray;
+        var questNumber;
+        var progressID;
+        var questMentor;
+        var percentCompleteNumber;
 
         function getCurrentRole(){
           var webMethod = "ProjectServices.asmx/LoadCurrentRole";
@@ -49,8 +56,6 @@
 
         function getProfile(){
 
-          var profilesArray;
-
           console.log("loading profile data...");
 
           webMethod = "ProjectServices.asmx/StoreProfiles";
@@ -69,8 +74,11 @@
                 for (var i = 0; i < profilesArray.length; i++){
                   console.log(profilesArray[i]);
                   document.getElementById('userName').innerHTML = profilesArray[i].fname;
+                }
 
-                } }else {
+                getProgress();
+                
+              }else {
                 alert('loading failed');
               }
             },
@@ -81,7 +89,6 @@
         }
 
         function getProgress(){
-          var progressArray;
 
           console.log("loading progress data...");
 
@@ -96,15 +103,145 @@
             dataType: "json",
             success: function (msg) {
               if (msg.d.length > 0) {
+                
                 progressArray = msg.d;
 
-                for (var i = 0; i < profilesArray.length; i++){
-                  console.log(progressArray[i]);
-                  // insert more data into Progress table to enroll 2 more classses
-                  // write a for loop to count haw many courses enrolled by the mentee
-                  // then make the corresponding numbers of quest button visible
+                switch(progressArray.length) {
+                  case 1:
+                    document.getElementById(quest1button).style.visibilty = 'visible';
+                    break;
+                  case 2:
+                    document.getElementById(quest1button).style.visibilty = 'visible';
+                    document.getElementById(quest2button).style.visibilty = 'visible';
+                    break;
+                  case 3:
+                    document.getElementById(quest1button).style.visibilty = 'visible';
+                    document.getElementById(quest2button).style.visibilty = 'visible';
+                    document.getElementById(quest3button).style.visibilty = 'visible';
+                    break;
+                  case 4:
+                    document.getElementById(quest1button).style.visibilty = 'visible';
+                    document.getElementById(quest2button).style.visibilty = 'visible';
+                    document.getElementById(quest3button).style.visibilty = 'visible';
+                    document.getElementById(quest4button).style.visibilty = 'visible';
+                    break;
+                  case 5:
+                    document.getElementById(quest1button).style.visibilty = 'visible';
+                    document.getElementById(quest2button).style.visibilty = 'visible';
+                    document.getElementById(quest3button).style.visibilty = 'visible';
+                    document.getElementById(quest4button).style.visibilty = 'visible';
+                    document.getElementById(quest5button).style.visibilty = 'visible';
+                    break;
+                  default:
+                    document.getElementById(quest1button).style.visibilty = 'visible';
+                    document.getElementById(quest2button).style.visibilty = 'visible';
+                    document.getElementById(quest3button).style.visibilty = 'visible';
+                    document.getElementById(quest4button).style.visibilty = 'visible';
+                    document.getElementById(quest5button).style.visibilty = 'visible';
+                    document.getElementById(quest6button).style.visibilty = 'visible';
+                    break;
+                } 
+              }else {
+                alert('loading failed');
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
 
-                } }else {
+        }
+        
+        function getQuest(questNumber){
+          
+          for (var i = 1; i <= progressArray.length; i++) {
+            
+            if (questNumber == i){
+              
+              progressID = progressArray[i].progressID;
+              
+              if (progressArray[i].check1 == true){
+                document.getElementById("checkpoint1").checked = true;
+              } else if (progressArray[i].check2 == true){
+                document.getElementById("checkpoint2").checked = true;
+              } else if (progressArray[i].check3 == true){
+                document.getElementById("checkpoint3").checked = true;
+              } else if (progressArray[i].check4 == true){
+                document.getElementById("checkpoint4").checked = true;
+              } else if (progressArray[i].check5 == true){
+                document.getElementById("checkpoint5").checked = true;
+              }
+            }
+            
+          };
+          
+          getCourseInfo();
+
+        }
+        
+        function getCourseInfo(){
+
+          console.log("loading course data...");
+          
+          webMethod = "ProjectServices.asmx/getAdvancedProgress";
+          parameters = "{\"progressID\":\"" + encodeURI(progressID) + "\"}";
+
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d > 0) {
+                
+                questMentor= msg.d;
+                console.log(questMentor);
+                // will add course decription later
+                document.getElementById("courseMentor").innerHTML = questMentor;
+
+              }else {
+                alert('loading failed');
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
+          
+        }
+        
+        function storeProcess(){
+
+          console.log(progressID);
+          console.log(percentCompleteNumber);
+          console.log("update new procress data...");
+          
+          var check1 = document.getElementById("checkpoint1").checked;
+          var check2 = document.getElementById("checkpoint2").checked;
+          var check3 = document.getElementById("checkpoint3").checked;
+          var check4 = document.getElementById("checkpoint4").checked;
+          var check5 = document.getElementById("checkpoint5").checked;
+          var progress = percentCompleteNumber;
+
+          webMethod = "ProjectServices.asmx/storeProgress";
+          parameters = "{\"check1\":\"" + encodeURI(check1) + "\", \"check2\":\"" + encodeURI(check2) + 
+                  "\", \"check3\":\"" + encodeURI(check3) + "\", \"check4\":\"" + encodeURI(check4) + 
+                  "\", \"check5\":\"" + encodeURI(check5) + "\", \"progress\":\"" + encodeURI(progress) + 
+                  "\", \"progressID\":\"" + encodeURI(progressID) + "\"}";
+
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d.length > 0) {
+
+               alert('Progress Saved!')
+
+              }else {
                 alert('loading failed');
               }
             },
@@ -146,7 +283,7 @@
 
    </main>
 
-<body class="w3-light-grey">
+<body onload="getCurrentRole()" class="w3-light-grey">
 
     <!-- Navbar -->
     <div class="w3-top">
@@ -202,17 +339,17 @@
         <!-- TODO: change onclick function being called -->
         <!-- TODO: Set up javascript to change HTML for Quest names -->
         <button id="quest1button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest()"></i>  Quest 1</button>
+            class="fa fa-users fa-fw" onclick="getQuest(1)"></i>  Quest 1</button>
         <button id="quest2button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest()"></i>  Quest 2</button>
+            class="fa fa-users fa-fw" onclick="getQuest(2)"></i>  Quest 2</button>
         <button id="quest3button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest()"></i>  Quest 3</button>
+            class="fa fa-users fa-fw" onclick="getQuest(3)"></i>  Quest 3</button>
         <button id="quest4button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest()"></i>  Quest 4</button>
+            class="fa fa-users fa-fw" onclick="getQuest(4)"></i>  Quest 4</button>
         <button id="quest5button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest()"></i>  Quest 5</button>
+            class="fa fa-users fa-fw" onclick="getQuest(5)"></i>  Quest 5</button>
         <button id="quest6button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest()"></i>  Quest 6</button>
+            class="fa fa-users fa-fw" onclick="getQuest(6)"></i>  Quest 6</button>
       </div>
     </nav>
 
@@ -241,7 +378,7 @@
 
       <!-- Course Checkpoint Template -->
       <div class="w3-container">
-        <form>
+        <form onsubmit="storeProcess()">
           <h5>Course List</h5>
           <table id="cpList" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
             <tr id="tr1">
@@ -332,6 +469,8 @@
           if (checkpoints[i].checked)
             complete += 1
         }
+        
+        percentCompleteNumber = (complete / total).toFixed(2) * 100 // for backend to store the data
         let percentComplete = String((complete / total).toFixed(2) * 100) + '%'
         console.log(complete)
         console.log(percentComplete)

@@ -648,5 +648,83 @@ namespace ProjectTemplate
 			//convert the list of accounts to an array and return!
 			return progresses.ToArray();
 		}
+		
+		[WebMethod(EnableSession = true)]
+		public string getAdvancedProgress(string progressID)
+		{
+			Console.WriteLine("Loading progress...");
+			Console.WriteLine(Session["userID"]);
+			
+			DataTable sqlDt = new DataTable("accounts");
+			
+			string sqlSelect = "select m.fname, m.lname from Progress p , Courses c , Mentors m " +
+			                   "where progressID=@idValue and p.courseID=c.courseID and c.courseCreatorID=m.mentorID;";
+			
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", Convert.ToInt32(HttpUtility.UrlDecode(progressID)));
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			string course_mentor_name = "";
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				course_mentor_name = sqlDt.Rows[i]["fname"].ToString() + " " + sqlDt.Rows[i]["lname"].ToString();
+				Console.WriteLine(course_mentor_name);
+			}
+			//return role
+			return course_mentor_name;
+		}
+		
+		[WebMethod(EnableSession = true)]
+		public bool storeProgress(string check1, string check2, string check3, string check4, string check5, string progress, string progressID)
+		{
+			Console.WriteLine(check1 +check2 + check3 + check4 + check5 + progress + progressID);
+			
+			bool success = false;
+			string sqlSelect = "SET FOREIGN_KEY_CHECKS = 0;";
+			
+			sqlSelect += "Update Progress Set check1=@c1Value, check2=@c2Value, check3=@c3Value, check4=@c4Value, check5=c5Value," +
+			             "progress=@progressValue Where progressID=@idValue;";
+
+			sqlSelect += "SET FOREIGN_KEY_CHECKS = 1;";
+			
+			Console.WriteLine(sqlSelect);
+			
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@c1Value", Convert.ToBoolean(HttpUtility.UrlDecode(check1)));
+			sqlCommand.Parameters.AddWithValue("@c2Value", Convert.ToBoolean(HttpUtility.UrlDecode(check2)));
+			sqlCommand.Parameters.AddWithValue("@c3Value", Convert.ToBoolean(HttpUtility.UrlDecode(check3)));
+			sqlCommand.Parameters.AddWithValue("@c4Value", Convert.ToBoolean(HttpUtility.UrlDecode(check4)));
+			sqlCommand.Parameters.AddWithValue("@c5Value", Convert.ToBoolean(HttpUtility.UrlDecode(check5)));
+			sqlCommand.Parameters.AddWithValue("@progressValue", Convert.ToInt32(HttpUtility.UrlDecode(progress)));
+			sqlCommand.Parameters.AddWithValue("@idValue", Convert.ToInt32(HttpUtility.UrlDecode(progressID)));
+			
+			sqlConnection.Open();
+			//we're using a try/catch so that if the query errors out we can handle it gracefully
+			//by closing the connection and moving on
+			Console.WriteLine("Executing query...");
+			
+			try
+			{
+				sqlCommand.ExecuteNonQuery();
+				success = true;
+				Console.WriteLine(success);
+			}
+			catch (Exception e) {
+				Console.WriteLine(e);
+				success = false;
+			}
+
+			sqlConnection.Close();
+			return success;
+		}
 	}
 }
