@@ -17,6 +17,103 @@
       </style>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script>
+        var userRole;
+
+        function getCurrentRole(){
+          var webMethod = "ProjectServices.asmx/LoadCurrentRole";
+          var parameters = "{}";
+
+          //jQuery ajax method
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d) {
+                userRole = msg.d;
+                console.log(userRole);
+                console.log("call function");
+                getProfile();
+              }
+              else {
+                alert("load current role failed");
+              }
+            },
+            error: function (e) {
+              // alert("load current role boo...");
+            }
+          });
+        }
+
+        function getProfile(){
+
+          var profilesArray;
+
+          console.log("loading profile data...");
+
+          webMethod = "ProjectServices.asmx/StoreProfiles";
+          parameters = "{\"role\":\"" + encodeURI(userRole) + "\"}";
+
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d.length > 0) {
+                profilesArray = msg.d;
+
+                for (var i = 0; i < profilesArray.length; i++){
+                  console.log(profilesArray[i]);
+                  document.getElementById('userName').innerHTML = profilesArray[i].fname;
+
+                } }else {
+                alert('loading failed');
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
+        }
+
+        function getProgress(){
+          var progressArray;
+
+          console.log("loading progress data...");
+
+          webMethod = "ProjectServices.asmx/getProgress";
+          parameters = "{}";
+
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d.length > 0) {
+                progressArray = msg.d;
+
+                for (var i = 0; i < profilesArray.length; i++){
+                  console.log(progressArray[i]);
+                  // insert more data into Progress table to enroll 2 more classses
+                  // write a for loop to count haw many courses enrolled by the mentee
+                  // then make the corresponding numbers of quest button visible
+
+                } }else {
+                alert('loading failed');
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
+
+        }
         function LogOff() {
 
           var webMethod = "ProjectServices.asmx/LogOff";
@@ -89,7 +186,7 @@
           <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
         </div>
         <div class="w3-col s8 w3-bar">
-          <span>Welcome, <strong>Mike</strong></span><br>
+          Welcome, <strong><span id="userName">Mike</span></strong><br>
           <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
           <a href="profile.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
           <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
