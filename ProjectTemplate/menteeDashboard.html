@@ -52,7 +52,9 @@
               // alert("load current role boo...");
             }
           });
+
         }
+        
 
         function getProfile(){
 
@@ -283,7 +285,7 @@
 
    </main>
 
-<body onload="getCurrentRole()" class="w3-light-grey">
+<body onload="displayName()" class="w3-light-grey">
 
     <!-- Navbar -->
     <div class="w3-top">
@@ -320,18 +322,20 @@
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
       <div class="w3-container w3-row">
         <div class="w3-col s4">
-          <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
         </div>
-        <div class="w3-col s8 w3-bar">
-          Welcome, <strong><span id="userName">Mike</span></strong><br>
-          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+        <div class="w3-col s8 w3-bar" style="font-size: 20px;">
+          Welcome, <strong id="displayName"><span>Mike</span></strong><br>
+          <!-- <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
           <a href="profile.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a> -->
         </div>
       </div>
       <hr>
       <div class="w3-container">
         <h5>My Quests</h5>
+        <div id="menteeQuests">
+          quest list here
+        </div>
       </div>
       <div class="w3-bar-block">
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
@@ -363,10 +367,8 @@
 
       <!-- Header -->
       <header class="w3-container" style="padding-top:20px">
-        <h5><b><i class="fa fa-dashboard"></i>My Dashboard</b></h5>
+        <h5><b style = "font-size: 30px; padding-left: 420px;"><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
       </header>
-
-      <hr>
       <div class="w3-container">
         <h5>Course Progress</h5>
         <p>New Visitors</p>
@@ -504,6 +506,95 @@
                 }
             })
         }
+
+        var userID = 0;
+
+        function displayName(){
+            
+            console.log("loaded first name...");
+            
+            webMethod = "ProjectServices.asmx/LoadMenteeName";
+            parameters = "{\"charID\":\"" + encodeURI(userID) + "\"}";
+
+            $.ajax({
+                type: "POST",
+                url: webMethod,
+                data: parameters,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (msg) {
+                    if (msg.d.length > 0) {
+                        userResult = msg.d;
+                        console.log(userResult);
+                        document.getElementById('displayName').innerHTML = userResult;
+                    }
+                    else {
+                        alert('loading failed');
+                    }
+                },
+                error: function (e) {
+                    alert("boo...");
+                }
+            });
+
+            getCourseData();
+            
+    }
+
+    menteeID = 0;
+
+    function getCourseData() {
+      var quests;
+
+      console.log("loading quest data...");
+
+      webMethod = "ProjectServices.asmx/menteeQuests";
+      parameters = "{\"id\":\"" + encodeURI(menteeID) + "\"}";
+
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d.length > 0) {
+            quests = msg.d;
+            document.getElementById('menteeQuests').innerHTML = quests;
+          } else {
+            alert('loading failed');
+          }
+        },
+        error: function (e) {
+          alert("boo...");
+        }
+      });
+    }
+
+    function LogOff() {
+
+      var webMethod = "ProjectServices.asmx/LogOff";
+      $.ajax({
+          type: "POST",
+          url: webMethod,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (msg) {
+              if (msg.d) {
+                  //we logged off, so go back to logon page,
+                  //stop checking messages
+                  //and clear the chat panel
+                  window.open('index.html', '_self')
+              }
+              else {
+                  alert('logout failed')
+              }
+          },
+          error: function (e) {
+              alert("boo...");
+          }
+      });
+}
 
       function LogOff() {
 
