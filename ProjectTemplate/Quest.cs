@@ -10,5 +10,6 @@ namespace ProjectTemplate
         public string check3;
         public string check4;
         public string check5;
+        public string description;
     }
 }
