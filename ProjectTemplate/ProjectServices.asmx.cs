@@ -680,6 +680,100 @@ namespace ProjectTemplate
 			//return role
 			return course_mentor_name;
 		}
+
+		[WebMethod(EnableSession = true)]
+		public string LoadMentorName()
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			// select latest login id
+			string sqlSelect = "select fname from Mentors where mentorID=@idValue;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			string userResult = "";
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				userResult = sqlDt.Rows[i]["fname"].ToString();
+				Console.WriteLine(userResult);
+			}
+			//return role
+			Console.WriteLine("test");
+
+			return userResult;
+		}
+
+		[WebMethod(EnableSession = true)]
+		public string LoadMenteeName()
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			// select latest login id
+			string sqlSelect = "select fname from Mentees where menteeID=@idValue;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			string userResult = "";
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				userResult = sqlDt.Rows[i]["fname"].ToString();
+				Console.WriteLine(userResult);
+			}
+			//return role
+			Console.WriteLine("test");
+
+			return userResult;
+		}
+
+		[WebMethod(EnableSession = true)]
+		public string menteeQuests() {
+			Console.WriteLine("Executing quests...");
+				
+			DataTable sqlDt = new DataTable ("quests");
+			  
+			//***needs modifying*****
+			string sqlSelect = "SELECT courseName FROM Courses;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
+			
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+			
+			string quests = "";
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				quests = sqlDt.Rows[i]["courseName"].ToString() + "\n";
+				Console.WriteLine(quests);
+			}
+
+			Console.WriteLine("Executing done...");
+
+		
+			//convert the list of accounts to an array and return!
+				return quests;
+		}
 		
 		[WebMethod(EnableSession = true)]
 		public bool storeProgress(string check1, string check2, string check3, string check4, string check5, string progress, string progressID)
