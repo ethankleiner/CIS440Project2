@@ -186,13 +186,13 @@
                   for (var i = 0; i < questsArray.length; i++) {
                     console.log(questsArray[i]);
                     const searchResult = {
-                      progressID: searchProgressID,
                       courseName: questsArray[i].courseName,
                       check1: questsArray[i].check1,
                       check2: questsArray[i].check2,
                       check3: questsArray[i].check3,
                       check4: questsArray[i].check4,
-                      check5: questsArray[i].check5
+                      check5: questsArray[i].check5,
+                      description: questsArray[i].description
                     }
                     searchResultArray.push(searchResult);
                   }
@@ -218,6 +218,9 @@
                       document.querySelector('#quest6button').innerHTML = displayResult.courseName;
                     }
                   }
+
+                  getQuest(1);
+                  
                 } else {
                   alert('loading failed');
                 }
@@ -244,6 +247,7 @@
               document.getElementById("check3label").innerHTML = displayResult.check3;
               document.getElementById("check4label").innerHTML = displayResult.check4;
               document.getElementById("check5label").innerHTML = displayResult.check5;
+              document.getElementById("courseDescription").innerHTML = displayResult.description;
               break;
             }
           }
@@ -255,19 +259,39 @@
 
               console.log(progressArray[i].progressID);
               progressID = progressArray[i].progressID;
-              console.log(progressArray[i].check1);
               
-              if (progressArray[i].check1 == true){
+              if (progressArray[i].check1 == true) { 
                 document.getElementById("checkpoint1").checked = true;
-              } else if (progressArray[i].check2 == true){
+              } else {
+                document.getElementById("checkpoint1").checked = false;
+              };
+              
+              if (progressArray[i].check2 == true) {
                 document.getElementById("checkpoint2").checked = true;
-              } else if (progressArray[i].check3 == true){
+              } else {
+                document.getElementById("checkpoint2").checked = false;
+              };
+
+              if (progressArray[i].check3 == true) {
                 document.getElementById("checkpoint3").checked = true;
-              } else if (progressArray[i].check4 == true){
+              } else {
+                document.getElementById("checkpoint3").checked = false;
+              };
+
+              if (progressArray[i].check4 == true) {
                 document.getElementById("checkpoint4").checked = true;
-              } else if (progressArray[i].check5 == true){
+              } else {
+                document.getElementById("checkpoint4").checked = false;
+              };
+
+              if (progressArray[i].check5 == true) {
                 document.getElementById("checkpoint5").checked = true;
-              }
+              } else {
+                document.getElementById("checkpoint5").checked = false;
+              };
+
+              updateBar();
+              
               break;
             }
             
@@ -308,11 +332,11 @@
           
         }
         
-        function storeProcess(){
+        function saveProgress(){
 
           console.log(progressID);
           console.log(percentCompleteNumber);
-          console.log("update new procress data...");
+          console.log("update new progress data...");
           
           var check1 = document.getElementById("checkpoint1").checked;
           var check2 = document.getElementById("checkpoint2").checked;
@@ -320,6 +344,7 @@
           var check4 = document.getElementById("checkpoint4").checked;
           var check5 = document.getElementById("checkpoint5").checked;
           var progress = percentCompleteNumber;
+          console.log(check1);
 
           webMethod = "ProjectServices.asmx/storeProgress";
           parameters = "{\"check1\":\"" + encodeURI(check1) + "\", \"check2\":\"" + encodeURI(check2) + 
@@ -334,7 +359,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-              if (msg.d.length > 0) {
+              if (msg.d) {
 
                alert('Progress Saved!')
 
@@ -408,7 +433,7 @@
           title="My Account">
           <img src="ProfilePic.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
         </a>
-        <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" onclick="LogOff">Logout</a>
+        <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" onclick="LogOff()">Logout</a>
 
       </div>
     </div>
@@ -475,7 +500,7 @@
 
       <!-- Course Checkpoint Template -->
       <div class="w3-container">
-        <form onsubmit="storeProcess()">
+        <form>
           <h5>Course List</h5>
           <table id="cpList" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
             <tr id="tr1">
@@ -504,7 +529,7 @@
               </td>
             </tr>
           </table><br>
-          <button class="button" id="submitButton" type="submit">Save Progress</button>
+          <button class="button" type="button" id="submitButton" onclick="saveProgress()">Save Progress</button>
         </form>
         <br>
       </div>

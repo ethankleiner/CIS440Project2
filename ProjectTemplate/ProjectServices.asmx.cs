@@ -687,7 +687,8 @@ namespace ProjectTemplate
 
 			DataTable sqlDt = new DataTable("quests");
 			
-			string sqlSelect = "select c.courseName, c.check1, c.check2, c.check3, c.check4, c.check5 from Progress p ,Courses c where p.progressID=@idValue and p.courseID=c.courseID;";
+			string sqlSelect = "select c.courseName, c.check1, c.check2, c.check3, c.check4, c.check5, c.description from " +
+			                   "Progress p ,Courses c where p.progressID=@idValue and p.courseID=c.courseID;";
 			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -709,7 +710,8 @@ namespace ProjectTemplate
 					check2 = sqlDt.Rows[i]["check2"].ToString(),
 					check3 = sqlDt.Rows[i]["check3"].ToString(),
 					check4 = sqlDt.Rows[i]["check4"].ToString(),
-					check5 = sqlDt.Rows[i]["check5"].ToString()
+					check5 = sqlDt.Rows[i]["check5"].ToString(),
+					description = sqlDt.Rows[i]["description"].ToString()
 				});
 				Console.WriteLine(quests);
 			}
@@ -822,7 +824,7 @@ namespace ProjectTemplate
 			bool success = false;
 			string sqlSelect = "SET FOREIGN_KEY_CHECKS = 0;";
 			
-			sqlSelect += "Update Progress Set check1=@c1Value, check2=@c2Value, check3=@c3Value, check4=@c4Value, check5=c5Value," +
+			sqlSelect += "Update Progress Set check1=@c1Value, check2=@c2Value, check3=@c3Value, check4=@c4Value, check5=@c5Value," +
 			             "progress=@progressValue Where progressID=@idValue;";
 
 			sqlSelect += "SET FOREIGN_KEY_CHECKS = 1;";
@@ -837,7 +839,7 @@ namespace ProjectTemplate
 			sqlCommand.Parameters.AddWithValue("@c3Value", Convert.ToBoolean(HttpUtility.UrlDecode(check3)));
 			sqlCommand.Parameters.AddWithValue("@c4Value", Convert.ToBoolean(HttpUtility.UrlDecode(check4)));
 			sqlCommand.Parameters.AddWithValue("@c5Value", Convert.ToBoolean(HttpUtility.UrlDecode(check5)));
-			sqlCommand.Parameters.AddWithValue("@progressValue", Convert.ToInt32(HttpUtility.UrlDecode(progress)));
+			sqlCommand.Parameters.AddWithValue("@progressValue", Convert.ToDecimal(HttpUtility.UrlDecode(progress)));
 			sqlCommand.Parameters.AddWithValue("@idValue", Convert.ToInt32(HttpUtility.UrlDecode(progressID)));
 			
 			sqlConnection.Open();
