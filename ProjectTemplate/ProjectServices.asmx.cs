@@ -425,8 +425,9 @@ namespace ProjectTemplate
 		[WebMethod(EnableSession = true)]
 		public void CreateQuests(string title, string check1, string check2, string check3, string check4, string check5, string description)
 		{
+			Console.WriteLine("Executing CreatQuest...");
 			Console.WriteLine(title + Session["userID"]+ check1 + check2 + check3 + check4 + check5);
-			
+
 			string sqlSelect = "SET FOREIGN_KEY_CHECKS = 0;";
 			
 			sqlSelect += "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5, description) " +

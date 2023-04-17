@@ -29,13 +29,13 @@
             if (t4 == ''){t4 = null;};
             if (t5 == ''){t5 = null;};
 
-            console.log(title, t1, t2, t3, t4, t5);
+            console.log(title, t1, t2, t3, t4, t5, description);
             
             var webMethod = "ProjectServices.asmx/CreateQuests";
             var parameters = "{\"title\":\"" + encodeURI(title) + "\",\"check1\":\"" + encodeURI(t1) +
-            "\",\"check2\":\"" + encodeURI(t2) + "\",\"check3\":\"" + encodeURI(t3) +
-            "\",\"check4\":\"" + encodeURI(t4) + "\",\"check5\":\"" + encodeURI(t5) + 
-                "\", ,\"description\":\"" + encodeURI(description) + "\"}";
+                                "\",\"check2\":\"" + encodeURI(t2) + "\",\"check3\":\"" + encodeURI(t3) +
+                                "\",\"check4\":\"" + encodeURI(t4) + "\",\"check5\":\"" + encodeURI(t5) + 
+                                "\",\"description\":\"" + encodeURI(description) + "\"}";
 
             //jQuery ajax method
             $.ajax({
