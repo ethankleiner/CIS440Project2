@@ -682,16 +682,13 @@ namespace ProjectTemplate
 		[WebMethod(EnableSession = true)]
 		public List<Quest> getCourseData(string progressID)
 		{
+			Console.WriteLine("Loading course data...");
 			Console.WriteLine(progressID);
-			Console.WriteLine("Loading progress...");
-			Console.WriteLine(Session["userID"]);
-			
-			DataTable sqlDt = new DataTable("accounts");
-			
-			string sqlSelect = "select courseName, check1, check2, check3, check4, check5 from Progress p , Courses c" +
-			                   "where progressID=@idValue and p.courseID=c.courseID;";
-			
 
+			DataTable sqlDt = new DataTable("quests");
+			
+			string sqlSelect = "select c.courseName, c.check1, c.check2, c.check3, c.check4, c.check5 from Progress p ,Courses c where p.progressID=@idValue and p.courseID=c.courseID;";
+			
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 			
@@ -707,15 +704,14 @@ namespace ProjectTemplate
 			{
 				quests.Add(new Quest
 				{
-					courseID = Convert.ToInt32(sqlDt.Rows[i]["courseID"]),
 					courseName = sqlDt.Rows[i]["courseName"].ToString(),
-					courseCreatorID = Convert.ToInt32(sqlDt.Rows[i]["courseCreatorID"]),
 					check1 = sqlDt.Rows[i]["check1"].ToString(),
 					check2 = sqlDt.Rows[i]["check2"].ToString(),
 					check3 = sqlDt.Rows[i]["check3"].ToString(),
 					check4 = sqlDt.Rows[i]["check4"].ToString(),
 					check5 = sqlDt.Rows[i]["check5"].ToString()
 				});
+				Console.WriteLine(quests);
 			}
 		
 			//convert the list of accounts to an array and return!

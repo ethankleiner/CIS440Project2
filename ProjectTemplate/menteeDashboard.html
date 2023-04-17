@@ -26,8 +26,9 @@
         var progressID = 0;
         var questMentor;
         var percentCompleteNumber;
-        let searchResult;
-        let searchResultArray;
+        let searchResultArray = [];
+        var displayResult; // an object of searchResultArray
+
 
         function getCurrentRole(){
           var webMethod = "ProjectServices.asmx/LoadCurrentRole";
@@ -164,10 +165,10 @@
 
           console.log("loading course detailed data...");
 
-          var displayResult; // an object of searchResultArray
 
           for (var i = 0; i < progressArray.length; i++) {
             searchProgressID = progressArray[i].progressID;
+            console.log("searchProgressID: ", searchProgressID)
 
             webMethod = "ProjectServices.asmx/getCourseData";
             parameters = "{\"progressID\":\"" + encodeURI(searchProgressID) + "\"}";
@@ -184,7 +185,7 @@
 
                   for (var i = 0; i < questsArray.length; i++) {
                     console.log(questsArray[i]);
-                    searchResult = {
+                    const searchResult = {
                       progressID: searchProgressID,
                       courseName: questsArray[i].courseName,
                       check1: questsArray[i].check1,
@@ -232,7 +233,22 @@
 
           console.log(questNumber);
           console.log("get quest is loading...");
+
+          // display Checkpoint names
+          for (var i = 0; i < searchResultArray.length; i++){
+            if (i == (questNumber-1)){
+              displayResult = searchResultArray[i];
+              console.log(displayResult.check1);
+              document.getElementById("check1label").innerHTML = displayResult.check1;
+              document.getElementById("check2label").innerHTML = displayResult.check2;
+              document.getElementById("check3label").innerHTML = displayResult.check3;
+              document.getElementById("check4label").innerHTML = displayResult.check4;
+              document.getElementById("check5label").innerHTML = displayResult.check5;
+              break;
+            }
+          }
           
+          // check if the checkpoints have been checked
           for (var i = 0; i < progressArray.length; i++) {
             
             if (i == (questNumber-1)){
@@ -258,7 +274,6 @@
           };
           
           getCourseMentorInfo();
-
         }
         
         function getCourseMentorInfo(){
