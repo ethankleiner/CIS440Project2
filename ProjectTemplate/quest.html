@@ -115,8 +115,11 @@
               const div = document.createElement("div");
               const ul = document.createElement("ul");
               const value = document.createTextNode(`${questsArray[i].courseName}`);
+              const button = document.createElement("button");
+              button.setAttribute(onclick="Enroll(${questsArray[i].courseID})");
               
               ul.appendChild(value);
+              ul.appendChild(button);
               div.appendChild(ul);
               mentorList.appendChild(div);
             }
@@ -135,7 +138,7 @@
       const mentorList = document.getElementById("mentorList");
       const div = document.createElement("div");
       const spn = document.createElement("spn");
-      const values = document.createTextNode(`${fname} ${lname}, ${company}, ${position}, ${years} Years`);
+      const values = document.createTextNode(`${fname} ${lname}, ${company}, ${position}, ${years} Years  `);
       
       spn.appendChild(values);
       div.appendChild(spn);
@@ -143,6 +146,29 @@
       console.log(mentorList);
 
       getCourseData();
+    }
+
+    function Enroll() {
+      var webMethod = "ProjectServices.asmx/Enroll";
+      var parameters = "{\"courseID\":\"" + encodeURI(questsArray[i].courseID) + "\"}";
+      $.ajax({
+          type: "POST",
+          url: webMethod,
+          data: parameters,
+          contentType: "application/json; charset=utf-8",
+          dataType: "json",
+          success: function (msg) {
+              if (msg.d) {
+                  alert('enrollment successful!')
+              }
+              else {
+                  alert('logout failed')
+              }
+          },
+          error: function (e) {
+              alert("boo...");
+          }
+      });
     }
 
     function LogOff() {

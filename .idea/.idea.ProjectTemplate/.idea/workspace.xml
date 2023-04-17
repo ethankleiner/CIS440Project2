@@ -4,8 +4,14 @@
     <projectFile>ProjectTemplate/ProjectTemplate.csproj</projectFile>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6350286b-44f7-410f-ac4b-843f0af01185" name="Changes" comment="expanded getQuestMember function to cycle through whole array">
+    <list default="true" id="6350286b-44f7-410f-ac4b-843f0af01185" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.CoreCompileInputs.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/quest.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/quest.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +96,8 @@
       <workItem from="1681355688602" duration="975000" />
       <workItem from="1681356830406" duration="1169000" />
       <workItem from="1681359599227" duration="6940000" />
-      <workItem from="1681421399874" duration="3659000" />
+      <workItem from="1681421399874" duration="3893000" />
+      <workItem from="1681771209320" duration="2178000" />
     </task>
     <task id="LOCAL-00001" summary="added quest page and functionality">
       <created>1681355926657</created>
@@ -127,7 +134,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681426020630</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="added functionality to cycle through courses and insert them into quest html page">
+      <created>1681427620947</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681427620947</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -143,6 +157,7 @@
     <MESSAGE value="adjusted getQuestMember function to check for role before storing id" />
     <MESSAGE value="added Enroll function" />
     <MESSAGE value="expanded getQuestMember function to cycle through whole array" />
-    <option name="LAST_COMMIT_MESSAGE" value="expanded getQuestMember function to cycle through whole array" />
+    <MESSAGE value="added functionality to cycle through courses and insert them into quest html page" />
+    <option name="LAST_COMMIT_MESSAGE" value="added functionality to cycle through courses and insert them into quest html page" />
   </component>
 </project>
