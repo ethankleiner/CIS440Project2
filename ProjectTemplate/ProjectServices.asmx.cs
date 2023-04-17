@@ -423,19 +423,14 @@ namespace ProjectTemplate
 		}
 		
 		[WebMethod(EnableSession = true)]
-		public void CreateQuests(string title, string check1, string check2, string check3, string check4, string check5)
+		public void CreateQuests(string title, string check1, string check2, string check3, string check4, string check5, string description)
 		{
 			Console.WriteLine(title + Session["userID"]+ check1 + check2 + check3 + check4 + check5);
 			
-			// string sqlSelect = "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
-			//                    "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value)" +
-			//                    "; SELECT LAST_INSERT_ID();";
-
-			
 			string sqlSelect = "SET FOREIGN_KEY_CHECKS = 0;";
 			
-			sqlSelect += "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5) " +
-			            "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value);";
+			sqlSelect += "insert into Courses (courseName, courseCreatorID, check1, check2, check3, check4, check5, description) " +
+			            "values (@titleValue, @idValue, @check1Value, @check2Value, @check3Value, @check4Value, @check5Value, @desValue);";
 
 			sqlSelect += "SET FOREIGN_KEY_CHECKS = 1;";
 
@@ -451,6 +446,8 @@ namespace ProjectTemplate
 			sqlCommand.Parameters.AddWithValue("@check3Value", HttpUtility.UrlDecode(check3));
 			sqlCommand.Parameters.AddWithValue("@check4Value", HttpUtility.UrlDecode(check4));
 			sqlCommand.Parameters.AddWithValue("@check5Value", HttpUtility.UrlDecode(check5));
+			sqlCommand.Parameters.AddWithValue("@desValue", HttpUtility.UrlDecode(description));
+
 
 			sqlConnection.Open();
 			//we're using a try/catch so that if the query errors out we can handle it gracefully
@@ -652,6 +649,7 @@ namespace ProjectTemplate
 		[WebMethod(EnableSession = true)]
 		public string getAdvancedProgress(string progressID)
 		{
+			Console.WriteLine(progressID);
 			Console.WriteLine("Loading progress...");
 			Console.WriteLine(Session["userID"]);
 			
@@ -680,6 +678,51 @@ namespace ProjectTemplate
 			//return role
 			return course_mentor_name;
 		}
+		
+		[WebMethod(EnableSession = true)]
+		public List<Quest> getCourseData(string progressID)
+		{
+			Console.WriteLine(progressID);
+			Console.WriteLine("Loading progress...");
+			Console.WriteLine(Session["userID"]);
+			
+			DataTable sqlDt = new DataTable("accounts");
+			
+			string sqlSelect = "select courseName, check1, check2, check3, check4, check5 from Progress p , Courses c" +
+			                   "where progressID=@idValue and p.courseID=c.courseID;";
+			
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", Convert.ToInt32(HttpUtility.UrlDecode(progressID)));
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			List<Quest> quests = new List<Quest>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				quests.Add(new Quest
+				{
+					courseID = Convert.ToInt32(sqlDt.Rows[i]["courseID"]),
+					courseName = sqlDt.Rows[i]["courseName"].ToString(),
+					courseCreatorID = Convert.ToInt32(sqlDt.Rows[i]["courseCreatorID"]),
+					check1 = sqlDt.Rows[i]["check1"].ToString(),
+					check2 = sqlDt.Rows[i]["check2"].ToString(),
+					check3 = sqlDt.Rows[i]["check3"].ToString(),
+					check4 = sqlDt.Rows[i]["check4"].ToString(),
+					check5 = sqlDt.Rows[i]["check5"].ToString()
+				});
+			}
+		
+			//convert the list of accounts to an array and return!
+			return quests;
+		}
+		
+		
 
 		[WebMethod(EnableSession = true)]
 		public string LoadMentorName()
