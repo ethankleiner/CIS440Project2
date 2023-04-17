@@ -20,7 +20,7 @@
             $('#task5').val("");
         }
 
-        function createQuest(title, t1, t2, t3, t4, t5){
+        function createQuest(title, t1, t2, t3, t4, t5, description){
 
             if (t2 == ''){t2 = null;};
             if (t3 == ''){t3 = null;};
@@ -32,7 +32,7 @@
             var webMethod = "ProjectServices.asmx/CreateQuests";
             var parameters = "{\"title\":\"" + encodeURI(title) + "\",\"check1\":\"" + encodeURI(t1) +
             "\",\"check2\":\"" + encodeURI(t2) + "\",\"check3\":\"" + encodeURI(t3) +
-            "\",\"check4\":\"" + encodeURI(t4) + "\",\"check5\":\"" + encodeURI(t5) + "\"}";
+            "\",\"check4\":\"" + encodeURI(t4) + "\",\"check5\":\"" + encodeURI(t5) + "\",\"description\":\"" + encodeURI(description) + "\" }";
 
             //jQuery ajax method
             $.ajax({
@@ -92,7 +92,7 @@
         <div class="w3-card w3-round w3-white w3-margin w3-padding-large">
         <h1>Craft a Quest</h1>
         <form onsubmit="createQuest($('#questTitle').val(), $('#task1').val(), $('#task2').val(), $('#task3').val(), 
-                                    $('#task4').val(), $('#task5').val()); return false;">
+                                    $('#task4').val(), $('#task5').val()), $('#questDescription').val(); return false;">
             <section>
                 <label><h4>Christen thy quest</h4></label>
                 <input placeholder="Quest Name" type="text" id="questTitle" required>
