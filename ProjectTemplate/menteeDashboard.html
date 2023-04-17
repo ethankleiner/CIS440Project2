@@ -19,12 +19,15 @@
       <script>
         
         var userRole;
-        var progressArray;
-        var profilesArray;
+        var progressArray = [];
+        var profilesArray = [];
+        var questsArray = [];
         var questNumber;
-        var progressID;
+        var progressID = 0;
         var questMentor;
         var percentCompleteNumber;
+        let searchResult;
+        let searchResultArray;
 
         function getCurrentRole(){
           var webMethod = "ProjectServices.asmx/LoadCurrentRole";
@@ -52,9 +55,7 @@
               // alert("load current role boo...");
             }
           });
-
         }
-        
 
         function getProfile(){
 
@@ -75,7 +76,9 @@
 
                 for (var i = 0; i < profilesArray.length; i++){
                   console.log(profilesArray[i]);
-                  document.getElementById('userName').innerHTML = profilesArray[i].fname;
+                  console.log (profilesArray[i].fname);
+                  var fname = profilesArray[i].fname;
+                  document.getElementById('userName').innerHTML = fname;
                 }
 
                 getProgress();
@@ -91,7 +94,7 @@
         }
 
         function getProgress(){
-
+          
           console.log("loading progress data...");
 
           webMethod = "ProjectServices.asmx/getProgress";
@@ -107,42 +110,46 @@
               if (msg.d.length > 0) {
                 
                 progressArray = msg.d;
-
+                console.log(progressArray.length);
+                
                 switch(progressArray.length) {
                   case 1:
-                    document.getElementById(quest1button).style.visibilty = 'visible';
+                    document.getElementById("quest1button").style.visibility = 'visible';
                     break;
                   case 2:
-                    document.getElementById(quest1button).style.visibilty = 'visible';
-                    document.getElementById(quest2button).style.visibilty = 'visible';
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
                     break;
                   case 3:
-                    document.getElementById(quest1button).style.visibilty = 'visible';
-                    document.getElementById(quest2button).style.visibilty = 'visible';
-                    document.getElementById(quest3button).style.visibilty = 'visible';
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    document.getElementById("quest3button").style.visibility = 'visible';
                     break;
                   case 4:
-                    document.getElementById(quest1button).style.visibilty = 'visible';
-                    document.getElementById(quest2button).style.visibilty = 'visible';
-                    document.getElementById(quest3button).style.visibilty = 'visible';
-                    document.getElementById(quest4button).style.visibilty = 'visible';
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    document.getElementById("quest3button").style.visibility = 'visible';
+                    document.getElementById("quest4button").style.visibility = 'visible';
                     break;
                   case 5:
-                    document.getElementById(quest1button).style.visibilty = 'visible';
-                    document.getElementById(quest2button).style.visibilty = 'visible';
-                    document.getElementById(quest3button).style.visibilty = 'visible';
-                    document.getElementById(quest4button).style.visibilty = 'visible';
-                    document.getElementById(quest5button).style.visibilty = 'visible';
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    document.getElementById("quest3button").style.visibility = 'visible';
+                    document.getElementById("quest4button").style.visibility = 'visible';
+                    document.getElementById("quest5button").style.visibility = 'visible';
                     break;
                   default:
-                    document.getElementById(quest1button).style.visibilty = 'visible';
-                    document.getElementById(quest2button).style.visibilty = 'visible';
-                    document.getElementById(quest3button).style.visibilty = 'visible';
-                    document.getElementById(quest4button).style.visibilty = 'visible';
-                    document.getElementById(quest5button).style.visibilty = 'visible';
-                    document.getElementById(quest6button).style.visibilty = 'visible';
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    document.getElementById("quest3button").style.visibility = 'visible';
+                    document.getElementById("quest4button").style.visibility = 'visible';
+                    document.getElementById("quest5button").style.visibility = 'visible';
+                    document.getElementById("quest6button").style.visibility = 'visible';
                     break;
-                } 
+                }
+
+                getCourseData();
+                
               }else {
                 alert('loading failed');
               }
@@ -151,16 +158,88 @@
               alert("boo...");
             }
           });
-
         }
         
-        function getQuest(questNumber){
+        function getCourseData() {
+
+          console.log("loading course detailed data...");
+
+          var displayResult; // an object of searchResultArray
+
+          for (var i = 0; i < progressArray.length; i++) {
+            searchProgressID = progressArray[i].progressID;
+
+            webMethod = "ProjectServices.asmx/getCourseData";
+            parameters = "{\"progressID\":\"" + encodeURI(searchProgressID) + "\"}";
+
+            $.ajax({
+              type: "POST",
+              url: webMethod,
+              data: parameters,
+              contentType: "application/json; charset=utf-8",
+              dataType: "json",
+              success: function (msg) {
+                if (msg.d.length > 0) {
+                  questsArray = msg.d;
+
+                  for (var i = 0; i < questsArray.length; i++) {
+                    console.log(questsArray[i]);
+                    searchResult = {
+                      progressID: searchProgressID,
+                      courseName: questsArray[i].courseName,
+                      check1: questsArray[i].check1,
+                      check2: questsArray[i].check2,
+                      check3: questsArray[i].check3,
+                      check4: questsArray[i].check4,
+                      check5: questsArray[i].check5
+                    }
+                    searchResultArray.push(searchResult);
+                  }
+
+                  for (var i = 0; i < searchResultArray.length; i++) {
+                    if (i == 0) {
+                      displayResult = searchResultArray[i];
+                      document.querySelector('#quest1button').innerHTML = displayResult.courseName;
+                    } else if (i == 1) {
+                      displayResult = searchResultArray[i];
+                      document.querySelector('#quest2button').innerHTML = displayResult.courseName;
+                    } else if (i == 2) {
+                      displayResult = searchResultArray[i];
+                      document.querySelector('#quest3button').innerHTML = displayResult.courseName;
+                    } else if (i == 3) {
+                      displayResult = searchResultArray[i];
+                      document.querySelector('#quest4button').innerHTML = displayResult.courseName;
+                    } else if (i == 4) {
+                      displayResult = searchResultArray[i];
+                      document.querySelector('#quest5button').innerHTML = displayResult.courseName;
+                    } else if (i == 5) {
+                      displayResult = searchResultArray[i];
+                      document.querySelector('#quest6button').innerHTML = displayResult.courseName;
+                    }
+                  }
+                } else {
+                  alert('loading failed');
+                }
+              },
+              error: function (e) {
+                alert("boo...");
+              }
+            });
+          }
+        }
           
-          for (var i = 1; i <= progressArray.length; i++) {
+        function getQuest(questNumber){
+
+          console.log(questNumber);
+          console.log("get quest is loading...");
+          
+          for (var i = 0; i < progressArray.length; i++) {
             
-            if (questNumber == i){
-              
+            if (i == (questNumber-1)){
+
+              console.log(progressArray[i].progressID);
               progressID = progressArray[i].progressID;
+              console.log(progressArray[i].check1);
               
               if (progressArray[i].check1 == true){
                 document.getElementById("checkpoint1").checked = true;
@@ -173,15 +252,16 @@
               } else if (progressArray[i].check5 == true){
                 document.getElementById("checkpoint5").checked = true;
               }
+              break;
             }
             
           };
           
-          getCourseInfo();
+          getCourseMentorInfo();
 
         }
         
-        function getCourseInfo(){
+        function getCourseMentorInfo(){
 
           console.log("loading course data...");
           
@@ -195,7 +275,7 @@
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (msg) {
-              if (msg.d > 0) {
+              if (msg.d) {
                 
                 questMentor= msg.d;
                 console.log(questMentor);
@@ -285,7 +365,7 @@
 
    </main>
 
-<body onload="displayName()" class="w3-light-grey">
+<body onload="getCurrentRole()" class="w3-light-grey">
 
     <!-- Navbar -->
     <div class="w3-top">
@@ -293,8 +373,8 @@
         <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
           href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
         <a href="dashboard.html" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i
-            class="fa fa-home w3-margin-right"></i>Mentorist</a>
-        <a href="quest.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Quests"><i
+            class="fa fa-home w3-margin-right"></i>Logo</a>
+        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i
             class="fa fa-globe"></i></a>
         <a href="profile.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
           title="Account Settings"><i class="fa fa-user"></i></a>
@@ -313,7 +393,7 @@
           title="My Account">
           <img src="ProfilePic.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
         </a>
-        <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" onclick="LogOff()">Logout</a>
+        <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" onclick="LogOff">Logout</a>
 
       </div>
     </div>
@@ -322,39 +402,37 @@
     <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
       <div class="w3-container w3-row">
         <div class="w3-col s4">
+          <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
         </div>
-        <div class="w3-col s8 w3-bar" style="font-size: 20px;">
-          Welcome, <strong id="displayName"><span>Mike</span></strong><br>
+        <div class="w3-col s8 w3-bar">
+          Welcome, <strong><span id="userName">Mike</span></strong><br>
           <a href="quest.html" class="w3-button">Start a new quest!</a>
-          <!-- <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
           <a href="profile.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a> -->
+          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
         </div>
       </div>
       <hr>
       <div class="w3-container">
         <h5>My Quests</h5>
-        <div id="menteeQuests">
-          quest list here
-        </div>
       </div>
       <div class="w3-bar-block">
         <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
           onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
         <!-- TODO: change onclick function being called -->
         <!-- TODO: Set up javascript to change HTML for Quest names -->
-        <button id="quest1button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest(1)"></i>  Quest 1</button>
-        <button id="quest2button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest(2)"></i>  Quest 2</button>
-        <button id="quest3button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest(3)"></i>  Quest 3</button>
-        <button id="quest4button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest(4)"></i>  Quest 4</button>
-        <button id="quest5button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest(5)"></i>  Quest 5</button>
-        <button id="quest6button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
-            class="fa fa-users fa-fw" onclick="getQuest(6)"></i>  Quest 6</button>
+        <button onclick="getQuest(1)" id="quest1button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
+            class="fa fa-users fa-fw"></i>  Quest 1</button>
+        <button onclick="getQuest(2)" id="quest2button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
+            class="fa fa-users fa-fw"></i>  Quest 2</button>
+        <button onclick="getQuest(3)" id="quest3button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
+            class="fa fa-users fa-fw"></i>  Quest 3</button>
+        <button onclick="getQuest(4)" id="quest4button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
+            class="fa fa-users fa-fw"></i>  Quest 4</button>
+        <button onclick="getQuest(5)" id="quest5button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
+            class="fa fa-users fa-fw"></i>  Quest 5</button>
+        <button onclick="getQuest(6)" id="quest6button" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue"><i
+            class="fa fa-users fa-fw"></i>  Quest 6</button>
       </div>
     </nav>
 
@@ -368,8 +446,10 @@
 
       <!-- Header -->
       <header class="w3-container" style="padding-top:20px">
-        <h5><b style = "font-size: 30px; padding-left: 420px;"><i class="fa fa-dashboard"></i> My Dashboard</b></h5>
+        <h5><b><i class="fa fa-dashboard"></i>My Dashboard</b></h5>
       </header>
+
+      <hr>
       <div class="w3-container">
         <h5>Course Progress</h5>
         <div class="w3-grey">
@@ -409,7 +489,7 @@
               </td>
             </tr>
           </table><br>
-          <button class="button" id="submitButton" type="submit" onclick="saveCheckpoints()">Save Progress</button>
+          <button class="button" id="submitButton" type="submit">Save Progress</button>
         </form>
         <br>
       </div>
@@ -470,7 +550,6 @@
           console.log(checkpoints[i].checked)
           if (checkpoints[i].checked)
             complete += 1
-
         }
         
         percentCompleteNumber = (complete / total).toFixed(2) * 100 // for backend to store the data
@@ -484,144 +563,6 @@
         // FOR EACH function to be used later :)
         // checkpoints.forEach(checkChecked)
       }
-
-      function saveCheckpoints(){
-            
-            var webMethod = "ProjectServices.asmx/storeProgress";
-            var parameters = "{\"check1\":\"" + encodeURI(check1) + "\",\"check2\":\"" + encodeURI(check2) + "\",\"check3\":\"" +
-                encodeURI(check3) + "\",\"check4\":\"" + encodeURI(check4) + "\",\"check5\":\"" + encodeURI(check5)+"\"}";
-
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: parameters,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    alert("Progress Saved!");
-                    clearChoices();
-                },
-                error: function (e) {
-                    alert("boo...");
-                }
-            })
-        }
-
-        var userID = 0;
-
-        function displayName(){
-            
-            console.log("loaded first name...");
-            
-            webMethod = "ProjectServices.asmx/LoadMenteeName";
-            parameters = "{\"charID\":\"" + encodeURI(userID) + "\"}";
-
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: parameters,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    if (msg.d.length > 0) {
-                        userResult = msg.d;
-                        console.log(userResult);
-                        document.getElementById('displayName').innerHTML = userResult;
-                    }
-                    else {
-                        alert('loading failed');
-                    }
-                },
-                error: function (e) {
-                    alert("boo...");
-                }
-            });
-
-            getCourseData();
-            
-    }
-
-    menteeID = 0;
-
-    function getCourseData() {
-      var quests;
-
-      console.log("loading quest data...");
-
-      webMethod = "ProjectServices.asmx/menteeQuests";
-      parameters = "{\"id\":\"" + encodeURI(menteeID) + "\"}";
-
-      $.ajax({
-        type: "POST",
-        url: webMethod,
-        data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-          if (msg.d.length > 0) {
-            quests = msg.d;
-            document.getElementById('menteeQuests').innerHTML = quests;
-          } else {
-            alert('loading failed');
-          }
-        },
-        error: function (e) {
-          alert("boo...");
-        }
-      });
-    }
-
-    function LogOff() {
-
-      var webMethod = "ProjectServices.asmx/LogOff";
-      $.ajax({
-          type: "POST",
-          url: webMethod,
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function (msg) {
-              if (msg.d) {
-                  //we logged off, so go back to logon page,
-                  //stop checking messages
-                  //and clear the chat panel
-                  window.open('index.html', '_self')
-              }
-              else {
-                  alert('logout failed')
-              }
-          },
-          error: function (e) {
-              alert("boo...");
-          }
-      });
-}
-
-      function LogOff() {
-
-        var webMethod = "ProjectServices.asmx/LogOff";
-        $.ajax({
-            type: "POST",
-            url: webMethod,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (msg) {
-                if (msg.d) {
-                    //we logged off, so go back to logon page,
-                    //stop checking messages
-                    //and clear the chat panel
-                    window.open('index.html', '_self')
-                }
-                else {
-                    alert('logout failed')
-                }
-            },
-            error: function (e) {
-                alert("boo...");
-            }
-        });
-    }
-
-    
 
 
 // function checkChecked(element) {
