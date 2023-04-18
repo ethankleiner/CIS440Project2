@@ -93,6 +93,7 @@
               document.getElementById('phone').innerHTML = profilesArray[i].phone;
 
               getAccount();
+              console.log(userRole);
 
               if (userRole == "mentor"){
               document.getElementById('profilePic1').src = 'MenteeImg.png';
@@ -166,9 +167,6 @@
               window.open('mentorDashboard.html', '_self');
             } else {
               window.open('menteeDashboard.html', '_self');
-              document.getElementById('profilePic1').src = 'MenteeImg.png';
-              document.getElementById('profilePic2').src = 'MenteeImg.png';
-
             }
           }
           else {
