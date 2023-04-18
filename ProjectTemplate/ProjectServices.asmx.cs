@@ -900,7 +900,7 @@ namespace ProjectTemplate
 		}
 		
 		[WebMethod(EnableSession = true)]
-		public Profile[] getspecificMembers(int courseID)
+		public Mentee[] getspecificMembers(int courseID)
 		{
 			Console.WriteLine("Executing profile...");
 			
@@ -918,29 +918,20 @@ namespace ProjectTemplate
 			sqlDa.Fill(sqlDt);
 			
 			// change class to name to more general name
-			List<Profile> profiles = new List<Profile>();
+			List<Mentee> profiles = new List<Mentee>();
 			for (int i = 0; i < sqlDt.Rows.Count; i++)
 			{
 				
-					profiles.Add(new Profile
+					profiles.Add(new Mentee
 					{
-						id = sqlDt.Rows[i]["mentorID"].ToString(),
+						menteeID = sqlDt.Rows[i]["menteeID"].ToString(),
 						fname = sqlDt.Rows[i]["fname"].ToString(),
-						lname = sqlDt.Rows[i]["lname"].ToString(),
-						company = sqlDt.Rows[i]["company"].ToString(),
-						phone = sqlDt.Rows[i]["phone"].ToString(),
-						years = sqlDt.Rows[i]["experienceYears"].ToString(),
-						birthday = sqlDt.Rows[i]["birthday"].ToString(),
-						position = sqlDt.Rows[i]["positionRole"].ToString(),
-						bio = sqlDt.Rows[i]["profileBio"].ToString(),
-						picture = sqlDt.Rows[i]["profilePic"].ToString(),
-						python = Convert.ToBoolean(sqlDt.Rows[i]["pythonOption"]),
-						java = Convert.ToBoolean(sqlDt.Rows[i]["javaOption"]),
-						sql = Convert.ToBoolean(sqlDt.Rows[i]["sqlOption"])
+						lname = sqlDt.Rows[i]["lname"].ToString()
 					});
 				
-				}
-				
 			}
+
+			return profiles.ToArray();
+		}
 	}
 }

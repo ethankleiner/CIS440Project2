@@ -4,6 +4,6 @@ namespace ProjectTemplate
     {
         public string menteeID;
         public string fname;
-        
+        public string lname;
     }
 }
