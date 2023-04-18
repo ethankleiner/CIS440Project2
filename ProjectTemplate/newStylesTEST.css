@@ -1,6 +1,7 @@
 html {
     /* background-color: rgb(27, 72, 44); */
-    background: url("theShire.jpg");
+    background-image: linear-gradient(rgba(17, 54, 38, 0.621),rgba(17, 54, 38, 0.621)),url("theShire.jpg");
+    /* background-size: cover; */
     background-position: 100% fixed;
     background-repeat: none;
     background-size: 100;
@@ -11,9 +12,9 @@ body {
     margin: 0;
 }
 
-.colorOverlay {
+/* .colorOverlay {
     background-color: rgba(17, 54, 38, 0.621);
-}
+} */
 
 .contentBox {
     padding-bottom: 15px;
