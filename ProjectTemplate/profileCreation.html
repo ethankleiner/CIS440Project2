@@ -83,22 +83,25 @@
 
 	</script>
 </head>
--<!-- Navbar -->
+
+
+<body class="w3-theme-l5" style="background-image: url(Rivendell.PNG);background-size: cover;">
+    -<!-- Navbar -->
 <div class="w3-top">
-	<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+	<div class="w3-bar w3-left-align w3-large riv-nav">
 	 <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-	 <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Logo</a>
-	 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
+	 <a href="index.html" class="w3-bar-item w3-button w3-padding-large riv-but"><i class="fa fa-home w3-margin-right"></i></a>
+	 <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
 	 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
-	 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
-	 <div class="w3-dropdown-hover w3-hide-small">
+	 <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a> -->
+	 <!-- <div class="w3-dropdown-hover w3-hide-small">
 	   <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>     
 	   <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
 		 <a href="#" class="w3-bar-item w3-button">One new friend request</a>
 		 <a href="#" class="w3-bar-item w3-button">John Doe posted on your wall</a>
 		 <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>
 	   </div>
-	 </div>
+	 </div> -->
 	</div>
    </div>
    
@@ -110,9 +113,9 @@
 	 <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
    </div>
 
-<body class="w3-theme-l5">
-	<div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
-    <div class="w3-card w3-round w3-white w3-margin w3-padding-large">
+	<div class="w3-container" style="max-width:1400px;margin-top:80px;opacity:.8;">
+    <div class="w3-col l6">
+    <div class="w3-card w3-round w3-grey w3-margin w3-padding-large">
 	<h1>Profile Settings</h1>
     <form onsubmit="CreateProfile($('#profileFname').val(), $('#profileLname').val(), $('#profileBday').val(),
     $('#profilePhone').val(), $('#profileCompany').val(), $('#profilePosition').val(), $('#profileYears').val(),
@@ -179,15 +182,16 @@
     </form>
     </div>
     </div>
+    </div>
     <br>
     <!-- Footer -->
-    <footer class="w3-container w3-theme-d3 w3-padding-16">
+    <!-- <footer class="w3-container w3-theme-d3 w3-padding-16">
         <h5>Footer</h5>
     </footer>
 
     <footer class="w3-container w3-theme-d5">
         <p><sup>&copy;</sup>Figrin D'an and the Modal Nodes</p>
-    </footer>
+    </footer> -->
 </body>
 
 </html>
