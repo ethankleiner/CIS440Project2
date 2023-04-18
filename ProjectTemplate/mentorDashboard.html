@@ -27,6 +27,7 @@
 <script>
   
   var userRole;
+  var courseID = 0;
 
   function getCurrentRole(){
       var webMethod = "ProjectServices.asmx/LoadCurrentRole";
@@ -44,7 +45,7 @@
             userRole = msg.d;
             console.log(userRole);
             console.log("call function");
-            getQuestMemberData();
+            
           }
           else {
             alert("load current role failed");
@@ -56,6 +57,34 @@
       });
     }
   
+    function getMentorCourseID(){
+      var webMethod = "ProjectServices.asmx/getMenteeforCourse";
+      var parameters = "{}";
+
+      //jQuery ajax method
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d) {
+            courseID = msg.d;
+            console.log(courseID);
+            console.log("call function");
+            getQuestMemberData();
+          }
+          else {
+            alert("load courseID failed");
+          }
+        },
+        error: function (e) {
+          alert("load courseID boo...");
+        }
+      });
+    }
+
   function getQuestMemberData(){
       
       var membersArray;
@@ -64,7 +93,7 @@
       console.log("loading quest member data...");
 
       webMethod = "ProjectServices.asmx/getQuestMembers";
-      parameters = "{\"role\":\"" + encodeURI(userRole) + "\"}";
+      parameters = "{\"courseID\":\"" + encodeURI(courseID) + "\"}";
 
       $.ajax({
         type: "POST",
@@ -79,11 +108,11 @@
             for (var i = 0; i < membersArray.length; i++){
               console.log(membersArray[i]);
               
-              // const menteeList = document.getElementById("menteeList")
-              // const button = document.getElementById(`mentee${i+1}`);
-              // const name = document.createTextNode(`${membersArray.fname} ${membersArray.lname}`);
-              // button.innerText = name;
-              // button.style.visibility = "visible";
+              const menteeList = document.getElementById("menteeList")
+              const button = document.getElementById(`mentee${i+1}`);
+              const name = document.createTextNode(`${membersArray.fname} ${membersArray.lname}`);
+              button.innerText = name;
+              button.style.visibility = "visible";
                    
           };
              
@@ -234,11 +263,11 @@
       <span>How fareth thine apprentices?</span><br>
       <select name="mentees" id="menteeList" class="poop-theme-backwards">
         <!-- getMentees - click on option and get mentees enrolled -->
-        <option id="quest1" value="quest1Value" onclick="getspecificMembers()">Quest 1</option>
-        <option id="quest2" value="quest2Value" style="visibility:hidden" onclick="getspecficMembers()">Quest 2</option>
-        <option id="quest3" value="quest3Value" style="visibility:hidden" onclick="getspecificMembers()">Quest 3</option>
-        <option id="quest4" value="quest4Value" style="visibility:hidden" onclick="getspecificMembers()">Quest 4</option>
-        <option id="quest5" value="quest5Value" style="visibility:hidden" onclick="getspecificMembers()">Quest 5</option>
+        <option id="quest1" value="quest1Value" onclick="getMentorCourseID()">Quest 1</option>
+        <option id="quest2" value="quest2Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 2</option>
+        <option id="quest3" value="quest3Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 3</option>
+        <option id="quest4" value="quest4Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 4</option>
+        <option id="quest5" value="quest5Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 5</option>
         <!-- can we create these in the script instead of having visibility set to hidden? -->
       </select>
 

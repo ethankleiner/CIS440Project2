@@ -933,5 +933,36 @@ namespace ProjectTemplate
 
 			return profiles.ToArray();
 		}
+		
+		[WebMethod(EnableSession = true)]
+		public int getMenteeforCourse()
+		{
+			Console.WriteLine("Executing profile...");
+
+			DataTable sqlDt = new DataTable("accounts");
+
+			string sqlSelect = "select c.courseID from Mentors m, Courses c where mentorID=courseCreatorID and mentorID=@mentorValue;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+   
+			sqlCommand.Parameters.AddWithValue("@mentorValue", Session["userID"]);
+
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			int courseID = 0;
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				courseID = Convert.ToInt32(sqlDt.Rows[i]["courseID"]);
+				Console.WriteLine(courseID);
+			}
+
+			return courseID;
+      
+		}
 	}
 }
