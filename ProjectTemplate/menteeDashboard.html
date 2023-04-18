@@ -405,22 +405,22 @@
 
    </main>
 
-<body onload="getCurrentRole()" class="w3-light-grey">
+<body onload="getCurrentRole()" class="w3-light-grey"  style="background-image: url(Middle-Earth.jpg);background-size: cover;">
 
     <!-- Navbar -->
     <div class="w3-top">
       <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
         <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
           href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-        <a href="dashboard.html" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i
+        <a href="menteeDashboard.html" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i
             class="fa fa-home w3-margin-right"></i>Logo</a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i
-            class="fa fa-globe"></i></a>
+        <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i
+            class="fa fa-globe"></i></a> -->
         <a href="profile.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
           title="Account Settings"><i class="fa fa-user"></i></a>
-        <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i
-            class="fa fa-envelope"></i></a>
-        <div class="w3-dropdown-hover w3-hide-small">
+        <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i
+            class="fa fa-envelope"></i></a> -->
+        <!-- <div class="w3-dropdown-hover w3-hide-small">
           <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span
               class="w3-badge w3-right w3-small w3-green">3</span></button>
           <div class="w3-dropdown-content w3-card-4 w3-bar-block" style="width:300px">
@@ -428,7 +428,7 @@
             <a href="#" class="w3-bar-item w3-button">John Doe posted on your wall</a>
             <a href="#" class="w3-bar-item w3-button">Jane likes your post</a>
           </div>
-        </div>
+        </div> -->
         <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white"
           title="My Account">
           <img src="ProfilePic.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
@@ -439,17 +439,17 @@
     </div>
 
     <!-- Sidebar/menu -->
-    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+    <nav class="w3-sidebar w3-collapse w3-dark-gray" style="z-index:3;width:300px;" id="mySidebar"><br>
       <div class="w3-container w3-row">
         <div class="w3-col s4">
-          <img src="/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
+          <img src="ProfilePic.png" class="w3-circle w3-margin-right" style="width:46px">
         </div>
         <div class="w3-col s8 w3-bar">
           Welcome, <strong><span id="userName">Mike</span></strong><br>
-          <a href="quest.html" class="w3-button">Start a new quest!</a>
-          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+          <a href="quest.html" class="w3-button w3-theme-d4">Start a new quest!</a>
+          <!-- <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
           <a href="profile.html" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
-          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+          <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a> -->
         </div>
       </div>
       <hr>
@@ -457,7 +457,7 @@
         <h5>My Quests</h5>
       </div>
       <div class="w3-bar-block">
-        <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
+        <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" 
           onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
         <!-- TODO: change onclick function being called -->
         <!-- TODO: Set up javascript to change HTML for Quest names -->
@@ -485,18 +485,18 @@
     <div class="w3-main" style="margin-left:300px;margin-top:40x;">
 
       <!-- Header -->
-      <header class="w3-container" style="padding-top:20px">
+      <header class="w3-container w3-center" style="padding-top:20px">
         <h5><b><i class="fa fa-dashboard"></i>My Dashboard</b></h5>
       </header>
 
-      <hr>
+      <br>
       <div class="w3-container">
         <h5>Course Progress</h5>
         <div class="w3-grey">
           <div id="progressBar" class="w3-container w3-center w3-padding w3-green" style="width:0%">0%</div>
         </div>
       </div>
-      <hr>
+      <br>
 
       <!-- Course Checkpoint Template -->
       <div class="w3-container">
@@ -533,22 +533,22 @@
         </form>
         <br>
       </div>
-      <hr>
+      <br>
       <div class="w3-container">
         <h5>About this course</h5>
         <ul class="w3-ul w3-card-4 w3-white">
           <li class="w3-padding-16">
-            <img src="ProfilePic.png" class="w3-left w3-circle w3-margin-right" style="width:35px">
+            <img src="ProfilePic.png" class="w3-left w3-circle w3-margin-right" style="width:35px" >
             <span class="w3-xlarge" id="courseMentor">Mike</span><br>
           </li>
-          <li class="w3-padding-16">
-            <span id="courseDescription">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam nobis illum fuga necessitatibus vitae
+          <li class="w3-padding-16" >
+            <span id="courseDescription" >Lorem ipsum dolor, sit amet consectetur adipisicing elit. Totam nobis illum fuga necessitatibus vitae
               cupiditate odit, tenetur nam similique? Fugiat ducimus harum doloribus sapiente ipsum numquam aperiam, nam
               totam temporibus?</span>
           </li>
         </ul>
       </div>
-      <hr>
+      <br>
 
     </div>
 
