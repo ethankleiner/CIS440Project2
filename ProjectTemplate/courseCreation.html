@@ -61,18 +61,18 @@
         
     </script>
 </head>
-<body class="w3-theme-l5">
+<body class="w3-theme-l5" style="background-image: url(Council.jpg);background-size:cover;background-repeat: no-repeat;">
     <div class="w3-top">
-        <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+        <div class="w3-bar w3-left-align w3-large riv-nav">
           <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
             href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-          <a href="dashboard.html" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i
-              class="fa fa-home w3-margin-right"></i>Home</a>
-          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i
-              class="fa fa-globe"></i></a>
-          <a href="profile.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white"
+          <a href="mentorDashboard.html" class="w3-bar-item w3-button w3-padding-large riv-but"><i
+              class="fa fa-home w3-margin-right"></i></a>
+          <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i
+              class="fa fa-globe"></i></a> -->
+          <a href="profile.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large riv-but"
             title="Account Settings"><i class="fa fa-user"></i></a>
-          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i
+          <!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i
               class="fa fa-envelope"></i></a>
           <div class="w3-dropdown-hover w3-hide-small">
             <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span
@@ -81,18 +81,17 @@
               <a href="#" class="w3-bar-item w3-button">You have one new Achievement!</a>
               <a href="dashboard.html" class="w3-bar-item w3-button">You have one new Task on your Dashboard!</a>
             </div>
-          </div>
-          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white"
+          </div> -->
+          <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large riv-but"
             title="My Account">
             <img src="ProfilePic.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
           </a>
-          <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white">Logout</a>
+          <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large riv-but">Logout</a>
         </div>
       </div>
-    <div>
-        <br><br>
-        <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px">
-        <div class="w3-card w3-round w3-white w3-margin w3-padding-large">
+        <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px;opacity:.8;">
+        <div class="w3-col l6">
+        <div class="w3-card w3-round w3-gray w3-margin w3-padding-large">
         <h1>Craft a Quest</h1>
         <form onsubmit="createQuest($('#questTitle').val(), $('#task1').val(), $('#task2').val(), $('#task3').val(), 
                                     $('#task4').val(), $('#task5').val(), $('#questDescription').val()); return false;">
@@ -134,7 +133,7 @@
             </section>
         </form>
     </div>
-        </div>
+    </div>
     </div>
 </body>
 </html>
