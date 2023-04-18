@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+    <title>The Mentorist</title>
+
+	<!--DO NOT FORGET THIS SCRIPT TAG SO YOU CAN USE JQUERY!!!!!-->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="finalStyles.css">
+	<link rel="stylesheet" href="style1.css">
+	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+	<!--YOUR OWN JAVASCRIPT CAN GO RIGHT HERE-->
+	<script type="text/javascript">
+
+		var roleType = "";
+		function clearLogon() {
+			$('#logonEmail').val("");
+			$('#logonPassword').val("");
+		}
+
+		function LogOn(email, pass) {
+
+			var webMethod = "ProjectServices.asmx/LogOn";
+			var parameters = "{\"email\":\"" + encodeURI(email) + "\",\"pass\":\"" + encodeURI(pass) + "\"}";
+			var accountsArray;
+
+			//jQuery ajax method
+			$.ajax({
+				type: "POST",
+				url: webMethod,
+				data: parameters,
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				success: function (msg) {
+					if (msg.d) {
+
+						webMethod = "ProjectServices.asmx/StoreAccounts";
+						parameters = "{}";
+
+						$.ajax({
+							type: "POST",
+							url: webMethod,
+							data: parameters,
+							contentType: "application/json; charset=utf-8",
+							dataType: "json",
+							success: function (msg) {
+								if (msg.d.length > 0) {
+									accountsArray = msg.d;
+
+									for (var i = 0; i < accountsArray.length; i++) {
+										console.log(accountsArray[i]);
+										roleType = accountsArray[i].role;
+										console.log(roleType);
+									}
+									openPage();
+								}
+								else {
+									console.log('loading failed');
+								}
+							},
+							error: function (e) {
+								console.log("boo...");
+							}
+						});
+					}
+					else {
+						alert("logon failed");
+						clearLogon();
+					}
+				},
+				error: function (e) {
+					alert("boo...");
+				}
+			});
+		}
+
+		function openPage() {
+			if (roleType == "mentor") {
+				window.open('mentorDashboard.html', '_self');
+			} else {
+				window.open('menteeDashboard.html', '_self');
+			};
+		}
+
+	</script>
+	<!--END OF YOUR OWN JAVASCRIPT-->
+
+</head >
+
+<body id="indexBody">
+	<!-- Navbar -->
+	<div class="nav titleFont">
+		<div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+			<a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+			
+			<a href="index.html" class="w3-bar-item w3-button w3-left w3-padding-large  w3-theme-d4 button-hover">Help</a>
+
+			<!-- <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large button-hover" title="My Account">
+			<img src="/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+			</a> -->
+		</div>
+	</div>
+	<div class="colorOverlay" >
+	
+	<br><br><br>
+	<!--	<button onclick="javascript: TestButtonHandler();">Click here to test connection!</button>-->
+
+		<main>
+
+			<div class="w3-container w3-content " style="max-width:780px; height:180px; margin-top:25px;">    
+				<div class = "w3-card w3-round content-box" style="height: 160px;">
+					<div class="w3-container">
+					<h1 class="titleFont">Welcome to Mentorist!</h1>
+						<h2 class="titleFont">Login to begin your quest</h2>
+					</div>
+				</div>
+			</div>
+
+			<!-- AHHHH -->
+			<form onsubmit="LogOn($('#logonEmail').val(), $('#logonPassword').val()); return false;">
+				<div class="w3-container w3-content" style="max-width:600px;margin-top:5px">    
+					<div class = "w3-card w3-round content-box">
+						<div class="w3-container">
+						<br>
+						<section>
+							<button onclick= "window.location.href = 'requestAccount.html';" class="buts" style="justify-content: center;"> Request an Account</button> 
+						</section>
+						<section>
+							<label>Email</label><br />
+							<input class="textInput" type="text" id="logonEmail" name="account" required/><br /><br />
+						</section>
+						<section>
+							<label>Password</label><br />
+							<input class="textInput" type="password" id="logonPassword" name="password" required/><br /><br />
+						</section>
+						</div>
+						<div>
+							<input class="buts" id="formButton"  type="reset" value="Clear">
+							<button class="buts" id="formButton" type="submit">Go!</button>
+						</div>
+						<br>
+					</div>
+				</div>
+			</form>
+		</main>
+	</div>
+</body>
+</html>

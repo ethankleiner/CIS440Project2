@@ -1,159 +1,167 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <meta charset="utf-8" />
 
-<head>
-	<meta charset="utf-8" />
-	<title>Create an Account</title>
-	<link rel="stylesheet" href="style1.css">
-	<link rel="stylesheet" href="style2.css">
-	<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script>
-		var accountsArray;
-		var noRepeatedAccount;
+        <title>Create Account</title>
 
-		//resets the new account inputs
-		function clearNewAccount() {
-			$('#newLogonPassword').val("");
-			$('#newLogonEmail').val("");
-			$('#mentorRadio').val();
-			$('#menteeRadio').val();
-		}
+        <link rel="stylesheet" href="newStylesTEST.css">
+        <!-- <link rel="stylesheet" href="newStylesTEST.css"> -->
 
-		//passes account info to the server, to create an account request
-		function CreateAccount(pass, email) {
+        <!-- Script -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	    <script>
+            var accountsArray;
+            var noRepeatedAccount;
 
-			var ele = document.getElementsByName('role');
-			var role = "";
+            //resets the new account inputs
+            function clearNewAccount() {
+                $('#newLogonPassword').val("");
+                $('#newLogonEmail').val("");
+                $('#mentorRadio').val();
+                $('#menteeRadio').val();
+            }
 
-			for (i = 0; i < ele.length; i++) {
-				if (ele[i].checked)
-					role = ele[i].value;
-			}
+            //passes account info to the server, to create an account request
+            function CreateAccount(pass, email) {
 
-			var webMethod = "ProjectServices.asmx/StoreAccounts";
-			$.ajax({
-				type: "POST",
-				url: webMethod,
-				contentType: "application/json; charset=utf-8",
-				dataType: "json",
-				success: function (msg) {
-					if (msg.d.length > 0) {
-						accountsArray = msg.d;
-						noRepeatedAccount = false;
+                var ele = document.getElementsByName('role');
+                var role = "";
 
-						for (var i = 0; i < accountsArray.length; i++) {
-							if (accountsArray[i].email == email) {
-								noRepeatedAccount = false;
-								break;
-							} else {
-								noRepeatedAccount = true;
-							}
-						}
-					} else {
-						alert("loading accounts failed");
-					}
-					console.log(noRepeatedAccount);
+                for (i = 0; i < ele.length; i++) {
+                    if (ele[i].checked)
+                        role = ele[i].value;
+                }
 
-					if (noRepeatedAccount) {
-						webMethod = "ProjectServices.asmx/RequestAccount";
-						parameters = "{\"pass\":\"" + encodeURI(pass) + "\",\"email\":\"" + encodeURI(email) +
-							"\",\"role\":\"" + encodeURI(role) + "\"}";
+                var webMethod = "ProjectServices.asmx/StoreAccounts";
+                $.ajax({
+                    type: "POST",
+                    url: webMethod,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (msg) {
+                        if (msg.d.length > 0) {
+                            accountsArray = msg.d;
+                            noRepeatedAccount = false;
 
-						$.ajax({
-							type: "POST",
-							url: webMethod,
-							data: parameters,
-							contentType: "application/json; charset=utf-8",
-							dataType: "json",
-							success: function (msg) {
-								window.open('profileCreation.html', '_self')
-								clearNewAccount();
-								alert("Account created!");
-							},
-							error: function (e) {
-								console.log('requestionAccount failed')
-								alert("boo...");
-							}
-						})
-					} else {
-						alert('Account ID exists! Choose a new one.');
-						clearNewAccount();
-					};
-				},
-				error: function (e) {
-					console.log('stored Account failed')
-					alert("boo...");
-				}
-			})
-		};
+                            for (var i = 0; i < accountsArray.length; i++) {
+                                if (accountsArray[i].email == email) {
+                                    noRepeatedAccount = false;
+                                    break;
+                                } else {
+                                    noRepeatedAccount = true;
+                                }
+                            }
+                        } else {
+                            alert("loading accounts failed");
+                        }
+                        console.log(noRepeatedAccount);
 
-	</script>
+                        if (noRepeatedAccount) {
+                            webMethod = "ProjectServices.asmx/RequestAccount";
+                            parameters = "{\"pass\":\"" + encodeURI(pass) + "\",\"email\":\"" + encodeURI(email) +
+                                "\",\"role\":\"" + encodeURI(role) + "\"}";
 
-</head>
+                            $.ajax({
+                                type: "POST",
+                                url: webMethod,
+                                data: parameters,
+                                contentType: "application/json; charset=utf-8",
+                                dataType: "json",
+                                success: function (msg) {
+                                    window.open('profileCreation.html', '_self')
+                                    clearNewAccount();
+                                    alert("Account created!");
+                                },
+                                error: function (e) {
+                                    console.log('requestionAccount failed')
+                                    alert("boo...");
+                                }
+                            })
+                        } else {
+                            alert('Account ID exists! Choose a new one.');
+                            clearNewAccount();
+                        };
+                    },
+                    error: function (e) {
+                        console.log('stored Account failed')
+                        alert("boo...");
+                    }
+                })
+            };
+	    </script>
 
-<body class="w3-theme-l5">
-	<!-- Nav -->
-	<div class="w3-top">
-		<nav class="w3-bar w3-theme-d2 w3-left-align w3-large">
-			<a href="index.html" class="w3-bar-item w3-button w3-left w3-padding-large  w3-theme-d4 w3-hover-white">Back to Log In</a>
+    </head>
 
-			<a href="index.html" class="w3-bar-item w3-button w3-left w3-padding-large  w3-theme-d4 w3-hover-white">Help</a>
+    <!-- Body -->
+    <body class="colorOverlay">
+        <!-- Nav Bar -->
+        <header>
+            <nav>
+                <a href="index.html" class="leftAlign">Back</a>
+                <a href="help.html" class="leftAlign">Help</a>
+                <a href="#" class="rightAlign" title="The Mentorist">
+                    <img class="logo" src="logo.jpg">
+                </a>
+            </nav>
+        </header>
+        
+        <!-- Content -->
+        <main>
+            
+            <div class="contentBox">
 
-			<a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
-				<img src="/w3images/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
-			</a>
-		</nav>
-	</div>
+                <div class="textDiv">
+                    <h1>Create Your Account</h1>
+                </div>
+            
+                <!-- Form Request -->
+                <form onsubmit="CreateAccount($('#newLogonPassword').val,$('#newLogonEmail').val()); return false;">
+                 
+                    <h3>Fill out the form below to start your journey</h3>
+                    
+                    <!-- Email and Password -->
+                    <section>
+                        <label>Email</label>    <br>
+                        <input type="email" class="textInput" id="newLogonEmail" name="email" required>
+                    </section>
 
-	<header>
-		<nav>
-			<a id="leftAlign">New Account</a>
-			<a class="navLink" id="leftAlign" href="index.html">Back to Log In</a>
-			<a class="navLink" id="rightAlign" href="help.html">Help</a> 
-		</nav>
-	</header>
+                    <section>
+                        <label>Password</label> <br>
+                        <input type="password" class="textInput" id="newLogonPassword" name="password" required>
+                    </section>
 
-	<!-- Main -->
-	<main class="gradientBG w3-padding-large">
-		<div class="w3-container w3-content" style="max-width:780px;height:180px;margin-top:80px;">
-			<div class = "w3-card w3-round w3-white"">
-				<div class="w3-container">
-					<h1>Create Your Account</h1>
-					<h2>Fill out the form below to start your journey</h2>
-				</div>
+                    <!-- Role -->
+                    <section>
+                        <p>Please select one from below:</p>
+                        <input type="radio" value="mentor" id="mentorRadio" name="role">
+                        <label>Mentor</label>
 
-					<form onsubmit="CreateAccount($('#newLogonPassword').val(), $('#newLogonEmail').val()); return false;">
+                        <input type="radio" value="mentee" id="mentoeeRadio" name="role">
+                        <label>Mentee</label>
+                    </section>
 
-					<section>
-						<label>Email</label><br />
-						<input type="email" class="textInput" id="newLogonEmail" name="email" required /><br /><br />
-					</section>
+                    <br>
+                    
 
-					<section>
-						<label>Password</label><br />
-						<input type="password" class="textInput" id="newLogonPassword" name="password" required /><br /><br />
-					</section>
+                    <!-- Buttons -->
+                    <div>
+                        <button type="reset" class="button" id="clearButton" value="Clear">Clear</button> <button type="submit" class="button" id="submitButton">Go!</button>
+                    </div>
 
-					<section>
-						<input type="radio" value="mentor" name="role" id="mentorRadio" />
-						<label for="mentorRadio">Mentor</label>
-						<input type="radio" value="mentee" name="role" id="menteeRadio" />
-						<label for="menteeRadio">Mentee</label>
-					</section><br>
+                </form>
 
-					<div>
-						<button type="reset" class="button" id="clearButton" value="Clear">Clear</button>
-						<button class="button" id="submitButton" type="submit">Go!</button>
-					</div>
+            </div>
 
-					</form>
-			</div>
-		</div>
+        </main>
 
-	</main>
-
-</body>
+        <!-- Footer -->
+        <footer>
+            <nav>
+                <p>The Mentorist</p>
+                <p>Figrin Dan and the Modal Nodes</p>
+            </nav>
+        </footer>
+    </body>
 
 </html>
