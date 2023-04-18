@@ -497,7 +497,7 @@ namespace ProjectTemplate
 		}
 		
 		[WebMethod(EnableSession = true)]
-		public Profile[] getQuestMembers(string role)
+		public Profile[] getQuestMembers(string role, int courseID)
 		{
 			Console.WriteLine("Executing profile...");
 			Console.WriteLine(role);
@@ -512,12 +512,17 @@ namespace ProjectTemplate
 			}
 			else
 			{
-				Console.WriteLine("Logged in as Mentor, functionality coming soon");
+				sqlSelect = "select Mentees.* from Mentees INNER JOIN Progress on Mentees.menteeID=Progress.menteeID where Progress.courseID=@courseID;";
 			}
 		
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-		
+
+			if (role == "mentor")
+			{
+				sqlCommand.Parameters.AddWithValue("@courseID", HttpUtility.UrlDecode(Convert.ToString(courseID)));
+			}
+
 			//gonna use this to fill a data table
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
 			//filling the data table
@@ -893,5 +898,49 @@ namespace ProjectTemplate
 			sqlConnection.Close();
 			return success;
 		}
+		
+		[WebMethod(EnableSession = true)]
+		public Profile[] getspecificMembers(int courseID)
+		{
+			Console.WriteLine("Executing profile...");
+			
+			
+			DataTable sqlDt = new DataTable("accounts");
+
+			string sqlSelect = "select c.courseID, m.menteeID, m.fname, m.lname from Mentees m, Progress p, Courses c where p.courseID = c.courseID and p.menteeID=m.menteeID;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+			
+			// change class to name to more general name
+			List<Profile> profiles = new List<Profile>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				
+					profiles.Add(new Profile
+					{
+						id = sqlDt.Rows[i]["mentorID"].ToString(),
+						fname = sqlDt.Rows[i]["fname"].ToString(),
+						lname = sqlDt.Rows[i]["lname"].ToString(),
+						company = sqlDt.Rows[i]["company"].ToString(),
+						phone = sqlDt.Rows[i]["phone"].ToString(),
+						years = sqlDt.Rows[i]["experienceYears"].ToString(),
+						birthday = sqlDt.Rows[i]["birthday"].ToString(),
+						position = sqlDt.Rows[i]["positionRole"].ToString(),
+						bio = sqlDt.Rows[i]["profileBio"].ToString(),
+						picture = sqlDt.Rows[i]["profilePic"].ToString(),
+						python = Convert.ToBoolean(sqlDt.Rows[i]["pythonOption"]),
+						java = Convert.ToBoolean(sqlDt.Rows[i]["javaOption"]),
+						sql = Convert.ToBoolean(sqlDt.Rows[i]["sqlOption"])
+					});
+				
+				}
+				
+			}
 	}
 }

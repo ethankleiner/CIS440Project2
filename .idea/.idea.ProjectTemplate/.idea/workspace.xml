@@ -5,13 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6350286b-44f7-410f-ac4b-843f0af01185" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/ProjectTemplate/Mentee.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.ProjectTemplate/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/ProjectServices.asmx.cs" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/ProjectServices.asmx.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/ProjectTemplate.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/ProjectTemplate.csproj" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectTemplate/mentorDashboard.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/mentorDashboard.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/quest.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/quest.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +102,8 @@
       <workItem from="1681780318876" duration="4571000" />
       <workItem from="1681785542884" duration="841000" />
       <workItem from="1681787181272" duration="248000" />
-      <workItem from="1681787476528" duration="1188000" />
+      <workItem from="1681787476528" duration="4521000" />
+      <workItem from="1681852377415" duration="1377000" />
     </task>
     <task id="LOCAL-00001" summary="added quest page and functionality">
       <created>1681355926657</created>
@@ -151,7 +154,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681774349811</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="adjusted quest.html backend to only select mentors with courses and display courses under the mentor's name">
+      <created>1681788939725</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1681788939727</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -169,6 +179,7 @@
     <MESSAGE value="expanded getQuestMember function to cycle through whole array" />
     <MESSAGE value="added functionality to cycle through courses and insert them into quest html page" />
     <MESSAGE value="Added Enroll function and buttons to quest.html" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added Enroll function and buttons to quest.html" />
+    <MESSAGE value="adjusted quest.html backend to only select mentors with courses and display courses under the mentor's name" />
+    <option name="LAST_COMMIT_MESSAGE" value="adjusted quest.html backend to only select mentors with courses and display courses under the mentor's name" />
   </component>
 </project>

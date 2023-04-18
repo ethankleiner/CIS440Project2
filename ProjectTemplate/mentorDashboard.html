@@ -25,6 +25,146 @@
   }
 </style>
 <script>
+  
+  var userRole;
+
+  function getCurrentRole(){
+      var webMethod = "ProjectServices.asmx/LoadCurrentRole";
+      var parameters = "{}";
+
+      //jQuery ajax method
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d) {
+            userRole = msg.d;
+            console.log(userRole);
+            console.log("call function");
+            getQuestMemberData();
+          }
+          else {
+            alert("load current role failed");
+          }
+        },
+        error: function (e) {
+          alert("load current role boo...");
+        }
+      });
+    }
+  
+  function getQuestMemberData(){
+      
+      var membersArray;
+      var interests;
+
+      console.log("loading quest member data...");
+
+      webMethod = "ProjectServices.asmx/getQuestMembers";
+      parameters = "{\"role\":\"" + encodeURI(userRole) + "\"}";
+
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d.length > 0) {
+            membersArray = msg.d;
+
+            for (var i = 0; i < membersArray.length; i++){
+              console.log(membersArray[i]);
+              
+              // const menteeList = document.getElementById("menteeList")
+              // const button = document.getElementById(`mentee${i+1}`);
+              // const name = document.createTextNode(`${membersArray.fname} ${membersArray.lname}`);
+              // button.innerText = name;
+              // button.style.visibility = "visible";
+                   
+          };
+             
+        } else {
+            alert('loading failed');
+          }
+        },
+        error: function (e) {
+          alert("boo...");
+        }
+      });
+
+    }
+  
+  function getProgress(){
+          
+          console.log("loading progress data...");
+
+          webMethod = "ProjectServices.asmx/getProgress";
+          parameters = "{}";
+
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d.length > 0) {
+                
+                progressArray = msg.d;
+                console.log(progressArray.length);
+                
+                switch(progressArray.length) {
+                  case 1:
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    break;
+                  case 2:
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    break;
+                  case 3:
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    document.getElementById("quest3button").style.visibility = 'visible';
+                    break;
+                  case 4:
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    document.getElementById("quest3button").style.visibility = 'visible';
+                    document.getElementById("quest4button").style.visibility = 'visible';
+                    break;
+                  case 5:
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    document.getElementById("quest3button").style.visibility = 'visible';
+                    document.getElementById("quest4button").style.visibility = 'visible';
+                    document.getElementById("quest5button").style.visibility = 'visible';
+                    break;
+                  default:
+                    document.getElementById("quest1button").style.visibility = 'visible';
+                    document.getElementById("quest2button").style.visibility = 'visible';
+                    document.getElementById("quest3button").style.visibility = 'visible';
+                    document.getElementById("quest4button").style.visibility = 'visible';
+                    document.getElementById("quest5button").style.visibility = 'visible';
+                    document.getElementById("quest6button").style.visibility = 'visible';
+                    break;
+                }
+
+                getCourseData();
+                
+              }else {
+                alert('loading failed');
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
+        }
+  
   function LogOff() {
 
     var webMethod = "ProjectServices.asmx/LogOff";
@@ -94,11 +234,11 @@
       <span>How fareth thine apprentices?</span><br>
       <select name="mentees" id="menteeList" class="poop-theme-backwards">
         <!-- getMentees - click on option and get mentees enrolled -->
-        <option id="quest1" value="quest1Value" onclick="getMentees()">Quest 1</option>
-        <option id="quest2" value="quest2Value" style="visibility:hidden" onclick="getMentees()">Quest 2</option>
-        <option id="quest3" value="quest3Value" style="visibility:hidden" onclick="getMentees()">Quest 3</option>
-        <option id="quest4" value="quest4Value" style="visibility:hidden" onclick="getMentees()">Quest 4</option>
-        <option id="quest5" value="quest5Value" style="visibility:hidden" onclick="getMentees()">Quest 5</option>
+        <option id="quest1" value="quest1Value" onclick="getQuestMembers('mentor', )">Quest 1</option>
+        <option id="quest2" value="quest2Value" style="visibility:hidden" onclick="getQuestMembers()">Quest 2</option>
+        <option id="quest3" value="quest3Value" style="visibility:hidden" onclick="getQuestMembers()">Quest 3</option>
+        <option id="quest4" value="quest4Value" style="visibility:hidden" onclick="getQuestMembers()">Quest 4</option>
+        <option id="quest5" value="quest5Value" style="visibility:hidden" onclick="getQuestMembers()">Quest 5</option>
         <!-- can we create these in the script instead of having visibility set to hidden? -->
       </select>
 
