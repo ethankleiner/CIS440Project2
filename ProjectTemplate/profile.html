@@ -155,8 +155,10 @@
             
             if (userRole == "mentor"){
               window.open('mentorDashboard.html', '_self');
+              getElementById('profilePic').style.src = 'MentorImg.png';
             } else {
               window.open('menteeDashboard.html', '_self');
+              getElementById('profilePic').style.src = 'MenteeImg.png';
             }
           }
           else {
@@ -260,7 +262,7 @@
           <table>
             <tr>
               <td>
-                <img src="ProfilePic.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                <img id="profilePic" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
               </td>
               <td>
                 <h4><span id="userName">John Doe</span><span> | </span><span id="userPosition">Position</span><span> | </span><span
