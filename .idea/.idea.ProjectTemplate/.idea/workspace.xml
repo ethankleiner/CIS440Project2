@@ -9,7 +9,6 @@
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/bin/ProjectTemplate.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.AssemblyReference.cache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.CoreCompileInputs.cache" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.csproj.CoreCompileInputs.cache" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.dll" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/obj/Debug/ProjectTemplate.pdb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/ProjectTemplate/quest.html" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectTemplate/quest.html" afterDir="false" />
@@ -97,7 +96,11 @@
       <workItem from="1681356830406" duration="1169000" />
       <workItem from="1681359599227" duration="6940000" />
       <workItem from="1681421399874" duration="3893000" />
-      <workItem from="1681771209320" duration="2178000" />
+      <workItem from="1681771209320" duration="2477000" />
+      <workItem from="1681780318876" duration="4571000" />
+      <workItem from="1681785542884" duration="841000" />
+      <workItem from="1681787181272" duration="248000" />
+      <workItem from="1681787476528" duration="1188000" />
     </task>
     <task id="LOCAL-00001" summary="added quest page and functionality">
       <created>1681355926657</created>
@@ -141,7 +144,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681427620947</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added Enroll function and buttons to quest.html">
+      <created>1681774349811</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1681774349811</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -158,6 +168,7 @@
     <MESSAGE value="added Enroll function" />
     <MESSAGE value="expanded getQuestMember function to cycle through whole array" />
     <MESSAGE value="added functionality to cycle through courses and insert them into quest html page" />
-    <option name="LAST_COMMIT_MESSAGE" value="added functionality to cycle through courses and insert them into quest html page" />
+    <MESSAGE value="Added Enroll function and buttons to quest.html" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Enroll function and buttons to quest.html" />
   </component>
 </project>

@@ -508,7 +508,7 @@ namespace ProjectTemplate
 			
 			if (role == "mentee")
 			{
-				sqlSelect = "select * from Mentors;";
+				sqlSelect = "select Mentors.* from Mentors INNER JOIN Courses on Mentors.mentorID=Courses.courseCreatorID;";
 			}
 			else
 			{
