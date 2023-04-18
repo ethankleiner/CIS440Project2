@@ -264,3 +264,6 @@ hr{border:0;border-top:1px solid #eee;margin:20px 0}
 
 .quest-nav {background-color: #4b544f;}
 .quest-but:hover {color:#fff!important;background-color:#2c3031!important}
+
+#mentorList > div {border: #2c3031 2px solid;margin: 8px;background-color: antiquewhite;opacity: 0.9;padding-left: 8px;}
+.questBut {float: right;margin-right: 50px;}

@@ -124,6 +124,7 @@
               questId = questsArray[i].courseID;
               console.log(questId);
               button.setAttribute("onclick", `Enroll(${questId})`);
+              button.setAttribute("class", `questBut`);
               
               ul.appendChild(value);
               ul.appendChild(button);
@@ -243,10 +244,10 @@
      <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
      <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
      </div>
-  <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px;opacity: .8;">
+  <div class="w3-container w3-content" style="max-width:1400px;margin-top:80px;opacity: .9;">
   <div class="w3-col l6">
   <div class="w3-card w3-round w3-white w3-margin w3-padding-large">
-  <h1>Quests</h1>
+  <h1 style="font-size: 45px;">Quests</h1>
     
     <div id="mentorList">
       
