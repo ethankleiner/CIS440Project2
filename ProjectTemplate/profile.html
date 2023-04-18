@@ -155,12 +155,12 @@
             
             if (userRole == "mentor"){
               window.open('mentorDashboard.html', '_self');
-              document.getElementById('profilePic1') = 'MentorImg.png';
-              document.getElementById('profilePic2') = 'MentorImg.png';
+              document.getElementById('profilePic1').src = 'MentorImg.png';
+              document.getElementById('profilePic2').src = 'MentorImg.png';
             } else {
               window.open('menteeDashboard.html', '_self');
-              document.getElementById('profilePic1') = 'MenteeImg.png';
-              document.getElementById('profilePic2') = 'MenteeImg.png';
+              document.getElementById('profilePic1').src = 'MenteeImg.png';
+              document.getElementById('profilePic2').src = 'MenteeImg.png';
 
             }
           }
