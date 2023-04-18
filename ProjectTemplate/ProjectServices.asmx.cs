@@ -155,6 +155,37 @@ namespace ProjectTemplate
 			sqlConnection.Close(); 
 		}
 		
+		[WebMethod(EnableSession = true)]
+		public Account[] checkAccounts()
+		{
+			DataTable sqlDt = new DataTable("accounts");
+
+			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
+			string sqlSelect = "select email, pword, roles from users;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+			
+			List<Account> accounts = new List<Account>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				accounts.Add(new Account
+				{
+					email = sqlDt.Rows[i]["email"].ToString(),
+					password = sqlDt.Rows[i]["pword"].ToString(),
+					role = sqlDt.Rows[i]["roles"].ToString(),
+				});
+			}
+			//convert the list of accounts to an array and return!
+			return accounts.ToArray();
+		}
+		
 		
 		[WebMethod(EnableSession = true)]
 		public Account[] StoreAccounts()

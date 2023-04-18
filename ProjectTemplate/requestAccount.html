@@ -33,7 +33,7 @@
                         role = ele[i].value;
                 }
 
-                var webMethod = "ProjectServices.asmx/StoreAccounts";
+                var webMethod = "ProjectServices.asmx/checkAccounts";
                 $.ajax({
                     type: "POST",
                     url: webMethod,
@@ -116,7 +116,7 @@
                 </div>
             
                 <!-- Form Request -->
-                <form onsubmit="CreateAccount($('#newLogonPassword').val,$('#newLogonEmail').val()); return false;">
+                <form onsubmit="CreateAccount($('#newLogonPassword').val(),$('#newLogonEmail').val()); return false;">
                  
                     <h3>Fill out the form below to start your journey</h3>
                     

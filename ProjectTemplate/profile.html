@@ -155,8 +155,13 @@
             
             if (userRole == "mentor"){
               window.open('mentorDashboard.html', '_self');
+              document.getElementById('profilePic1') = 'MentorImg.png';
+              document.getElementById('profilePic2') = 'MentorImg.png';
             } else {
               window.open('menteeDashboard.html', '_self');
+              document.getElementById('profilePic1') = 'MenteeImg.png';
+              document.getElementById('profilePic2') = 'MenteeImg.png';
+
             }
           }
           else {
@@ -201,7 +206,7 @@
       </div> -->
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white"
         title="My Account">
-        <img src="ProfilePic.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
+        <img src="ProfilePic.png" id="profilePic2" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
       </a>
       <a href="#" class="w3-bar-item w3-button w3-right w3-padding-large w3-hover-white" onclick="LogOff()">Logout</a>
     </div>
@@ -260,7 +265,7 @@
           <table>
             <tr>
               <td>
-                <img src="ProfilePic.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+                <img id="profilePic2" src="ProfilePic.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
               </td>
               <td>
                 <h4><span id="userName">John Doe</span><span> | </span><span id="userPosition">Position</span><span> | </span><span
