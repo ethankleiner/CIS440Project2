@@ -93,6 +93,15 @@
               document.getElementById('phone').innerHTML = profilesArray[i].phone;
 
               getAccount();
+
+              if (userRole == "mentor"){
+              document.getElementById('profilePic1').src = 'MenteeImg.png';
+              document.getElementById('profilePic2').src = 'MenteeImg.png';
+            } else {
+              document.getElementById('profilePic1').src = 'MenteeImg.png';
+              document.getElementById('profilePic2').src = 'MenteeImg.png';
+
+            }
                       
             } }else {
             alert('loading failed');
@@ -155,8 +164,6 @@
             
             if (userRole == "mentor"){
               window.open('mentorDashboard.html', '_self');
-              document.getElementById('profilePic1').src = 'MentorImg.png';
-              document.getElementById('profilePic2').src = 'MentorImg.png';
             } else {
               window.open('menteeDashboard.html', '_self');
               document.getElementById('profilePic1').src = 'MenteeImg.png';
