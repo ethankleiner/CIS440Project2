@@ -452,11 +452,15 @@
         <!-- can we create these in the script instead of having visibility set to hidden? -->
       <!-- </select> -->
 
+      <!-- placeholder for quest title is in span below -->
+      <h5>Quest: <span id="questTitleSide">Title</span></h5><br>
       <h5>Apprentices</h5>
     </div>
     <div class="w3-bar-block">
       <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black"
         onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+
+        <!-- apprentices for given course - visbility is set to hidden, change through JS and backend functions -->
       <button id="mentee1" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 1</button>
       <button id="mentee2" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 2</button>
       <button id="mentee3" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 3</button>
@@ -480,7 +484,7 @@
 
     <!-- Header -->
     <header class="w3-container" style="padding-top:20px">
-      <h1><b>Quest Title</b></h1>
+      <h1 id="questTitleDash"><b>Quest Title</b></h1>
     </header>
 
     <br>
