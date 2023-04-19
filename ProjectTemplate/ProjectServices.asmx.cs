@@ -520,7 +520,7 @@ namespace ProjectTemplate
 
 			if (role == "mentor")
 			{
-				sqlCommand.Parameters.AddWithValue("@courseID", HttpUtility.UrlDecode(Convert.ToString(courseID)));
+				sqlCommand.Parameters.AddWithValue("@courseID", courseID);
 			}
 
 			//gonna use this to fill a data table
@@ -963,6 +963,47 @@ namespace ProjectTemplate
 
 			return courseID;
       
+		}
+		
+		public Progress[] getMenteeProgress(int courseID, string menteeID)
+		{
+			Console.WriteLine("Loading progress...");
+			Console.WriteLine(Session["userID"]);
+			
+			DataTable sqlDt = new DataTable("accounts");
+			
+			string sqlSelect = "select * from Progress where menteeID=@idValue and courseID=@courseValue;";
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@idValue", menteeID);
+			sqlCommand.Parameters.AddWithValue("@courseValue", courseID);
+
+			//gonna use this to fill a data table
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+			
+			// change class to name to more general name
+			List<Progress> progresses = new List<Progress>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				progresses.Add(new Progress
+				{
+					progressID = Convert.ToInt32(sqlDt.Rows[i]["progressID"]),
+					menteeID = Convert.ToInt32(sqlDt.Rows[i]["menteeID"]),
+					courseID = Convert.ToInt32(sqlDt.Rows[i]["courseID"]),
+					check1 = Convert.ToBoolean(sqlDt.Rows[i]["check1"]),
+					check2 = Convert.ToBoolean(sqlDt.Rows[i]["check2"]),
+					check3 = Convert.ToBoolean(sqlDt.Rows[i]["check3"]),
+					check4 = Convert.ToBoolean(sqlDt.Rows[i]["check4"]),
+					check5 = Convert.ToBoolean(sqlDt.Rows[i]["check5"]),
+					progress = Convert.ToInt32(sqlDt.Rows[i]["progress"]),
+				});
+			}
+			//convert the list of accounts to an array and return!
+			return progresses.ToArray();
 		}
 	}
 }

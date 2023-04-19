@@ -28,6 +28,9 @@
   
   var userRole;
   var courseID = 0;
+  var menteeID = "";
+  let searchResultArray = [];
+  var displayResult;
 
   function getCurrentRole(){
       var webMethod = "ProjectServices.asmx/LoadCurrentRole";
@@ -45,7 +48,7 @@
             userRole = msg.d;
             console.log(userRole);
             console.log("call function");
-            
+            getProfile();
           }
           else {
             alert("load current role failed");
@@ -56,6 +59,41 @@
         }
       });
     }
+
+    function getProfile(){
+
+      console.log("loading profile data...");
+
+      webMethod = "ProjectServices.asmx/StoreProfiles";
+      parameters = "{\"role\":\"" + encodeURI(userRole) + "\"}";
+
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d.length > 0) {
+            profilesArray = msg.d;
+
+            for (var i = 0; i < profilesArray.length; i++){
+              console.log(profilesArray[i]);
+              console.log (profilesArray[i].fname);
+              var fname = profilesArray[i].fname;
+            }
+
+            getMentorCourseID();
+            
+          }else {
+            alert('loading failed');
+          }
+        },
+        error: function (e) {
+          alert("boo...");
+        }
+      });
+      }
   
     function getMentorCourseID(){
       var webMethod = "ProjectServices.asmx/getMenteeforCourse";
@@ -110,9 +148,13 @@
               
               const menteeList = document.getElementById("menteeList")
               const button = document.getElementById(`mentee${i+1}`);
-              const name = document.createTextNode(`${membersArray.fname} ${membersArray.lname}`);
+              const name = document.createTextNode(`${membersArray[i].fname} ${membersArray[i].lname}`);
               button.innerText = name;
               button.style.visibility = "visible";
+
+              menteeID = membersArray[i].menteeID;
+
+              getMenteeProgress();
                    
           };
              
@@ -127,12 +169,12 @@
 
     }
   
-  function getProgress(){
+  function getMenteeProgress(){
           
           console.log("loading progress data...");
 
-          webMethod = "ProjectServices.asmx/getProgress";
-          parameters = "{}";
+          webMethod = "ProjectServices.asmx/getMenteeProgress";
+          parameters = "{\"courseID\":\"" + encodeURI(courseID) + "\",\"menteeID\":\"" + encodeURI(menteeID) + "\",}";
 
           $.ajax({
             type: "POST",
@@ -182,7 +224,7 @@
                 //     break;
                 // }
 
-                getCourseData();
+                getQuest();
                 
               }else {
                 alert('loading failed');
@@ -193,6 +235,145 @@
             }
           });
         }
+
+        function getCourseData() {
+
+    console.log("loading course detailed data...");
+
+
+    for (var i = 0; i < progressArray.length; i++) {
+      searchProgressID = progressArray[i].progressID;
+      console.log("searchProgressID: ", searchProgressID)
+
+      webMethod = "ProjectServices.asmx/getCourseData";
+      parameters = "{\"progressID\":\"" + encodeURI(searchProgressID) + "\"}";
+
+      $.ajax({
+        type: "POST",
+        url: webMethod,
+        data: parameters,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (msg) {
+          if (msg.d.length > 0) {
+            questsArray = msg.d;
+
+            for (var i = 0; i < questsArray.length; i++) {
+              console.log(questsArray[i]);
+              const searchResult = {
+                courseName: questsArray[i].courseName,
+                check1: questsArray[i].check1,
+                check2: questsArray[i].check2,
+                check3: questsArray[i].check3,
+                check4: questsArray[i].check4,
+                check5: questsArray[i].check5,
+                description: questsArray[i].description
+              }
+              searchResultArray.push(searchResult);
+            }
+
+            for (var i = 0; i < searchResultArray.length; i++) {
+              if (i == 0) {
+                displayResult = searchResultArray[i];
+                document.querySelector('#quest1button').innerHTML = displayResult.courseName;
+              } else if (i == 1) {
+                displayResult = searchResultArray[i];
+                document.querySelector('#quest2button').innerHTML = displayResult.courseName;
+              } else if (i == 2) {
+                displayResult = searchResultArray[i];
+                document.querySelector('#quest3button').innerHTML = displayResult.courseName;
+              } else if (i == 3) {
+                displayResult = searchResultArray[i];
+                document.querySelector('#quest4button').innerHTML = displayResult.courseName;
+              } else if (i == 4) {
+                displayResult = searchResultArray[i];
+                document.querySelector('#quest5button').innerHTML = displayResult.courseName;
+              } else if (i == 5) {
+                displayResult = searchResultArray[i];
+                document.querySelector('#quest6button').innerHTML = displayResult.courseName;
+              }
+            }
+
+            getQuest(1);
+            
+          } else {
+            alert('loading failed');
+          }
+        },
+        error: function (e) {
+          alert("boo...");
+        }
+      });
+    }
+}
+
+        function getQuest(questNumber){
+
+          console.log(questNumber);
+          console.log("get quest is loading...");
+
+          // display Checkpoint names
+          for (var i = 0; i < searchResultArray.length; i++){
+            if (i == (questNumber-1)){
+              displayResult = searchResultArray[i];
+              console.log(displayResult.check1);
+              document.getElementById("check1label").innerHTML = displayResult.check1;
+              document.getElementById("check2label").innerHTML = displayResult.check2;
+              document.getElementById("check3label").innerHTML = displayResult.check3;
+              document.getElementById("check4label").innerHTML = displayResult.check4;
+              document.getElementById("check5label").innerHTML = displayResult.check5;
+              document.getElementById("courseDescription").innerHTML = displayResult.description;
+              break;
+            }
+          }
+
+          // check if the checkpoints have been checked
+          for (var i = 0; i < progressArray.length; i++) {
+            
+            if (i == (questNumber-1)){
+
+              console.log(progressArray[i].progressID);
+              progressID = progressArray[i].progressID;
+              
+              if (progressArray[i].check1 == true) { 
+                document.getElementById("checkpoint1").checked = true;
+              } else {
+                document.getElementById("checkpoint1").checked = false;
+              };
+              
+              if (progressArray[i].check2 == true) {
+                document.getElementById("checkpoint2").checked = true;
+              } else {
+                document.getElementById("checkpoint2").checked = false;
+              };
+
+              if (progressArray[i].check3 == true) {
+                document.getElementById("checkpoint3").checked = true;
+              } else {
+                document.getElementById("checkpoint3").checked = false;
+              };
+
+              if (progressArray[i].check4 == true) {
+                document.getElementById("checkpoint4").checked = true;
+              } else {
+                document.getElementById("checkpoint4").checked = false;
+              };
+
+              if (progressArray[i].check5 == true) {
+                document.getElementById("checkpoint5").checked = true;
+              } else {
+                document.getElementById("checkpoint5").checked = false;
+              };
+
+              updateBar();
+              
+              break;
+            }
+            
+          };
+
+          
+}
   
   function LogOff() {
 
@@ -318,27 +499,27 @@
         <table id="cpList" class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white">
           <tr>
             <td><input type="checkbox" id="checkpoint1" disabled=true>
-              <label for="checkpoint1">&nbsp;Checkpoint 1</label>
+              <label for="checkpoint1" id="check1label">&nbsp;Checkpoint 1</label>
             </td>
           </tr>
           <tr>
             <td><input type="checkbox" id="checkpoint2" disabled=true>
-              <label for="checkpoint2">&nbsp;Checkpoint 2</label>
+              <label for="checkpoint2" id="check2label">&nbsp;Checkpoint 2</label>
             </td>
           </tr>
           <tr>
             <td><input type="checkbox" id="checkpoint3" disabled=true>
-              <label for="checkpoint3">&nbsp;Checkpoint 3</label>
+              <label for="checkpoint3" id="check3label">&nbsp;Checkpoint 3</label>
             </td>
           </tr>
           <tr>
             <td><input type="checkbox" id="checkpoint4" disabled=true>
-              <label for="checkpoint4">&nbsp;Checkpoint 4</label>
+              <label for="checkpoint4" id="check4label">&nbsp;Checkpoint 4</label>
             </td>
           </tr>
           <tr>
             <td><input type="checkbox" id="checkpoint5" disabled=true>
-              <label for="checkpoint5">&nbsp;Checkpoint 5</label>
+              <label for="checkpoint5" id="check5label">&nbsp;Checkpoint 5</label>
             </td>
           </tr>
         </table><br>
@@ -437,6 +618,7 @@
                         userResult = msg.d;
                         console.log(userResult);
                         document.getElementById('displayName').innerHTML = userResult;
+                        getCurrentRole();
                     }
                     else {
                         alert('loading failed');
