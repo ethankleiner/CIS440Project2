@@ -146,41 +146,41 @@
                 progressArray = msg.d;
                 console.log(progressArray.length);
                 
-                switch(progressArray.length) {
-                  case 1:
-                    document.getElementById("quest1button").style.visibility = 'visible';
-                    break;
-                  case 2:
-                    document.getElementById("quest1button").style.visibility = 'visible';
-                    document.getElementById("quest2button").style.visibility = 'visible';
-                    break;
-                  case 3:
-                    document.getElementById("quest1button").style.visibility = 'visible';
-                    document.getElementById("quest2button").style.visibility = 'visible';
-                    document.getElementById("quest3button").style.visibility = 'visible';
-                    break;
-                  case 4:
-                    document.getElementById("quest1button").style.visibility = 'visible';
-                    document.getElementById("quest2button").style.visibility = 'visible';
-                    document.getElementById("quest3button").style.visibility = 'visible';
-                    document.getElementById("quest4button").style.visibility = 'visible';
-                    break;
-                  case 5:
-                    document.getElementById("quest1button").style.visibility = 'visible';
-                    document.getElementById("quest2button").style.visibility = 'visible';
-                    document.getElementById("quest3button").style.visibility = 'visible';
-                    document.getElementById("quest4button").style.visibility = 'visible';
-                    document.getElementById("quest5button").style.visibility = 'visible';
-                    break;
-                  default:
-                    document.getElementById("quest1button").style.visibility = 'visible';
-                    document.getElementById("quest2button").style.visibility = 'visible';
-                    document.getElementById("quest3button").style.visibility = 'visible';
-                    document.getElementById("quest4button").style.visibility = 'visible';
-                    document.getElementById("quest5button").style.visibility = 'visible';
-                    document.getElementById("quest6button").style.visibility = 'visible';
-                    break;
-                }
+                // switch(progressArray.length) {
+                //   case 1:
+                //     document.getElementById("quest1button").style.visibility = 'visible';
+                //     break;
+                //   case 2:
+                //     document.getElementById("quest1button").style.visibility = 'visible';
+                //     document.getElementById("quest2button").style.visibility = 'visible';
+                //     break;
+                //   case 3:
+                //     document.getElementById("quest1button").style.visibility = 'visible';
+                //     document.getElementById("quest2button").style.visibility = 'visible';
+                //     document.getElementById("quest3button").style.visibility = 'visible';
+                //     break;
+                //   case 4:
+                //     document.getElementById("quest1button").style.visibility = 'visible';
+                //     document.getElementById("quest2button").style.visibility = 'visible';
+                //     document.getElementById("quest3button").style.visibility = 'visible';
+                //     document.getElementById("quest4button").style.visibility = 'visible';
+                //     break;
+                //   case 5:
+                //     document.getElementById("quest1button").style.visibility = 'visible';
+                //     document.getElementById("quest2button").style.visibility = 'visible';
+                //     document.getElementById("quest3button").style.visibility = 'visible';
+                //     document.getElementById("quest4button").style.visibility = 'visible';
+                //     document.getElementById("quest5button").style.visibility = 'visible';
+                //     break;
+                //   default:
+                //     document.getElementById("quest1button").style.visibility = 'visible';
+                //     document.getElementById("quest2button").style.visibility = 'visible';
+                //     document.getElementById("quest3button").style.visibility = 'visible';
+                //     document.getElementById("quest4button").style.visibility = 'visible';
+                //     document.getElementById("quest5button").style.visibility = 'visible';
+                //     document.getElementById("quest6button").style.visibility = 'visible';
+                //     break;
+                // }
 
                 getCourseData();
                 
@@ -260,16 +260,16 @@
     </div>
     <hr>
     <div class="w3-container">
-      <span>How fareth thine apprentices?</span><br>
-      <select name="mentees" id="menteeList" class="poop-theme-backwards">
+      <!-- <span>How fareth thine apprentices?</span><br>
+      <select name="mentees" id="menteeList" class="poop-theme-backwards"> -->
         <!-- getMentees - click on option and get mentees enrolled -->
-        <option id="quest1" value="quest1Value" onclick="getMentorCourseID()">Quest 1</option>
+        <!-- <option id="quest1" value="quest1Value" onclick="getMentorCourseID()">Quest 1</option>
         <option id="quest2" value="quest2Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 2</option>
         <option id="quest3" value="quest3Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 3</option>
         <option id="quest4" value="quest4Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 4</option>
-        <option id="quest5" value="quest5Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 5</option>
+        <option id="quest5" value="quest5Value" style="visibility:hidden" onclick="getMentorCourseID()">Quest 5</option> -->
         <!-- can we create these in the script instead of having visibility set to hidden? -->
-      </select>
+      <!-- </select> -->
 
       <h5>Apprentices</h5>
     </div>
