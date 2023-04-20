@@ -26,13 +26,12 @@
       var userRole;
       var courseID = 0;
       var menteeID = 0;
-      var mentorID = 0;
       var coursesArray = [];
       var membersArray;
       var menteeName;
       let menteeProgressArray = [];
       let searchResultArray = [];
-      var displayResult;
+      var displayResult; // an object of searchResultArray
       var questNumber;
 
 
@@ -84,7 +83,6 @@
                 for (var i = 0; i < profilesArray.length; i++){
                   
                   console.log ("Mentor FName: ", profilesArray[i].fname);
-                  mentorID = profilesArray[i].id;
                   var fname = profilesArray[i].fname;
                   document.getElementById('displayName').innerHTML = fname;
                 }
@@ -102,9 +100,12 @@
           }
       
         function getMentorCourseInfo(){
-          var webMethod = "ProjectServices.asmx/getQuests";
-          var parameters = "{\"id\":\"" + encodeURI(mentorID) + "\"}";
-    
+        
+          console.log("executing get mentor course info")
+          
+          var webMethod = "ProjectServices.asmx/getMentorQuest";
+          var parameters = "{}";
+          
           //jQuery ajax method
           $.ajax({
             type: "POST",
@@ -210,20 +211,35 @@
           });
       
         }
-  
+
+
       function getMenteeProgress() {
-    
+
         console.log("loading progress data...");
-    
+
         for (var i = 0; i < membersArray.length; i++) {
-          
+
           menteeID = membersArray[i].id;
           menteeName = membersArray[i].fname + " " + membersArray[i].lname;
           console.log("menteeID: ", menteeID, "menteeName ", menteeName);
-    
+
+          if (i == 0) {
+            document.querySelector('#mentee1').innerHTML = menteeName;
+          } else if (i == 1) {
+            document.querySelector('#mentee2').innerHTML = menteeName;
+          } else if (i == 2) {
+            document.querySelector('#mentee3').innerHTML = menteeName;
+          } else if (i == 3) {
+            document.querySelector('#mentee4').innerHTML = menteeName;
+          } else if (i == 4) {
+            document.querySelector('#mentee5').innerHTML = menteeName;
+          } else if (i == 5) {
+            document.querySelector('#mentee6').innerHTML = menteeName;
+          }
+
           webMethod = "ProjectServices.asmx/getMenteeProgress";
-          parameters = "{\"courseID\":\"" + encodeURI(courseID) + "\",\"menteeID\":\"" + encodeURI(menteeID) + "\",}";
-          
+          parameters = "{\"courseID\":\"" + encodeURI(courseID) + "\",\"menteeID\":\"" + encodeURI(menteeID) + "\"}";
+
           $.ajax({
             type: "POST",
             url: webMethod,
@@ -233,12 +249,11 @@
             success: function (msg) {
               if (msg.d.length > 0) {
                 menteeProgressArray = msg.d;
-    
+
                 for (var i = 0; i < menteeProgressArray.length; i++) {
                   console.log(menteeProgressArray[i]);
                   const searchResult = {
                     menteeID: menteeID,
-                    menteeName: menteeName,
                     check1: menteeProgressArray[i].check1,
                     check2: menteeProgressArray[i].check2,
                     check3: menteeProgressArray[i].check3,
@@ -247,31 +262,10 @@
                   }
                   searchResultArray.push(searchResult);
                 }
-    
-                for (var i = 0; i < searchResultArray.length; i++) {
-                  if (i == 0) {
-                    displayResult = searchResultArray[i];
-                    document.querySelector('#mentee1').innerHTML = displayResult.menteeName;
-                  } else if (i == 1) {
-                    displayResult = searchResultArray[i];
-                    document.querySelector('#mentee2').innerHTML = displayResult.menteeName;
-                  } else if (i == 2) {
-                    displayResult = searchResultArray[i];
-                    document.querySelector('#mentee3').innerHTML = displayResult.menteeName;
-                  } else if (i == 3) {
-                    displayResult = searchResultArray[i];
-                    document.querySelector('#mentee4').innerHTML = displayResult.menteeName;
-                  } else if (i == 4) {
-                    displayResult = searchResultArray[i];
-                    document.querySelector('#mentee5').innerHTML = displayResult.menteeName;
-                  } else if (i == 5) {
-                    displayResult = searchResultArray[i];
-                    document.querySelector('#mentee6').innerHTML = displayResult.menteeName;
-                  }
-                }
-    
+                
+
                 getQuest(1);
-    
+
               } else {
                 alert('loading failed');
               }
@@ -282,6 +276,7 @@
           });
         }
       }
+
 
         function getQuest(questNumber){
 
@@ -363,7 +358,7 @@
 
 </main>
 
-<body class="w3-light-grey" onload="updateBar()" style="background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)),url(Middle-Earth.jpg);background-position: 100% fixed;background-repeat: none;background-size: 100;">
+<body class="w3-light-grey" onload="getCurrentRole()" style="background-image: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)),url(Middle-Earth.jpg);background-position: 100% fixed;background-repeat: none;background-size: 100;">
   <!-- Navbar -->
   <div class="w3-top">
     <div class="w3-bar w3-left-align w3-large navpoop-ment">

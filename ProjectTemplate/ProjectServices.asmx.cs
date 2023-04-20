@@ -574,26 +574,30 @@ namespace ProjectTemplate
 			//convert the list of accounts to an array and return!
 			return profiles.ToArray();
 		}
+
+		
 		
 		[WebMethod(EnableSession = true)]
-			  
-		public List<Quest> getQuests(string id) {
+		public List<Quest> getQuests(string id)
+		{
 			Console.WriteLine("Executing quests...");
-				
-			DataTable sqlDt = new DataTable ("quests");
-			  
-			string sqlSelect = "select Courses.* from Courses INNER JOIN Mentors on Mentors.mentorID=Courses.courseCreatorID where mentorID=@mentorID;";
-			
-		
+			Console.WriteLine(id);
+
+			DataTable sqlDt = new DataTable("quests");
+
+			string sqlSelect =
+				"select Courses.* from Courses INNER JOIN Mentors on Mentors.mentorID=Courses.courseCreatorID where mentorID=@mentorID;";
+
+
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-			
+
 			sqlCommand.Parameters.AddWithValue("@mentorID", HttpUtility.UrlDecode(id));
-			
+
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
 			//filling the data table
 			sqlDa.Fill(sqlDt);
-			
+
 			List<Quest> quests = new List<Quest>();
 			for (int i = 0; i < sqlDt.Rows.Count; i++)
 			{
@@ -609,15 +613,56 @@ namespace ProjectTemplate
 					check5 = sqlDt.Rows[i]["check5"].ToString()
 				});
 			}
-		
+
 			//convert the list of accounts to an array and return!
-				return quests;
+			return quests;
 		}
 		
 		
-
+		
 		[WebMethod(EnableSession = true)]
+		public List<Quest> getMentorQuest()
+		{
+			Console.WriteLine("Executing quests...");
 
+			DataTable sqlDt = new DataTable("quests");
+
+			string sqlSelect =
+				"select Courses.* from Courses INNER JOIN Mentors on Mentors.mentorID=Courses.courseCreatorID where mentorID=@mentorID;";
+
+
+			MySqlConnection sqlConnection = new MySqlConnection(getConString());
+			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+
+			sqlCommand.Parameters.AddWithValue("@mentorID", Session["userID"]);
+
+			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
+			//filling the data table
+			sqlDa.Fill(sqlDt);
+
+			List<Quest> quests = new List<Quest>();
+			for (int i = 0; i < sqlDt.Rows.Count; i++)
+			{
+				quests.Add(new Quest
+				{
+					courseID = Convert.ToInt32(sqlDt.Rows[i]["courseID"]),
+					courseName = sqlDt.Rows[i]["courseName"].ToString(),
+					courseCreatorID = Convert.ToInt32(sqlDt.Rows[i]["courseCreatorID"]),
+					check1 = sqlDt.Rows[i]["check1"].ToString(),
+					check2 = sqlDt.Rows[i]["check2"].ToString(),
+					check3 = sqlDt.Rows[i]["check3"].ToString(),
+					check4 = sqlDt.Rows[i]["check4"].ToString(),
+					check5 = sqlDt.Rows[i]["check5"].ToString()
+				});
+			}
+
+			//convert the list of accounts to an array and return!
+			return quests;
+		}
+
+		
+		
+		[WebMethod(EnableSession = true)]
 		public void Enroll(int courseID)
 		{
 			string sqlSelect = "insert into Progress(menteeID, courseID, check1, check2, check3, check4, check5, progress) values(@menteeValue, @courseID, false, false, false, false, false, 0);";
@@ -878,10 +923,11 @@ namespace ProjectTemplate
 		}
 		
 		
+		[WebMethod(EnableSession = true)]
 		public Progress[] getMenteeProgress(string courseID, string menteeID)
 		{
 			Console.WriteLine("Loading progress...");
-			Console.WriteLine(Session["userID"]);
+			Console.WriteLine("CourseID" + courseID + "MenteeID" + menteeID);
 			
 			DataTable sqlDt = new DataTable("accounts");
 			
@@ -890,8 +936,8 @@ namespace ProjectTemplate
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 			
-			sqlCommand.Parameters.AddWithValue("@idValue", menteeID);
-			sqlCommand.Parameters.AddWithValue("@courseValue", Convert.ToInt32(courseID));
+			sqlCommand.Parameters.AddWithValue("@idValue", Convert.ToInt32(HttpUtility.UrlDecode(menteeID)));
+			sqlCommand.Parameters.AddWithValue("@courseValue", Convert.ToInt32(HttpUtility.UrlDecode(courseID)));
 
 			//gonna use this to fill a data table
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
