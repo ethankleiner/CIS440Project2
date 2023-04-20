@@ -499,7 +499,7 @@ namespace ProjectTemplate
 		[WebMethod(EnableSession = true)]
 		public Profile[] getQuestMembers(string role, int courseID)
 		{
-			Console.WriteLine("Executing profile...");
+			Console.WriteLine("Executing get Quest Members...");
 			Console.WriteLine(role);
 			
 			DataTable sqlDt = new DataTable("accounts");
@@ -583,6 +583,7 @@ namespace ProjectTemplate
 			DataTable sqlDt = new DataTable ("quests");
 			  
 			string sqlSelect = "select Courses.* from Courses INNER JOIN Mentors on Mentors.mentorID=Courses.courseCreatorID where mentorID=@mentorID;";
+			
 		
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
@@ -612,6 +613,8 @@ namespace ProjectTemplate
 			//convert the list of accounts to an array and return!
 				return quests;
 		}
+		
+		
 
 		[WebMethod(EnableSession = true)]
 
@@ -757,69 +760,6 @@ namespace ProjectTemplate
 			return quests;
 		}
 		
-		
-
-		[WebMethod(EnableSession = true)]
-		public string LoadMentorName()
-		{
-			DataTable sqlDt = new DataTable("accounts");
-
-			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			// select latest login id
-			string sqlSelect = "select fname from Mentors where mentorID=@idValue;";
-
-			MySqlConnection sqlConnection = new MySqlConnection(getConString());
-			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-			
-			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
-
-			//gonna use this to fill a data table
-			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-			//filling the data table
-			sqlDa.Fill(sqlDt);
-
-			string userResult = "";
-			for (int i = 0; i < sqlDt.Rows.Count; i++)
-			{
-				userResult = sqlDt.Rows[i]["fname"].ToString();
-				Console.WriteLine(userResult);
-			}
-			//return role
-			Console.WriteLine("test");
-
-			return userResult;
-		}
-
-		[WebMethod(EnableSession = true)]
-		public string LoadMenteeName()
-		{
-			DataTable sqlDt = new DataTable("accounts");
-
-			// string sqlConnectString = System.Configuration.ConfigurationManager.ConnectionStrings["myDB"].ConnectionString;
-			// select latest login id
-			string sqlSelect = "select fname from Mentees where menteeID=@idValue;";
-
-			MySqlConnection sqlConnection = new MySqlConnection(getConString());
-			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-			
-			sqlCommand.Parameters.AddWithValue("@idValue", Session["userID"]);
-
-			//gonna use this to fill a data table
-			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-			//filling the data table
-			sqlDa.Fill(sqlDt);
-
-			string userResult = "";
-			for (int i = 0; i < sqlDt.Rows.Count; i++)
-			{
-				userResult = sqlDt.Rows[i]["fname"].ToString();
-				Console.WriteLine(userResult);
-			}
-			//return role
-			Console.WriteLine("test");
-
-			return userResult;
-		}
 
 		[WebMethod(EnableSession = true)]
 		public string menteeQuests() {
@@ -900,17 +840,20 @@ namespace ProjectTemplate
 		}
 		
 		[WebMethod(EnableSession = true)]
-		public Mentee[] getspecificMembers(int courseID)
+		public Profile[] getspecificMembers(string courseID)
 		{
 			Console.WriteLine("Executing profile...");
 			
 			
 			DataTable sqlDt = new DataTable("accounts");
 
-			string sqlSelect = "select c.courseID, m.menteeID, m.fname, m.lname from Mentees m, Progress p, Courses c where p.courseID = c.courseID and p.menteeID=m.menteeID;";
+			string sqlSelect = "select m.menteeID, m.fname, m.lname from Mentees m, Progress p, Courses c " +
+			                   "where p.courseID = c.courseID and p.menteeID=m.menteeID and c.courseID=@courseidValue;";
 
 			MySqlConnection sqlConnection = new MySqlConnection(getConString());
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
+			
+			sqlCommand.Parameters.AddWithValue("@courseidValue", Convert.ToInt32(HttpUtility.UrlDecode(courseID)));
 
 			//gonna use this to fill a data table
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
@@ -918,13 +861,13 @@ namespace ProjectTemplate
 			sqlDa.Fill(sqlDt);
 			
 			// change class to name to more general name
-			List<Mentee> profiles = new List<Mentee>();
+			List<Profile> profiles = new List<Profile>();
 			for (int i = 0; i < sqlDt.Rows.Count; i++)
 			{
 				
-					profiles.Add(new Mentee
+					profiles.Add(new Profile
 					{
-						menteeID = sqlDt.Rows[i]["menteeID"].ToString(),
+						id = sqlDt.Rows[i]["menteeID"].ToString(),
 						fname = sqlDt.Rows[i]["fname"].ToString(),
 						lname = sqlDt.Rows[i]["lname"].ToString()
 					});
@@ -934,38 +877,8 @@ namespace ProjectTemplate
 			return profiles.ToArray();
 		}
 		
-		[WebMethod(EnableSession = true)]
-		public int getMenteeforCourse()
-		{
-			Console.WriteLine("Executing profile...");
-
-			DataTable sqlDt = new DataTable("accounts");
-
-			string sqlSelect = "select c.courseID from Mentors m, Courses c where mentorID=courseCreatorID and mentorID=@mentorValue;";
-
-			MySqlConnection sqlConnection = new MySqlConnection(getConString());
-			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
-   
-			sqlCommand.Parameters.AddWithValue("@mentorValue", Session["userID"]);
-
-
-			//gonna use this to fill a data table
-			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);
-			//filling the data table
-			sqlDa.Fill(sqlDt);
-
-			int courseID = 0;
-			for (int i = 0; i < sqlDt.Rows.Count; i++)
-			{
-				courseID = Convert.ToInt32(sqlDt.Rows[i]["courseID"]);
-				Console.WriteLine(courseID);
-			}
-
-			return courseID;
-      
-		}
 		
-		public Progress[] getMenteeProgress(int courseID, string menteeID)
+		public Progress[] getMenteeProgress(string courseID, string menteeID)
 		{
 			Console.WriteLine("Loading progress...");
 			Console.WriteLine(Session["userID"]);
@@ -978,7 +891,7 @@ namespace ProjectTemplate
 			MySqlCommand sqlCommand = new MySqlCommand(sqlSelect, sqlConnection);
 			
 			sqlCommand.Parameters.AddWithValue("@idValue", menteeID);
-			sqlCommand.Parameters.AddWithValue("@courseValue", courseID);
+			sqlCommand.Parameters.AddWithValue("@courseValue", Convert.ToInt32(courseID));
 
 			//gonna use this to fill a data table
 			MySqlDataAdapter sqlDa = new MySqlDataAdapter(sqlCommand);

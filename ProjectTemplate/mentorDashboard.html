@@ -5,177 +5,72 @@
   <title>Mentorist - Mentor Dashboard</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
-</head>
-
-<link rel="stylesheet" href="style1.css">
-<link rel="stylesheet" href="style2.css">
-<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<style>
-  html,
-  body,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    font-family: "Raleway", sans-serif
-  }
-</style>
-<script>
-  
-  var userRole;
-  var courseID = 0;
-  var menteeID = "";
-  let searchResultArray = [];
-  var displayResult;
-
-  function getCurrentRole(){
-      var webMethod = "ProjectServices.asmx/LoadCurrentRole";
-      var parameters = "{}";
-
-      //jQuery ajax method
-      $.ajax({
-        type: "POST",
-        url: webMethod,
-        data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-          if (msg.d) {
-            userRole = msg.d;
-            console.log(userRole);
-            console.log("call function");
-            getProfile();
-          }
-          else {
-            alert("load current role failed");
-          }
-        },
-        error: function (e) {
-          alert("load current role boo...");
-        }
-      });
+  <link rel="stylesheet" href="style1.css">
+  <link rel="stylesheet" href="style2.css">
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style>
+    html,
+    body,
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      font-family: "Raleway", sans-serif
     }
-
-    function getProfile(){
-
-      console.log("loading profile data...");
-
-      webMethod = "ProjectServices.asmx/StoreProfiles";
-      parameters = "{\"role\":\"" + encodeURI(userRole) + "\"}";
-
-      $.ajax({
-        type: "POST",
-        url: webMethod,
-        data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-          if (msg.d.length > 0) {
-            profilesArray = msg.d;
-
-            for (var i = 0; i < profilesArray.length; i++){
-              console.log(profilesArray[i]);
-              console.log (profilesArray[i].fname);
-              var fname = profilesArray[i].fname;
-            }
-
-            getMentorCourseID();
-            
-          }else {
-            alert('loading failed');
-          }
-        },
-        error: function (e) {
-          alert("boo...");
-        }
-      });
-      }
+  </style>
+  <script>
   
-    function getMentorCourseID(){
-      var webMethod = "ProjectServices.asmx/getMenteeforCourse";
-      var parameters = "{}";
-
-      //jQuery ajax method
-      $.ajax({
-        type: "POST",
-        url: webMethod,
-        data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-          if (msg.d) {
-            courseID = msg.d;
-            console.log(courseID);
-            console.log("call function");
-            getQuestMemberData();
-          }
-          else {
-            alert("load courseID failed");
-          }
-        },
-        error: function (e) {
-          alert("load courseID boo...");
-        }
-      });
-    }
-
-  function getQuestMemberData(){
-      
+      var userRole;
+      var courseID = 0;
+      var menteeID = 0;
+      var mentorID = 0;
+      var coursesArray = [];
       var membersArray;
-      var interests;
+      var menteeName;
+      let menteeProgressArray = [];
+      let searchResultArray = [];
+      var displayResult;
+      var questNumber;
 
-      console.log("loading quest member data...");
 
-      webMethod = "ProjectServices.asmx/getQuestMembers";
-      parameters = "{\"courseID\":\"" + encodeURI(courseID) + "\"}";
-
-      $.ajax({
-        type: "POST",
-        url: webMethod,
-        data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-          if (msg.d.length > 0) {
-            membersArray = msg.d;
-
-            for (var i = 0; i < membersArray.length; i++){
-              console.log(membersArray[i]);
-              
-              const menteeList = document.getElementById("menteeList")
-              const button = document.getElementById(`mentee${i+1}`);
-              const name = document.createTextNode(`${membersArray[i].fname} ${membersArray[i].lname}`);
-              button.innerText = name;
-              button.style.visibility = "visible";
-
-              menteeID = membersArray[i].menteeID;
-
-              getMenteeProgress();
-                   
-          };
-             
-        } else {
-            alert('loading failed');
-          }
-        },
-        error: function (e) {
-          alert("boo...");
+      function getCurrentRole(){
+          var webMethod = "ProjectServices.asmx/LoadCurrentRole";
+          var parameters = "{}";
+    
+          //jQuery ajax method
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d) {
+                userRole = msg.d;
+                console.log(userRole);
+                console.log("call function");
+                getProfile();
+              }
+              else {
+                alert("load current role failed");
+              }
+            },
+            error: function (e) {
+              alert("load current role boo...");
+            }
+          });
         }
-      });
-
-    }
-  
-  function getMenteeProgress(){
-          
-          console.log("loading progress data...");
-
-          webMethod = "ProjectServices.asmx/getMenteeProgress";
-          parameters = "{\"courseID\":\"" + encodeURI(courseID) + "\",\"menteeID\":\"" + encodeURI(menteeID) + "\",}";
-
+    
+        function getProfile(){
+    
+          console.log("loading profile data...");
+    
+          webMethod = "ProjectServices.asmx/StoreProfiles";
+          parameters = "{\"role\":\"" + encodeURI(userRole) + "\"}";
+    
           $.ajax({
             type: "POST",
             url: webMethod,
@@ -184,47 +79,17 @@
             dataType: "json",
             success: function (msg) {
               if (msg.d.length > 0) {
-                
-                progressArray = msg.d;
-                console.log(progressArray.length);
-                
-                // switch(progressArray.length) {
-                //   case 1:
-                //     document.getElementById("quest1button").style.visibility = 'visible';
-                //     break;
-                //   case 2:
-                //     document.getElementById("quest1button").style.visibility = 'visible';
-                //     document.getElementById("quest2button").style.visibility = 'visible';
-                //     break;
-                //   case 3:
-                //     document.getElementById("quest1button").style.visibility = 'visible';
-                //     document.getElementById("quest2button").style.visibility = 'visible';
-                //     document.getElementById("quest3button").style.visibility = 'visible';
-                //     break;
-                //   case 4:
-                //     document.getElementById("quest1button").style.visibility = 'visible';
-                //     document.getElementById("quest2button").style.visibility = 'visible';
-                //     document.getElementById("quest3button").style.visibility = 'visible';
-                //     document.getElementById("quest4button").style.visibility = 'visible';
-                //     break;
-                //   case 5:
-                //     document.getElementById("quest1button").style.visibility = 'visible';
-                //     document.getElementById("quest2button").style.visibility = 'visible';
-                //     document.getElementById("quest3button").style.visibility = 'visible';
-                //     document.getElementById("quest4button").style.visibility = 'visible';
-                //     document.getElementById("quest5button").style.visibility = 'visible';
-                //     break;
-                //   default:
-                //     document.getElementById("quest1button").style.visibility = 'visible';
-                //     document.getElementById("quest2button").style.visibility = 'visible';
-                //     document.getElementById("quest3button").style.visibility = 'visible';
-                //     document.getElementById("quest4button").style.visibility = 'visible';
-                //     document.getElementById("quest5button").style.visibility = 'visible';
-                //     document.getElementById("quest6button").style.visibility = 'visible';
-                //     break;
-                // }
-
-                getQuest();
+                profilesArray = msg.d;
+    
+                for (var i = 0; i < profilesArray.length; i++){
+                  
+                  console.log ("Mentor FName: ", profilesArray[i].fname);
+                  mentorID = profilesArray[i].id;
+                  var fname = profilesArray[i].fname;
+                  document.getElementById('displayName').innerHTML = fname;
+                }
+    
+                getMentorCourseInfo();
                 
               }else {
                 alert('loading failed');
@@ -234,174 +99,265 @@
               alert("boo...");
             }
           });
-        }
-
-        function getCourseData() {
-
-    console.log("loading course detailed data...");
-
-
-    for (var i = 0; i < progressArray.length; i++) {
-      searchProgressID = progressArray[i].progressID;
-      console.log("searchProgressID: ", searchProgressID)
-
-      webMethod = "ProjectServices.asmx/getCourseData";
-      parameters = "{\"progressID\":\"" + encodeURI(searchProgressID) + "\"}";
-
-      $.ajax({
-        type: "POST",
-        url: webMethod,
-        data: parameters,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        success: function (msg) {
-          if (msg.d.length > 0) {
-            questsArray = msg.d;
-
-            for (var i = 0; i < questsArray.length; i++) {
-              console.log(questsArray[i]);
-              const searchResult = {
-                courseName: questsArray[i].courseName,
-                check1: questsArray[i].check1,
-                check2: questsArray[i].check2,
-                check3: questsArray[i].check3,
-                check4: questsArray[i].check4,
-                check5: questsArray[i].check5,
-                description: questsArray[i].description
-              }
-              searchResultArray.push(searchResult);
-            }
-
-            for (var i = 0; i < searchResultArray.length; i++) {
-              if (i == 0) {
-                displayResult = searchResultArray[i];
-                document.querySelector('#quest1button').innerHTML = displayResult.courseName;
-              } else if (i == 1) {
-                displayResult = searchResultArray[i];
-                document.querySelector('#quest2button').innerHTML = displayResult.courseName;
-              } else if (i == 2) {
-                displayResult = searchResultArray[i];
-                document.querySelector('#quest3button').innerHTML = displayResult.courseName;
-              } else if (i == 3) {
-                displayResult = searchResultArray[i];
-                document.querySelector('#quest4button').innerHTML = displayResult.courseName;
-              } else if (i == 4) {
-                displayResult = searchResultArray[i];
-                document.querySelector('#quest5button').innerHTML = displayResult.courseName;
-              } else if (i == 5) {
-                displayResult = searchResultArray[i];
-                document.querySelector('#quest6button').innerHTML = displayResult.courseName;
-              }
-            }
-
-            getQuest(1);
-            
-          } else {
-            alert('loading failed');
           }
-        },
-        error: function (e) {
-          alert("boo...");
+      
+        function getMentorCourseInfo(){
+          var webMethod = "ProjectServices.asmx/getQuests";
+          var parameters = "{\"id\":\"" + encodeURI(mentorID) + "\"}";
+    
+          //jQuery ajax method
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d.length > 0) {
+    
+                coursesArray = msg.d;
+    
+                for (var i = 0; i < coursesArray.length; i++){
+             
+                  console.log (coursesArray[i].courseID, coursesArray[i].courseName);
+                  document.getElementById("questTitleSide").innerHTML = coursesArray[i].courseName;
+                  courseID = coursesArray[i].courseID;
+                  
+                  document.getElementById("check1label").innerHTML = coursesArray[i].check1;
+                  document.getElementById("check2label").innerHTML = coursesArray[i].check2;
+                  document.getElementById("check3label").innerHTML = coursesArray[i].check3;
+                  document.getElementById("check4label").innerHTML = coursesArray[i].check4;
+                  document.getElementById("check5label").innerHTML = coursesArray[i].check5;
+                  
+                }
+                
+                getQuestMemberData();
+              }
+              else {
+                alert("load mentor course info failed");
+              }
+            },
+            error: function (e) {
+              alert("load mentor course info boo...");
+            }
+          });
         }
-      });
-    }
-}
+    
+      function getQuestMemberData(){
+    
+          console.log("loading quest member data...");
+    
+          webMethod = "ProjectServices.asmx/getspecificMembers";
+          parameters = "{\"courseID\":\"" + encodeURI(courseID) + "\"}";
+    
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d.length > 0) {
+                membersArray = msg.d;
+    
+                console.log(membersArray.length);
+    
+                switch(membersArray.length) {
+                  case 1:
+                    document.getElementById("mentee1").style.visibility = 'visible';
+                    break;
+                  case 2:
+                    document.getElementById("mentee1").style.visibility = 'visible';
+                    document.getElementById("mentee2").style.visibility = 'visible';
+                    break;
+                  case 3:
+                    document.getElementById("mentee1").style.visibility = 'visible';
+                    document.getElementById("mentee2").style.visibility = 'visible';
+                    document.getElementById("mentee3").style.visibility = 'visible';
+                    break;
+                  case 4:
+                    document.getElementById("mentee1").style.visibility = 'visible';
+                    document.getElementById("mentee2").style.visibility = 'visible';
+                    document.getElementById("mentee3").style.visibility = 'visible';
+                    document.getElementById("mentee4").style.visibility = 'visible';
+                    break;
+                  case 5:
+                    document.getElementById("mentee1").style.visibility = 'visible';
+                    document.getElementById("mentee2").style.visibility = 'visible';
+                    document.getElementById("mentee3").style.visibility = 'visible';
+                    document.getElementById("mentee4").style.visibility = 'visible';
+                    document.getElementById("mentee5").style.visibility = 'visible';
+                    break;
+                  default:
+                    document.getElementById("mentee1").style.visibility = 'visible';
+                    document.getElementById("mentee2").style.visibility = 'visible';
+                    document.getElementById("mentee3").style.visibility = 'visible';
+                    document.getElementById("mentee4").style.visibility = 'visible';
+                    document.getElementById("mentee5").style.visibility = 'visible';
+                    document.getElementById("mentee6").style.visibility = 'visible';
+                    break;
+                }
+    
+                getMenteeProgress();
+                       
+              } else {
+                alert('loading failed');
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
+      
+        }
+  
+      function getMenteeProgress() {
+    
+        console.log("loading progress data...");
+    
+        for (var i = 0; i < membersArray.length; i++) {
+          
+          menteeID = membersArray[i].id;
+          menteeName = membersArray[i].fname + " " + membersArray[i].lname;
+          console.log("menteeID: ", menteeID, "menteeName ", menteeName);
+    
+          webMethod = "ProjectServices.asmx/getMenteeProgress";
+          parameters = "{\"courseID\":\"" + encodeURI(courseID) + "\",\"menteeID\":\"" + encodeURI(menteeID) + "\",}";
+          
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            data: parameters,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d.length > 0) {
+                menteeProgressArray = msg.d;
+    
+                for (var i = 0; i < menteeProgressArray.length; i++) {
+                  console.log(menteeProgressArray[i]);
+                  const searchResult = {
+                    menteeID: menteeID,
+                    menteeName: menteeName,
+                    check1: menteeProgressArray[i].check1,
+                    check2: menteeProgressArray[i].check2,
+                    check3: menteeProgressArray[i].check3,
+                    check4: menteeProgressArray[i].check4,
+                    check5: menteeProgressArray[i].check5,
+                  }
+                  searchResultArray.push(searchResult);
+                }
+    
+                for (var i = 0; i < searchResultArray.length; i++) {
+                  if (i == 0) {
+                    displayResult = searchResultArray[i];
+                    document.querySelector('#mentee1').innerHTML = displayResult.menteeName;
+                  } else if (i == 1) {
+                    displayResult = searchResultArray[i];
+                    document.querySelector('#mentee2').innerHTML = displayResult.menteeName;
+                  } else if (i == 2) {
+                    displayResult = searchResultArray[i];
+                    document.querySelector('#mentee3').innerHTML = displayResult.menteeName;
+                  } else if (i == 3) {
+                    displayResult = searchResultArray[i];
+                    document.querySelector('#mentee4').innerHTML = displayResult.menteeName;
+                  } else if (i == 4) {
+                    displayResult = searchResultArray[i];
+                    document.querySelector('#mentee5').innerHTML = displayResult.menteeName;
+                  } else if (i == 5) {
+                    displayResult = searchResultArray[i];
+                    document.querySelector('#mentee6').innerHTML = displayResult.menteeName;
+                  }
+                }
+    
+                getQuest(1);
+    
+              } else {
+                alert('loading failed');
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
+        }
+      }
 
         function getQuest(questNumber){
 
           console.log(questNumber);
           console.log("get quest is loading...");
 
-          // display Checkpoint names
           for (var i = 0; i < searchResultArray.length; i++){
             if (i == (questNumber-1)){
+
               displayResult = searchResultArray[i];
-              console.log(displayResult.check1);
-              document.getElementById("check1label").innerHTML = displayResult.check1;
-              document.getElementById("check2label").innerHTML = displayResult.check2;
-              document.getElementById("check3label").innerHTML = displayResult.check3;
-              document.getElementById("check4label").innerHTML = displayResult.check4;
-              document.getElementById("check5label").innerHTML = displayResult.check5;
-              document.getElementById("courseDescription").innerHTML = displayResult.description;
-              break;
-            }
-          }
-
-          // check if the checkpoints have been checked
-          for (var i = 0; i < progressArray.length; i++) {
-            
-            if (i == (questNumber-1)){
-
-              console.log(progressArray[i].progressID);
-              progressID = progressArray[i].progressID;
               
-              if (progressArray[i].check1 == true) { 
+              if (displayResult.check1 == true) {
                 document.getElementById("checkpoint1").checked = true;
               } else {
                 document.getElementById("checkpoint1").checked = false;
               };
-              
-              if (progressArray[i].check2 == true) {
+
+              if ( displayResult.check2 == true) {
                 document.getElementById("checkpoint2").checked = true;
               } else {
                 document.getElementById("checkpoint2").checked = false;
               };
 
-              if (progressArray[i].check3 == true) {
+              if ( displayResult.check3 == true) {
                 document.getElementById("checkpoint3").checked = true;
               } else {
                 document.getElementById("checkpoint3").checked = false;
               };
 
-              if (progressArray[i].check4 == true) {
+              if ( displayResult.check4 == true) {
                 document.getElementById("checkpoint4").checked = true;
               } else {
                 document.getElementById("checkpoint4").checked = false;
               };
 
-              if (progressArray[i].check5 == true) {
+              if ( displayResult.check5 == true) {
                 document.getElementById("checkpoint5").checked = true;
               } else {
                 document.getElementById("checkpoint5").checked = false;
               };
-
-              updateBar();
               
+              updateBar();
               break;
             }
+          }
+        }
             
-          };
-
           
-}
-  
-  function LogOff() {
+        function LogOff() {
+      
+          var webMethod = "ProjectServices.asmx/LogOff";
+          $.ajax({
+            type: "POST",
+            url: webMethod,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (msg) {
+              if (msg.d) {
+                //we logged off, so go back to logon page,
+                //stop checking messages
+                //and clear the chat panel
+                window.open('index.html', '_self')
+              }
+              else {
+                alert('logout failed')
+              }
+            },
+            error: function (e) {
+              alert("boo...");
+            }
+          });
+        }
+        
+  </script>
 
-    var webMethod = "ProjectServices.asmx/LogOff";
-    $.ajax({
-      type: "POST",
-      url: webMethod,
-      contentType: "application/json; charset=utf-8",
-      dataType: "json",
-      success: function (msg) {
-        if (msg.d) {
-          //we logged off, so go back to logon page,
-          //stop checking messages
-          //and clear the chat panel
-          window.open('index.html', '_self')
-        }
-        else {
-          alert('logout failed')
-        }
-      },
-      error: function (e) {
-        alert("boo...");
-      }
-    });
-  }
-</script>
 </head>
-
 
 <main class="main">
 
@@ -461,16 +417,12 @@
         onclick="w3_close()" title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
 
         <!-- apprentices for given course - visbility is set to hidden, change through JS and backend functions -->
-      <button id="mentee1" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 1</button>
-      <button id="mentee2" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 2</button>
-      <button id="mentee3" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 3</button>
-      <button id="mentee4" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 4</button>
-      <button id="mentee5" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 5</button>
-      <button id="mentee6" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 6</button>
-      <button id="mentee7" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 7</button>
-      <button id="mentee8" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 8</button>
-      <button id="mentee9" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 9</button>
-      <button id="mentee10" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getProgress()"><i class="fa fa-users fa-fw"></i>  Apprentice 10</button>
+      <button id="mentee1" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getQuest(1)"><i class="fa fa-users fa-fw"></i>  Apprentice 1</button>
+      <button id="mentee2" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getQuest(2)"><i class="fa fa-users fa-fw"></i>  Apprentice 2</button>
+      <button id="mentee3" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getQuest(3)"><i class="fa fa-users fa-fw"></i>  Apprentice 3</button>
+      <button id="mentee4" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getQuest(4)"><i class="fa fa-users fa-fw"></i>  Apprentice 4</button>
+      <button id="mentee5" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getQuest(5)"><i class="fa fa-users fa-fw"></i>  Apprentice 5</button>
+      <button id="mentee6" style="visibility:hidden" class="w3-bar-item w3-button w3-padding w3-blue" onclick="getQuest(6)"><i class="fa fa-users fa-fw"></i>  Apprentice 6</button>
     </div>
   </nav>
 
@@ -595,75 +547,10 @@
       let pBar = document.getElementById("progressBar")
       pBar.style = "width:" + percentComplete
       pBar.innerHTML = percentComplete
-
-      displayName();
-
+      
       // FOR EACH function to be used later :)
       // checkpoints.forEach(checkChecked)
     }
-
-    var userID = 0;
-
-    function displayName(){
-            
-            console.log("loaded first name...");
-            
-            webMethod = "ProjectServices.asmx/LoadMentorName";
-            parameters = "{\"charID\":\"" + encodeURI(userID) + "\"}";
-
-            $.ajax({
-                type: "POST",
-                url: webMethod,
-                data: parameters,
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function (msg) {
-                    if (msg.d.length > 0) {
-                        userResult = msg.d;
-                        console.log(userResult);
-                        document.getElementById('displayName').innerHTML = userResult;
-                        getCurrentRole();
-                    }
-                    else {
-                        alert('loading failed');
-                    }
-                },
-                error: function (e) {
-                    alert("boo...");
-                }
-            });
-            
-    }
-
-    function LogOff() {
-
-      var webMethod = "ProjectServices.asmx/LogOff";
-      $.ajax({
-          type: "POST",
-          url: webMethod,
-          contentType: "application/json; charset=utf-8",
-          dataType: "json",
-          success: function (msg) {
-              if (msg.d) {
-                  //we logged off, so go back to logon page,
-                  //stop checking messages
-                  //and clear the chat panel
-                  window.open('index.html', '_self')
-              }
-              else {
-                  alert('logout failed')
-              }
-          },
-          error: function (e) {
-              alert("boo...");
-          }
-      });
-    }
-
-
-// function checkChecked(element) {
-//   console.log(element.checked)
-// }
 
 
   </script>
