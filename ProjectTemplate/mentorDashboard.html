@@ -121,7 +121,7 @@
                 for (var i = 0; i < coursesArray.length; i++){
              
                   console.log (coursesArray[i].courseID, coursesArray[i].courseName);
-                  document.getElementById("questTitleSide").innerHTML = coursesArray[i].courseName;
+                  document.getElementById("questTitleDash").innerHTML = coursesArray[i].courseName;
                   courseID = coursesArray[i].courseID;
                   
                   document.getElementById("check1label").innerHTML = coursesArray[i].check1;
@@ -131,6 +131,8 @@
                   document.getElementById("check5label").innerHTML = coursesArray[i].check5;
                   
                 }
+                
+                document.getElementById("createCourse").disabled = true;
                 
                 getQuestMemberData();
               }
@@ -323,7 +325,6 @@
             }
           }
         }
-            
           
         function LogOff() {
       
@@ -387,7 +388,7 @@
       </div>
       <div >
         <span>Welcome, <strong id="displayName">Mike</strong></span><br>
-        <a href="courseCreation.html" class="w3-button poop-theme-backwards">Create a new quest!</a>
+        <button id="createCourse" onclick="location.href='courseCreation.html';" class="w3-button poop-theme-backwards">Create a new quest!</button>
       </div>
     </div>
     <hr>
@@ -403,8 +404,6 @@
         <!-- can we create these in the script instead of having visibility set to hidden? -->
       <!-- </select> -->
 
-      <!-- placeholder for quest title is in span below -->
-      <h5>Quest: <span id="questTitleSide">Title</span></h5><br>
       <h5>Apprentices</h5>
     </div>
     <div class="w3-bar-block">
